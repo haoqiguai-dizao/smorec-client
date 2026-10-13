@@ -76,8 +76,8 @@
     },
     {
       "path": "SECURITY.md",
-      "size": 960,
-      "sha256": "c7802731da7fee392ae8a739bfdd8226843ecb191a376485312adbe4caca59f9"
+      "size": 2042,
+      "sha256": "6fe2a10f702b1954f1a42eaea2a868d60bcfa70e25fa06ce5928a3d8419224a2"
     },
     {
       "path": "THIRD-PARTY-LICENSES.txt",
@@ -91,8 +91,8 @@
     },
     {
       "path": "VERIFICATION.md",
-      "size": 2406,
-      "sha256": "c01653aa154205b2760690e91db3c16e62f3874ed05b8e580206e1f249aa4e03"
+      "size": 3559,
+      "sha256": "6da80499195a8617f1dbdc71fc879f0d83c9620800fd0e11bb133a8a670ffdf3"
     },
     {
       "path": "build/icon.icns",
