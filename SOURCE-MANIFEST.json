@@ -36,8 +36,8 @@
     },
     {
       "path": "ASSETS.md",
-      "size": 1787,
-      "sha256": "7553a2e605a2542d354e41e015d94b38f3ad6af5eb8a3373e72fffa3e10c6ad0"
+      "size": 1818,
+      "sha256": "05cb234d072cd7087d878577fc68dd9000bc54c314b3ff326dff740f414c03f0"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -66,13 +66,13 @@
     },
     {
       "path": "PUBLICATION-PLAN.md",
-      "size": 1931,
-      "sha256": "eaa5d6e380d8248e3095759f4f462626c0d48fa7cad32519b1b8abbca05d4403"
+      "size": 2159,
+      "sha256": "1bb97b496b9c6415a8e3cf36134bb3b5fcd246f1f5912008df214a7313880b7c"
     },
     {
       "path": "README.md",
-      "size": 8190,
-      "sha256": "11690d21c4f38aef7087bfb307e936d1b1f788cda505d181828df8895815aa54"
+      "size": 8689,
+      "sha256": "84c7505e4e2d840763dbcea150ab62dfc39b5eb1e77cfefd343096beaae49983"
     },
     {
       "path": "SECURITY.md",
@@ -181,8 +181,8 @@
     },
     {
       "path": "docs/readme/README.md",
-      "size": 1795,
-      "sha256": "b8153a09e2599f9799efd4f931b3e0100b636802c4505a428d98e2de61d75fc3"
+      "size": 2911,
+      "sha256": "7b1259faa5f5dc765d31ce1574bc552ed437dc8373a5d39ab92499e61aff3826"
     },
     {
       "path": "docs/readme/editor.jpg",
@@ -200,9 +200,19 @@
       "sha256": "4a63744ee128323bd77130add602d07d211d1b8da493b7acee5dd7fa6332c912"
     },
     {
+      "path": "docs/readme/live-auto-zoom.gif",
+      "size": 2921131,
+      "sha256": "276c120e8c485ee52fcc0f627bc1348837af4f19d1f4046895aecd2803732c13"
+    },
+    {
       "path": "docs/readme/recorder.jpg",
       "size": 25339,
       "sha256": "def1522ae95daee10bbc60a7ec4854cd15006ade1b662bc2bcf7209c40d4f3a5"
+    },
+    {
+      "path": "docs/readme/voice-whiteboard.gif",
+      "size": 390377,
+      "sha256": "26b1d3b68b3ad71f58b309d268d8dcc60361ffecd0173e7f323eece1f2d89e57"
     },
     {
       "path": "docs/readme/whiteboard.jpg",
