@@ -1,0 +1,96 @@
+{
+  "source": "https://aka.ms/vs/17/release/channel",
+  "catalogVersion": "17.14.37614.0",
+  "components": [
+    {
+      "id": "Microsoft.Net.4.8.SDK.Cab",
+      "version": "4.8.3928.2",
+      "file": "sdk_tools48.cab",
+      "url": "https://download.visualstudio.microsoft.com/download/pr/33ce7103-7284-4a6b-9efc-a889c13bdcbb/131fa7cd8d661a151a13077a4bed21a4d187c5070b223c28fcf1a2bd1243d817/sdk_tools48.cab",
+      "size": 5142799,
+      "sha256": "131fa7cd8d661a151a13077a4bed21a4d187c5070b223c28fcf1a2bd1243d817",
+      "target": "netfx-sdk", "format": "netfx-cab"
+    },
+    {
+      "id": "Microsoft.Net.4.8.SDK.Metadata",
+      "version": "4.8.3928.2",
+      "file": "sdk_tools48.msi",
+      "url": "https://download.visualstudio.microsoft.com/download/pr/33ce7103-7284-4a6b-9efc-a889c13bdcbb/61c76da293738f93fd0176837e5e70bf414903ecb527a7fc25fc7c862066f5bc/sdk_tools48.msi",
+      "size": 569344,
+      "sha256": "61c76da293738f93fd0176837e5e70bf414903ecb527a7fc25fc7c862066f5bc",
+      "target": "netfx-sdk", "format": "retain-only"
+    },
+    {
+      "id": "Microsoft.VC.14.44.17.14.CRT.x64.Store.base",
+      "version": "14.44.35226",
+      "file": "Microsoft.VC.14.44.17.14.CRT.x64.Store.base.vsix",
+      "url": "https://download.visualstudio.microsoft.com/download/pr/67cf767c-5e71-47c2-a54a-cd5631e28942/9135b03c0df53c7a0aa9bef7230a1c2ff4263a0ee7baa7e419d034f484f6bb56/Microsoft.VC.14.44.17.14.CRT.x64.Store.base.vsix",
+      "size": 28032384,
+      "sha256": "9135b03c0df53c7a0aa9bef7230a1c2ff4263a0ee7baa7e419d034f484f6bb56",
+      "target": "msvc", "vsix": true
+    },
+    {
+      "id": "Microsoft.VC.14.44.17.14.Tools.HostX64.TargetX64.base",
+      "version": "14.44.35228",
+      "file": "Microsoft.VC.14.44.17.14.Tools.HostX64.TargetX64.base.vsix",
+      "url": "https://download.visualstudio.microsoft.com/download/pr/bbc72d8e-2acd-4229-8f6a-85e23c5e3456/ee0baaa3a112d255f19f6c27dcc0ff6e496949eb9f1f37be0ac908c562a7076c/Microsoft.VC.14.44.17.14.Tools.HostX64.TargetX64.base.vsix",
+      "size": 26660160,
+      "sha256": "ee0baaa3a112d255f19f6c27dcc0ff6e496949eb9f1f37be0ac908c562a7076c",
+      "target": "msvc", "vsix": true
+    },
+    {
+      "id": "Microsoft.VC.14.44.17.14.Tools.HostX64.TargetX64.Res.base",
+      "version": "14.44.35228",
+      "file": "Microsoft.VC.14.44.17.14.Tools.HostX64.TargetX64.Res.base.enu.vsix",
+      "url": "https://download.visualstudio.microsoft.com/download/pr/bbc72d8e-2acd-4229-8f6a-85e23c5e3456/6e31f47833bfa585f56d55716a1ef081f1434f93ad77160eab49c6e193765832/Microsoft.VC.14.44.17.14.Tools.HostX64.TargetX64.Res.base.enu.vsix",
+      "size": 225537,
+      "sha256": "6e31f47833bfa585f56d55716a1ef081f1434f93ad77160eab49c6e193765832",
+      "target": "msvc", "vsix": true
+    },
+    {
+      "id": "Microsoft.VC.14.44.17.14.CRT.Headers.base",
+      "version": "14.44.35220",
+      "file": "Microsoft.VC.14.44.17.14.CRT.Headers.base.vsix",
+      "url": "https://download.visualstudio.microsoft.com/download/pr/c610cd8c-801b-44b8-a80a-82cc382aeb43/852382a9aa73502b7849c1bcadfb603ba7175c4e8b60e6aba03c7de711d4ece5/Microsoft.VC.14.44.17.14.CRT.Headers.base.vsix",
+      "size": 2128977,
+      "sha256": "852382a9aa73502b7849c1bcadfb603ba7175c4e8b60e6aba03c7de711d4ece5",
+      "target": "msvc", "vsix": true
+    },
+    {
+      "id": "Microsoft.VC.14.44.17.14.CRT.x64.Desktop.base",
+      "version": "14.44.35226",
+      "file": "Microsoft.VC.14.44.17.14.CRT.x64.Desktop.base.vsix",
+      "url": "https://download.visualstudio.microsoft.com/download/pr/67cf767c-5e71-47c2-a54a-cd5631e28942/f01f701a7bcd9587a340898c851424f6a52bb913a70c185ff0d5bf0288c5831a/Microsoft.VC.14.44.17.14.CRT.x64.Desktop.base.vsix",
+      "size": 51521199,
+      "sha256": "f01f701a7bcd9587a340898c851424f6a52bb913a70c185ff0d5bf0288c5831a",
+      "target": "msvc", "vsix": true
+    },
+    {
+      "id": "Microsoft.VC.14.44.17.14.CLI.X64.base",
+      "version": "14.44.35208",
+      "file": "Microsoft.VC.14.44.17.14.CLI.X64.base.vsix",
+      "url": "https://download.visualstudio.microsoft.com/download/pr/d2fa077f-a814-4fb2-b903-1fca7658d17e/d093535bb2d0782f7353894a71c9ffcb58690f99130093c3133a546f8a604086/Microsoft.VC.14.44.17.14.CLI.X64.base.vsix",
+      "size": 64266813,
+      "sha256": "d093535bb2d0782f7353894a71c9ffcb58690f99130093c3133a546f8a604086",
+      "target": "msvc", "vsix": true
+    },
+    {
+      "id": "Microsoft.VC.14.44.17.14.ATL.Headers.base",
+      "version": "14.44.35208",
+      "file": "Microsoft.VC.14.44.17.14.ATL.Headers.base.vsix",
+      "url": "https://download.visualstudio.microsoft.com/download/pr/d2fa077f-a814-4fb2-b903-1fca7658d17e/f8d375a254b6cfdbe0e7dc4fe7342d6212052068eb6394070dd932c815adb500/Microsoft.VC.14.44.17.14.ATL.Headers.base.vsix",
+      "size": 579876,
+      "sha256": "f8d375a254b6cfdbe0e7dc4fe7342d6212052068eb6394070dd932c815adb500",
+      "target": "msvc", "vsix": true
+    },
+    {
+      "id": "Microsoft.VC.14.44.17.14.ATL.X64.base",
+      "version": "14.44.35208",
+      "file": "Microsoft.VC.14.44.17.14.ATL.X64.base.vsix",
+      "url": "https://download.visualstudio.microsoft.com/download/pr/d2fa077f-a814-4fb2-b903-1fca7658d17e/6dd0b7f8079c654db2b8fdaebc74900e8418b5204914a77bde93a5b01ac0998c/Microsoft.VC.14.44.17.14.ATL.X64.base.vsix",
+      "size": 808455,
+      "sha256": "6dd0b7f8079c654db2b8fdaebc74900e8418b5204914a77bde93a5b01ac0998c",
+      "target": "msvc", "vsix": true
+    }
+  ]
+}

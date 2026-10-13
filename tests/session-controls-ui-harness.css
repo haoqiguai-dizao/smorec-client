@@ -1,0 +1,6 @@
+html, body { background: #e4e7ea; }
+body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+#root { width: min(1120px, 100vw); height: min(704px, calc(100vh - 84px)); flex-shrink: 0; }
+#fixture-controls { position: absolute; top: 22px; left: 24px; display: flex; align-items: center; flex-wrap: wrap; gap: 14px; color: #59636a; font-size: 12px; }
+#fixture-controls button { background: #292e35; color: #e4e7ea; border: 1px solid #ffffff22; border-radius: 6px; padding: 7px 12px; }
+@media (max-height: 220px) { #fixture-controls { display: none; } }

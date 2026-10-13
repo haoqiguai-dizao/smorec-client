@@ -1,0 +1,20 @@
+.mac-permissions { margin-block: 8px; }
+.mac-permissions-toggle { width: 100%; min-height: 44px; }
+.mac-permissions-toggle > svg:last-child { transition: transform 120ms ease; }
+.mac-permissions-toggle > svg.expanded { transform: rotate(180deg); }
+.mac-permissions-content { margin: 0 10px 8px 32px; }
+.mac-permissions-toolbar { display: flex; justify-content: space-between; align-items: center; min-height: 30px; color: var(--text-secondary, var(--text-secondary)); }
+.mac-permissions-toolbar [role="img"] { display: flex; padding: 5px; }
+.mac-permissions-refresh { border: 0; background: transparent; color: inherit; padding: 5px 0 5px 12px; font-size: 11px; cursor: pointer; }
+.mac-permissions-refresh:disabled { opacity: .5; cursor: default; }
+.mac-permission-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 40px; font-size: 12px; }
+.mac-permission-row + .mac-permission-row { border-top: 1px solid var(--border-subtle, var(--border-subtle)); }
+.mac-permission-row .launcher-icon { width: auto; padding-inline: 10px; font-size: 12px; }
+.mac-permission-granted { display: inline-flex; align-items: center; gap: 5px; color: var(--text-secondary, var(--text-secondary)); }
+.mac-permissions-ready > svg:first-child, .mac-permission-granted { color: var(--success); }
+.mac-permissions-optional { border-top: 1px solid var(--border-subtle); margin-top: 10px; padding-top: 10px; color: var(--text-secondary); }
+.mac-permissions-optional summary { cursor: pointer; padding-block: 5px; font-size: 12px; }
+.mac-permission-unknown, .mac-permissions-loading { color: var(--text-secondary, var(--text-secondary)); font-size: 12px; }
+.mac-permissions-loading { padding-block: 12px; }
+.mac-permissions button:focus-visible, .mac-permissions [tabindex]:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.mac-permissions-unused { display: block; padding-block: 5px; font-size: 11px; }

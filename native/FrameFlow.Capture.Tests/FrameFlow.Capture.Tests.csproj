@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../FrameFlow.Capture/LivePcmMixer.cs" Link="LivePcmMixer.cs" />
+    <Compile Include="../FrameFlow.Capture/LiveStereoSampleProvider.cs" Link="LiveStereoSampleProvider.cs" />
+    <Compile Include="../FrameFlow.Capture/LiveAudioResampler.cs" Link="LiveAudioResampler.cs" />
+    <Compile Include="../FrameFlow.Capture/AudioMuteGate.cs" Link="AudioMuteGate.cs" />
+    <Compile Include="../FrameFlow.Capture/AudioLevel.cs" Link="AudioLevel.cs" />
+    <Compile Include="../FrameFlow.Capture/DictationTap.cs" Link="DictationTap.cs" />
+    <Compile Include="../FrameFlow.Capture/AudioPacketPlanner.cs" Link="AudioPacketPlanner.cs" />
+    <Compile Include="../FrameFlow.Capture/Contracts.cs" Link="Contracts.cs" />
+    <Compile Include="../FrameFlow.Capture/LiveWindowExclusions.cs" Link="LiveWindowExclusions.cs" />
+    <Compile Include="../FrameFlow.Capture/WindowsApplicationCatalog.cs" Link="WindowsApplicationCatalog.cs" />
+    <Compile Include="../FrameFlow.Capture/LiveCaptureStartup.cs" Link="LiveCaptureStartup.cs" />
+    <Compile Include="../FrameFlow.Capture/CaptureSpecification.cs" Link="CaptureSpecification.cs" />
+    <Compile Include="../FrameFlow.Capture/VideoClockCorrelation.cs" Link="VideoClockCorrelation.cs" />
+    <Compile Include="../FrameFlow.Capture/InputLatencyDiagnostics.cs" Link="InputLatencyDiagnostics.cs" />
+    <Compile Include="../FrameFlow.Capture/CaptureClock.cs" Link="CaptureClock.cs" />
+    <Compile Include="../FrameFlow.Capture/Win32.cs" Link="Win32.cs" />
+    <Compile Include="../FrameFlow.Capture/RawInputWin32.cs" Link="RawInputWin32.cs" />
+    <Compile Include="../FrameFlow.Capture/RawMousePacket.cs" Link="RawMousePacket.cs" />
+    <Compile Include="../FrameFlow.Capture/RawMouseInputCollector.cs" Link="RawMouseInputCollector.cs" />
+    <Compile Include="../FrameFlow.Capture/TypingActivityState.cs" Link="TypingActivityState.cs" />
+    <Compile Include="../FrameFlow.Capture/TypingFocusWin32.cs" Link="TypingFocusWin32.cs" />
+    <Compile Include="../FrameFlow.Capture/TypingFocusGeometry.cs" Link="TypingFocusGeometry.cs" />
+    <Compile Include="../FrameFlow.Capture/TypingFocusLocator.cs" Link="TypingFocusLocator.cs" />
+    <Compile Include="../FrameFlow.Capture/TypingFocusAutomation.cs" Link="TypingFocusAutomation.cs" />
+    <Compile Include="../FrameFlow.Capture/RawKeyboardActivityCollector.cs" Link="RawKeyboardActivityCollector.cs" />
+    <Compile Include="../FrameFlow.Capture/InputActivityJournal.cs" Link="InputActivityJournal.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NAudio.Wasapi" Version="2.3.0" />
+    <None Include="../../tests/fixtures/typing-focus-click-race.json" Link="typing-focus-click-race.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

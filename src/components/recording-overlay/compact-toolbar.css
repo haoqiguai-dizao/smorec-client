@@ -1,0 +1,14 @@
+.compact-toolbar { display: flex; align-items: center; align-self: flex-end; order: 2; flex: 0 0 34px; height: 34px; min-width: 136px; max-width: 200px; margin-right: var(--compact-toolbar-margin-right, 1px); margin-bottom: var(--compact-toolbar-margin-bottom, 12px); padding: 0 8px 0 4px; gap: 3px; border: 1px solid var(--border-subtle); border-radius: 10px; background: var(--surface); box-shadow: var(--shadow-panel); -webkit-app-region: drag; }
+.compact-toolbar-grip { display: grid; place-items: center; width: 15px; height: 24px; color: var(--text-secondary); }
+.compact-toolbar button { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; height: 26px; padding: 0; border: 1px solid transparent; border-radius: 6px; color: var(--text-secondary); font: inherit; cursor: pointer; background: transparent; -webkit-app-region: no-drag; }
+.compact-toolbar .compact-toolbar-expand { justify-content: flex-start; flex: 1; gap: 7px; padding: 0 5px; font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.compact-toolbar-expand i { width: 5px; height: 5px; flex-shrink: 0; border-radius: 50%; background: var(--surface); }
+.compact-toolbar.live .compact-toolbar-expand i { background: var(--surface); }
+.compact-toolbar .compact-toolbar-stop { width: 26px; margin-left: 4px; border-color: var(--danger-border); color: var(--danger); background: var(--danger-soft); }
+.compact-toolbar button:hover:not(:disabled) { border-color: var(--border-strong); background: var(--surface-hover); }
+.compact-toolbar .compact-toolbar-stop:hover:not(:disabled) { background: var(--danger-soft); color: var(--danger); }
+.compact-toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.compact-toolbar button:disabled { cursor: default; opacity: .5; }
+.compact-toolbar-spinning { animation: compact-toolbar-spin 1s linear infinite; }
+@keyframes compact-toolbar-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .compact-toolbar-spinning { animation: none; } }

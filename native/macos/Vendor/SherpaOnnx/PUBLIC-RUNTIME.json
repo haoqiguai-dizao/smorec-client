@@ -1,0 +1,19 @@
+{
+  "source": "https://github.com/k2-fsa/sherpa-onnx/releases/download/v1.12.29/sherpa-onnx-v1.12.29-osx-universal2-shared-no-tts.tar.bz2",
+  "archiveSha256": "a6149e3bcfce6d9c45dc7bb67f807af553f5dc48ba0268bcb364bb369933dfb6",
+  "sherpaVersion": "1.12.29",
+  "gitCommit": "3595893df30c2e3cd1b407d51de29dd532c47b86",
+  "tts": false,
+  "files": [
+    {
+      "file": "libsherpa-onnx-c-api.dylib",
+      "sha256": "fc769a5683e48cb482ed917ec9a8000a1b025a850782ead66c924365fb27c24d",
+      "bytes": 3511256
+    },
+    {
+      "file": "libonnxruntime.1.23.2.dylib",
+      "sha256": "0708038eff766aed5559989aa0710d45546c469dc1bf85c6e83d603a98c10ae9",
+      "bytes": 35138784
+    }
+  ]
+}

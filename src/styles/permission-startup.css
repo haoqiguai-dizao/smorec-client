@@ -1,0 +1,34 @@
+html, body, #root { margin: 0; width: 100%; min-height: 100%; background: #171a20; }
+.permission-startup { box-sizing: border-box; padding: 30px 36px 24px; color: #edf0f6; font: 14px -apple-system, BlinkMacSystemFont, sans-serif; }
+.permission-startup * { box-sizing: border-box; }
+.permission-startup header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+.permission-startup header img { width: 48px; height: 48px; border-radius: 13px; }
+.permission-startup h1 { font-size: 23px; font-weight: 600; margin: 0 0 7px; }
+.permission-startup header p { margin: 0; color: #949eaf; font-size: 13px; }
+.permission-startup header > span { margin-left: auto; color: #97a6be; font-variant-numeric: tabular-nums; }
+.permission-startup-list { border: 1px solid #ffffff12; border-radius: 16px; overflow: hidden; background: #20242c; }
+.permission-startup-row { height: 61px; display: flex; align-items: center; gap: 14px; padding: 0 18px; color: #8893a5; }
+.permission-startup-row + .permission-startup-row { border-top: 1px solid #ffffff08; }
+.permission-startup-row.current { color: #d3dff3; background: #759bde0c; }
+.permission-startup-row > div { display: flex; flex-direction: column; gap: 5px; }
+.permission-startup-row strong { color: #e2e7ef; font-size: 13px; font-weight: 500; }
+.permission-startup-row span { font-size: 11px; }
+.permission-startup-row > span { margin-left: auto; display: flex; align-items: center; gap: 5px; }
+.permission-startup-granted { color: #82c8ac; }
+.permission-startup-current { color: #a4bce8; }
+.permission-startup-action { margin-top: 21px; min-height: 112px; }
+.permission-startup-caption { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #c2cbdc; margin-bottom: 10px; }
+.permission-startup-caption strong { font-weight: 500; }
+.permission-startup-action p { margin: 10px 0 0; color: #8793a6; font-size: 12px; }
+.permission-startup .permission-startup-ready { color: #93d0b7; display: flex; align-items: center; gap: 8px; padding-top: 18px; }
+.permission-startup .permission-startup-error { color: #efa29b; }
+.permission-startup footer { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+.permission-startup button { font: inherit; cursor: pointer; display: flex; align-items: center; gap: 8px; border-radius: 9px; padding: 11px 15px; }
+.permission-startup-refresh { color: #a5b0c2; border: none; background: transparent; font-size: 12px !important; }
+.permission-startup-primary { border: 1px solid #a5bde744; color: #17202e; background: #c5d4ed; font-size: 13px !important; font-weight: 500 !important; }
+.permission-startup button:disabled { cursor: default; opacity: .4; }
+.permission-startup button:focus-visible { outline: 2px solid #a6c2f4; outline-offset: 3px; }
+.permission-startup .permission-startup-row { width: 100%; border: 0; border-radius: 0; padding: 0 18px; background: transparent; text-align: left; justify-content: flex-start; }
+.permission-startup .permission-startup-row + .permission-startup-row { border-top: 1px solid #ffffff08; }
+.permission-startup .permission-startup-row.current { background: #759bde0c; }
+.permission-startup .permission-startup-row:hover { background: #ffffff06; }

@@ -1,0 +1,55 @@
+.workspace-shell { display: flex; flex-direction: column; width: 100%; height: 100%; min-width: 900px; background: var(--surface-stage); }
+.titlebar { height: 52px; flex-shrink: 0; display: flex; align-items: center; border-bottom: 1px solid var(--border-subtle); background: var(--surface); -webkit-app-region: drag; user-select: none; }
+.brand { width: 112px; padding: 0 18px; display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
+.brand strong { font-size: 15px; font-weight: 600; letter-spacing: 1px; color: var(--text-primary); white-space: nowrap; }
+.brand-mark { width: 27px; height: 27px; display: block; object-fit: contain; }
+.titlebar-project { display: flex; align-items: center; gap: 14px; min-width: 0; border-left: 1px solid var(--border-subtle); padding-left: 18px; }
+.project-title { max-width: 320px; min-width: 0; gap: 12px; font-size: 12px; color: var(--text-primary); height: 30px; padding: 0 7px; border-radius: 5px; }
+.project-title > span { text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.project-title:hover:not(:disabled) { background: var(--surface-hover); }
+.project-title svg { color: var(--text-primary); opacity: 0; transition: opacity 140ms; }
+.project-title:hover svg, .project-title:focus-visible svg { opacity: 1; }
+.project-title-input { width: 240px; height: 30px; padding: 5px 8px; }
+.save-state { font-size: 10px; color: var(--text-secondary); display: flex; gap: 4px; align-items: center; white-space: nowrap; }
+.save-state.dirty { color: var(--warning); }
+.save-state i { width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+.titlebar-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; padding-left: 14px; }
+.export-button { height: 29px; min-height: 29px; margin-left: 3px; padding: 0 12px; font-size: 11px; }
+.window-controls { display: flex; height: 52px; margin-left: 16px; }
+.window-controls button { width: 39px; height: 100%; color: var(--text-secondary); border-radius: 0; }
+.window-controls button:hover { background: var(--surface-hover); color: var(--text-primary); }
+.window-controls .window-close:hover { background: var(--accent-soft); color: var(--accent); }
+.workspace-body { --library-width: 224px; --inspector-width: 272px; min-height: 0; flex: 1; display: grid; grid-template-columns: var(--library-width) minmax(360px, 1fr) var(--inspector-width); }
+.workspace-body:has(.library-panel.is-collapsed) { --library-width: 60px; }
+.workspace-body:not(:has(.inspector-panel)) { grid-template-columns: var(--library-width) minmax(360px, 1fr); }
+.editor-main { display: flex; flex-direction: column; min-width: 0; min-height: 0; background: var(--surface-stage); }
+.canvas-stage { position: relative; display: flex; flex: 1; min-height: 180px; flex-direction: column; background: var(--surface-stage); overflow: hidden; }
+.canvas-toolbar { height: 42px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; color: var(--text-secondary); font-size: 11px; }
+.canvas-toolbar button, .canvas-toolbar select { font-size: 11px; }
+.canvas-viewport { display: flex; align-items: center; justify-content: center; flex: 1; min-height: 0; min-width: 0; padding: 12px 28px 10px; overflow: hidden; }
+.preview-canvas { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 3px; box-shadow: var(--shadow-control); }
+.canvas-footer { display: flex; align-items: center; justify-content: center; gap: 8px; height: 30px; font-size: 10px; color: var(--text-secondary); }
+.empty-canvas { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 28px 20px 65px; overflow: auto; }
+.home-app-icon { width: 82px; height: 82px; object-fit: contain; margin-bottom: 22px; }
+.empty-canvas h1 { font-size: 24px; font-weight: 550; letter-spacing: .2px; color: var(--text-primary); }
+.empty-canvas > p { font-size: 12px; color: var(--text-secondary); margin-top: 12px; }
+.home-start-actions { display: flex; gap: 12px; margin-top: 30px; text-align: left; }
+.home-start-actions button { justify-content: flex-start; width: 216px; padding: 17px; border: 1px solid var(--border-strong); border-radius: 8px; gap: 12px; background: var(--surface-sunken); color: var(--text-secondary); }
+.home-start-actions button:hover { border-color: var(--border-strong); background: var(--surface-hover); }
+.home-start-actions strong { display: block; font-size: 12px; font-weight: 550; }
+.home-start-actions small { display: block; font-size: 10px; color: var(--text-secondary); margin-top: 5px; }
+.home-start-actions button > svg:first-child { color: var(--text-secondary); }
+.home-start-actions button > svg:last-child { margin-left: auto; color: var(--text-secondary); }
+.home-record-card { border-color: var(--border-subtle) !important; }
+.home-record-card > svg:first-child { color: var(--accent-record) !important; }
+.home-shortcut { margin-top: 28px; font-size: 11px; color: var(--text-secondary); }
+.status-message, .status-banner { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 90; display: flex; align-items: center; gap: 10px; padding: 10px 13px; max-width: 650px; border-radius: 8px; background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-secondary); box-shadow: var(--shadow-panel); }
+.status-message > svg { color: var(--text-secondary); }
+.status-error { border-color: var(--danger-border); color: var(--danger); }
+.status-error > svg { color: var(--danger); }
+.recording-overlay { position: absolute; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: center; flex-direction: column; background: var(--backdrop); gap: 20px; }
+.recording-time { font-size: 44px; font-variant-numeric: tabular-nums; letter-spacing: 1px; font-weight: 350; }
+.recording-indicator { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); }
+.recording-indicator .record-dot { animation: pulse 1.5s ease infinite; }
+@media (max-width: 1160px) { .workspace-body { --library-width: 204px; --inspector-width: 256px; } .project-title { max-width: 220px; } .save-state { display: none; } .canvas-viewport { padding: 10px 20px; } }
+@media (max-height: 720px) { .empty-canvas { padding-bottom: 30px; } .home-app-icon { width: 66px; height: 66px; margin-bottom: 16px; } }

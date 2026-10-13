@@ -1,0 +1,4 @@
+.camera-format-fields { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 12px; }
+.camera-format-actual { display: flex; align-items: center; gap: 7px; min-height: 19px; color: var(--text-secondary); font-size: 11px; font-variant-numeric: tabular-nums; }
+.camera-format-actual.limited { color: var(--text-secondary); }
+.camera-format-actual svg { flex-shrink: 0; cursor: help; }

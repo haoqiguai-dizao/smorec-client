@@ -1,0 +1,34 @@
+.launcher-recording-timer { display: flex; align-items: center; justify-content: center; gap: 5px; padding: 0; font-variant-numeric: tabular-nums; }
+.launcher-recording-timer i { width: 5px; height: 5px; flex-shrink: 0; border-radius: 50%; background: var(--accent-record); }
+.launcher-whiteboard { display: flex; align-items: center; flex-shrink: 0; }
+.launcher-whiteboard button { display: grid; place-items: center; width: 30px; height: 46px; border: 1px solid transparent; border-radius: 8px; color: var(--text-secondary); }
+.launcher-whiteboard .launcher-mode { display: flex; height: 50px; }
+.launcher-whiteboard .whiteboard-mode-button { width: 18px; }
+.launcher-whiteboard button:hover:not(:disabled) { background: var(--surface-hover); color: var(--text-primary); }
+.launcher-whiteboard button[aria-pressed=true] { border-color: var(--accent-border); color: var(--accent); background: var(--accent-soft); }
+.launcher-recording-warning { display: flex; align-items: center; color: var(--warning); -webkit-app-region: no-drag; }
+.launcher-bar .launcher-start[data-toolbar-focus="stop"] { padding-inline: 9px; gap: 7px; }
+.recording-session-controls { display: flex; align-items: center; gap: 7px; padding: 8px 12px; min-height: 64px; }
+.recording-session-controls .launcher-recording-timer { width: 58px; flex-shrink: 0; font-size: 13px; }
+.recording-session-toggles { display: flex; align-items: center; gap: 3px; }
+.recording-session-toggle { display: flex; flex-direction: column; justify-content: center; gap: 4px; width: 40px; height: 46px; flex-shrink: 0; border: 1px solid transparent; border-radius: 7px; color: var(--text-tertiary); font-size: 10px; white-space: nowrap; }
+.recording-session-toggle[aria-pressed=true] { color: var(--text-primary); }
+.recording-session-toggle:hover:not(:disabled) { background: var(--surface-hover); }
+.recording-session-toggle[aria-expanded=true] { border-color: var(--accent-border); background: var(--accent-soft); color: var(--text-primary); }
+.recording-session-controls .launcher-start { width: 112px; margin-left: auto; }
+.launcher-panel-session { width: min(100%, 320px); align-self: center; }
+.recording-session-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.recording-session-tools .launcher-mode { width: 100%; min-height: 44px; justify-content: flex-start; padding-inline: 12px; }
+.recording-session-whiteboard { display: flex; grid-column: 1 / -1; grid-row: 1; min-width: 0; border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--surface-sunken); }
+.recording-session-whiteboard .launcher-mode { flex: 1; border: 0; background: transparent; min-width: 0; }
+.recording-session-whiteboard .whiteboard-mode-button { display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 96px; padding-inline: 10px; flex-shrink: 0; border-left: 1px solid var(--border-subtle); color: var(--text-secondary); font-size: 12px; }
+.recording-session-other { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border-subtle); }
+.recording-session-other > summary { padding: 4px 0; color: var(--text-secondary); cursor: pointer; font-size: 12px; }
+.recording-session-other[open] > .launcher-more-settings { margin-top: 12px; }
+@media (max-width: 470px) {
+  .recording-session-controls { gap: 4px; padding-inline: 8px; }
+  .recording-session-controls .launcher-recording-timer { width: 49px; font-size: 12px; }
+  .recording-session-controls .launcher-grip { display: none; }
+  .recording-session-toggle { width: 36px; }
+  .recording-session-controls .launcher-start { width: 104px; font-size: 12px; }
+}

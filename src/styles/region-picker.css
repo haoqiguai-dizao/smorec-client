@@ -1,0 +1,16 @@
+:root { font-family: "Microsoft YaHei UI", sans-serif; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; width: 100%; height: 100%; overflow: hidden; background: transparent; }
+.region-picker { position: fixed; inset: 0; cursor: crosshair; user-select: none; touch-action: none; color: #f4f6f5; background: #0007; }
+.region-picker.has-selection { background: transparent; }
+.region-picker-hint { position: absolute; top: 30px; left: 50%; transform: translateX(-50%); background: #222325; padding: 14px 22px; border-radius: 10px; font-size: 15px; pointer-events: none; box-shadow: 0 6px 24px #0004; }
+.region-picker-hint span { color: #aeb6b2; margin-left: 24px; font-size: 12px; }
+.region-picker-selection { position: absolute; border: 2px solid #91d4ae; box-shadow: 0 0 0 10000px #0007; cursor: move; }
+.region-picker-size { position: absolute; top: -30px; left: -2px; padding: 4px 8px; background: #222325; font-size: 12px; border-radius: 5px; pointer-events: none; white-space: nowrap; }
+.region-handle { position: absolute; width: 10px; height: 10px; border: 1px solid #fff; border-radius: 2px; background: #91d4ae; transform: translate(-50%, -50%); }
+.region-handle.nw { left: 0; top: 0; cursor: nwse-resize; }.region-handle.n { left: 50%; top: 0; cursor: ns-resize; }.region-handle.ne { left: 100%; top: 0; cursor: nesw-resize; }.region-handle.e { left: 100%; top: 50%; cursor: ew-resize; }.region-handle.se { left: 100%; top: 100%; cursor: nwse-resize; }.region-handle.s { left: 50%; top: 100%; cursor: ns-resize; }.region-handle.sw { left: 0; top: 100%; cursor: nesw-resize; }.region-handle.w { left: 0; top: 50%; cursor: ew-resize; }
+.region-picker-actions { position: absolute; bottom: 32px; left: 50%; display: flex; align-items: center; gap: 6px; padding: 8px; background: #222325; border: 1px solid #ffffff24; border-radius: 10px; box-shadow: 0 6px 24px #0005; cursor: default; }
+.has-selection .region-picker-actions { bottom: auto; }
+.region-picker-actions button { display: flex; align-items: center; gap: 5px; border: 0; border-radius: 6px; background: transparent; color: #f0f3f1; padding: 8px 10px; cursor: pointer; font: inherit; font-size: 12px; }
+.region-picker-actions button:hover { background: #ffffff12; }.region-picker-actions button.confirm { background: #91d4ae; color: #18251e; }.region-picker-actions button:disabled { opacity: .4; cursor: default; }
+.region-picker-actions [role=alert] { color: #ffd0c0; font-size: 12px; }

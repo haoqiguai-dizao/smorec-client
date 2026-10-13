@@ -1,0 +1,61 @@
+.launcher-panel { display: flex; flex-direction: column; order: 1; flex: 0 1 auto; min-height: 0; width: min(100%, 360px); max-height: calc(100% - 74px); margin-bottom: 8px; align-self: flex-start; overflow: hidden; border: 1px solid var(--border-subtle); border-radius: 13px; background: var(--surface); box-shadow: 0 4px 14px #00000018; }
+.launcher-panel-camera { width: min(100%, 620px); }
+.launcher-panel-more, .launcher-panel-microphone, .launcher-panel-applications { width: min(100%, 440px); align-self: center; }
+.launcher-panel-header { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 15px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; }
+.launcher-panel-header h1 { flex: 1; margin: 0; font-size: 15px; font-weight: 650; }
+.launcher-panel-content { min-height: 0; padding: 14px; overflow: auto; scrollbar-width: thin; scrollbar-color: var(--scrollbar) transparent; }
+.launcher-live-panel { width: min(100%, 432px); flex: 0 1 auto; align-self: flex-end; }
+.launcher-live-panel .launcher-panel-header { border: 0; padding: 12px 18px 4px; }
+.launcher-live-panel .launcher-panel-header h1 { font-size: 19px; }
+.launcher-source-modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 12px; }
+.launcher-source-modes button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; min-height: 82px; padding: 10px 6px; border: 1px solid var(--border-strong); border-radius: 9px; background: var(--surface-sunken); }
+.launcher-source-modes button[aria-pressed=true] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.launcher-source-grid { display: grid; gap: 7px; max-height: 232px; overflow: auto; }
+.launcher-source { display: flex; align-items: center; gap: 11px; width: 100%; min-width: 0; padding: 8px; border: 1px solid var(--border-strong); border-radius: 9px; text-align: left; }
+.launcher-source.selected { border-color: var(--accent-border); background: var(--accent-soft); }
+.launcher-source-image { display: grid; place-items: center; width: 82px; height: 54px; flex-shrink: 0; overflow: hidden; border-radius: 6px; background: var(--surface-sunken); color: var(--text-tertiary); }
+.launcher-source-image img { width: 100%; height: 100%; object-fit: contain; }
+.launcher-source-details { flex: 1; min-width: 0; }
+.launcher-source-name { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.launcher-source small { display: block; margin-top: 3px; color: var(--text-secondary); font-size: 12px; font-variant-numeric: tabular-nums; }
+.launcher-source-check { flex-shrink: 0; color: var(--accent); }
+.launcher-region-summary { margin-top: 10px; color: var(--text-secondary); font-size: 12px; }
+.launcher-empty { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 94px; color: var(--text-tertiary); }
+.launcher-inline-error { display: flex; align-items: flex-start; gap: 8px; margin-top: 10px; padding: 9px 10px; border: 1px solid #f0d2c7; border-radius: 8px; background: #fff4ef; color: #a84935; font-size: 12px; line-height: 1.55; user-select: text; }
+.launcher-inline-error svg { flex-shrink: 0; margin-top: 2px; }
+.launcher-camera-settings { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 14px; }
+.launcher-device-settings, .launcher-more-settings { display: grid; gap: 14px; }
+.launcher-switch { display: flex; align-items: center; gap: 8px; min-height: 28px; color: var(--text-primary); }
+.launcher-switch > span { flex: 1; }
+.launcher-switch input { position: relative; appearance: none; width: 30px; height: 18px; margin: 0; border: 1px solid var(--border-strong); border-radius: 99px; background: var(--switch-off); cursor: pointer; flex-shrink: 0; }
+.launcher-switch input::before { content: ""; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface-raised); transition: transform 120ms ease; }
+.launcher-switch input:checked { border-color: var(--accent); background: var(--accent); }
+.launcher-switch input:checked::before { transform: translateX(12px); }
+.launcher-field { display: grid; gap: 7px; min-width: 0; }
+.launcher-field > span { color: var(--text-secondary); }
+.launcher-field select { width: 100%; min-height: 36px; padding: 7px 10px; border: 1px solid var(--border-strong); border-radius: 7px; color: var(--text-primary); background: var(--surface-raised); }
+.launcher-setting-row, .launcher-menu-row { display: flex; align-items: center; gap: 9px; width: 100%; min-height: 40px; padding: 8px; border-radius: 7px; color: var(--text-primary); text-align: left; }
+.launcher-setting-row > span, .launcher-menu-row > span { flex: 1; }
+.launcher-menu-row { background: var(--surface-sunken); }
+.launcher-menu-row small { color: var(--text-tertiary); }
+.launcher-resolution-field { width: 132px; }
+.launcher-segmented { display: flex; gap: 3px; padding: 3px; border-radius: 7px; background: var(--surface-sunken); }
+.launcher-segmented button { padding: 5px 8px; border-radius: 5px; color: var(--text-secondary); }
+.launcher-segmented button.active { background: var(--surface-raised); color: var(--accent); box-shadow: 0 1px 3px #00000012; }
+.launcher-output-format { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--text-secondary); flex-wrap: wrap; }
+.launcher-secondary-actions { display: flex; gap: 8px; flex-wrap: wrap; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); }
+.launcher-live-tools { margin-top: 12px; color: var(--text-secondary); }
+.launcher-live-tools summary { padding-block: 6px; cursor: pointer; }
+.launcher-live-tools .launcher-secondary-actions { padding-top: 10px; margin: 0; border: 0; }
+.launcher-panel .camera-live-preview { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid var(--border-strong); border-radius: 9px; background: #181d27; }
+.launcher-panel .camera-live-preview video { width: 100%; height: 100%; object-fit: cover; }
+.launcher-panel .camera-effects-controls { margin-top: 10px; gap: 8px; }
+.launcher-panel .camera-effects-controls label, .launcher-panel .camera-effects-controls button, .launcher-panel .microphone-trial, .launcher-panel .launcher-live-applications, .launcher-panel .audio-cache-settings { color: var(--text-secondary); }
+.launcher-panel input[type=checkbox] { accent-color: var(--accent); }
+.launcher-panel select, .launcher-panel input[type=text], .launcher-panel input[type=number] { max-width: 100%; min-width: 0; }
+.launcher-panel .launcher-start { width: auto; min-width: 112px; }
+@media (max-width: 470px) {
+  .launcher-camera-settings { grid-template-columns: minmax(0, 1fr); }
+  .launcher-source-image { width: 62px; }
+  .launcher-panel-content { padding: 11px; }
+}

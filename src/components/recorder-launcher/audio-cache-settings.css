@@ -1,0 +1,9 @@
+.audio-cache-settings { margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--border-subtle); font-size: 12px; }
+.audio-cache-content { display: flex; flex-direction: column; gap: 8px; padding: 8px 10px 0; }
+.audio-cache-toggle > svg:last-child { transition: transform .15s; }
+.audio-cache-toggle[aria-expanded="true"] > svg:last-child { transform: rotate(180deg); }
+.audio-cache-heading { display: flex; gap: 8px; align-items: center; }
+.audio-cache-heading strong { font-weight: 500; flex: 1; }
+.audio-cache-heading > span { font-variant-numeric: tabular-nums; }
+.audio-cache-settings p { margin: 0; color: var(--text-secondary); font-size: 11px; line-height: 1.6; }
+.audio-cache-detail { color: var(--text-secondary); font-size: 11px; line-height: 1.6; overflow-wrap: anywhere; }

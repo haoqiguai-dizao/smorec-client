@@ -1,0 +1,30 @@
+.launcher-session { width: 51px; padding: 7px 0; flex-shrink: 0; border: 0; border-radius: 5px; background: var(--surface-sunken); color: var(--text-secondary); font-size: 12px; -webkit-app-region: no-drag; }
+.launcher-demo { flex-shrink: 0; color: var(--text-secondary); }
+.launcher-demo:hover:not(:disabled), .launcher-demo.active { background: var(--accent-soft); color: var(--accent); }
+.launcher-bar:has(.launcher-session) .launcher-grip { width: 10px; }
+.launcher-bar:has(.launcher-session) .launcher-mode { min-width: 47px; padding-inline: 3px; }
+.launcher-bar:has(.launcher-session) .launcher-device { width: 67px; }
+.launcher-bar:has(.launcher-session) .launcher-divider { margin-inline: 5px; }
+.launcher-bar:has(.launcher-session) .launcher-start { width: 102px; }
+.launcher-bar:has(.launcher-session) .launcher-update-notice { width: 28px; padding: 0; }
+.launcher-bar:has(.launcher-session) .launcher-update-notice > span,
+.launcher-bar:has(.launcher-session) .launcher-update-notice small { display: none; }
+.launcher-live-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.launcher-live-row > span { margin-left: auto; color: var(--text-secondary); }
+.launcher-live-shortcuts { display: grid; grid-template-columns: 1fr auto; gap: 12px; margin: 24px 0 0; font-size: 12px; color: var(--text-secondary); }
+.launcher-live-shortcuts dd { margin: 0; font-variant-numeric: tabular-nums; }
+
+.launcher-live-applications { margin: 0; }
+.launcher-live-applications > header { display: flex; align-items: center; gap: 7px; }
+.launcher-live-applications > header > strong { font-size: 12px; font-weight: 500; }
+.launcher-live-info { display: inline-flex; color: var(--text-secondary); }
+.launcher-live-applications > header > button { margin-left: auto; }
+.launcher-live-application-list { display: grid; gap: 3px; max-height: 270px; overflow-y: auto; margin-top: 7px; }
+.launcher-live-application-list label { display: flex; align-items: center; gap: 8px; min-height: 29px; padding: 3px 5px; border-radius: 5px; }
+.launcher-live-application-list label:hover { background: var(--surface-hover); }
+.launcher-live-application-list input { flex-shrink: 0; accent-color: var(--accent); }
+.launcher-live-application-list label > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.launcher-live-application-list small { flex-shrink: 0; margin-left: auto; color: var(--text-secondary); }
+.launcher-live-application-empty { padding: 6px; color: var(--text-secondary); font-size: 11px; }
+.launcher-live-applications .launcher-inline-error { display: flex; align-items: center; gap: 8px; }
+.launcher-live-applications .launcher-inline-error button { margin-left: auto; flex-shrink: 0; text-decoration: underline; }

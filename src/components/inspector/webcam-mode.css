@@ -1,0 +1,5 @@
+.webcam-mode-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.webcam-mode-options button { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 8px; border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--surface-sunken); color: var(--text-secondary); font-size: 11px; }
+.webcam-mode-options button:hover { border-color: var(--border-strong); background: var(--surface-hover); color: var(--text-primary); }
+.webcam-mode-options button[aria-pressed=true] { border-color: var(--accent-border); background: var(--accent-soft); color: var(--accent); box-shadow: var(--shadow-control); }
+.webcam-mode-options button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

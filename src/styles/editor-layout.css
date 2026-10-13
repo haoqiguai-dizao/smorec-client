@@ -1,0 +1,52 @@
+/* Editor structure: projects, preview/timeline and contextual properties. */
+.titlebar { height: 58px; }
+.titlebar-project { gap: 12px; }
+.project-title { font-size: 14px; }
+.titlebar-save { height: 36px; font-size: 12px; }
+.export-button { height: 36px; min-height: 36px; padding-inline: 15px; font-size: 12px; }
+.window-controls { height: 58px; }
+.workspace-body { --library-width: 220px; --inspector-width: 304px; gap: 12px; padding: 12px; grid-template-columns: var(--library-width) minmax(0, 1fr) var(--inspector-width); }
+.workspace-body:not(:has(.inspector-panel)) { grid-template-columns: var(--library-width) minmax(0, 1fr); }
+.library-panel, .inspector-panel { border: 1px solid var(--border-subtle); border-radius: 11px; overflow: hidden; }
+.editor-main { gap: 12px; }
+.canvas-stage { border: 1px solid var(--border-subtle); border-radius: 11px; }
+.canvas-toolbar { height: 44px; background: var(--surface); border-bottom: 1px solid var(--border-subtle); font-size: 12px; }
+.canvas-viewport { padding: 18px 22px 10px; }
+.canvas-footer { height: 32px; font-size: 11px; }
+.timeline-panel { height: 246px; border: 1px solid var(--border-subtle); border-radius: 11px; overflow: hidden; }
+.timeline-panel:has(.camera-track) { height: 284px; }
+.playback-bar { height: 46px; }
+.timeline-label { font-size: 12px; font-weight: 600; }
+.timeline-toolbar { height: 42px; }
+.tool-button { height: 30px; font-size: 12px; }
+.timeline-track-labels { width: 84px; }
+.library-top { padding: 15px 14px; }
+.panel-eyebrow { color: var(--text-primary); font-size: 14px; font-weight: 600; }
+.record-button { height: 38px; color: var(--text-primary); }
+.library-actions button { height: 34px; font-size: 12px; }
+.library-heading { height: 42px; font-size: 12px; }
+.library-search { height: 34px; }
+.library-search input { font-size: 12px; }
+.project-card { min-height: 62px; }
+.project-info > strong { font-size: 12px; }
+.inspector-heading { height: 44px; font-size: 14px; font-weight: 600; }
+.inspector-tabs { margin: 0 14px; padding: 0; border: 0; border-bottom: 1px solid var(--border-subtle); border-radius: 0; background: transparent; }
+.inspector-tabs button { height: 52px; font-size: 11px; border-radius: 0; border-bottom: 2px solid transparent; }
+.inspector-tabs button.active { background: transparent; border-bottom-color: var(--accent); color: var(--text-primary); }
+.inspector-content { padding: 14px; background: var(--surface-sunken); }
+.inspector-section { padding: 14px; margin-bottom: 12px; border: 1px solid var(--border-subtle); border-radius: 9px; background: var(--surface-raised); }
+.inspector-section:last-child { margin-bottom: 0; }
+.inspector-section h3 { font-size: 13px; font-weight: 600; }
+.field-top, .toggle-field, .number-field, .audio-track-label { font-size: 12px; }
+.field-top { margin-bottom: 5px; }
+@media (max-width: 1160px) {
+  .workspace-body { --library-width: 204px; --inspector-width: 288px; gap: 8px; padding: 8px; }
+  .editor-main { gap: 8px; }
+  .inspector-content { padding: 10px; }
+  .inspector-section { padding: 12px; }
+}
+@media (max-height: 760px) {
+  .timeline-panel { height: 226px; }
+  .timeline-panel:has(.camera-track) { height: 264px; }
+  .canvas-viewport { padding-top: 10px; }
+}

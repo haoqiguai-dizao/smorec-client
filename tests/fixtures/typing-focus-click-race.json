@@ -1,0 +1,19 @@
+{
+  "duration": 6,
+  "cursor": [
+    { "t": 0.1, "x": 0.2, "y": 0.3, "visible": true, "click": true },
+    { "t": 0.98, "x": 0.2, "y": 0.3, "visible": true },
+    { "t": 1, "x": 0.75, "y": 0.3, "visible": true, "click": true },
+    { "t": 1.6, "x": 0.95, "y": 0.85, "visible": true },
+    { "t": 6, "x": 0.95, "y": 0.85, "visible": true }
+  ],
+  "inputActivity": [
+    { "t": 0.1, "kind": "reset" },
+    { "t": 0.98, "kind": "typing" },
+    { "t": 1, "kind": "reset" },
+    { "t": 1.04, "kind": "typing" },
+    { "t": 1.15, "kind": "typing" },
+    { "t": 2, "kind": "typing" },
+    { "t": 3, "kind": "typing" }
+  ]
+}

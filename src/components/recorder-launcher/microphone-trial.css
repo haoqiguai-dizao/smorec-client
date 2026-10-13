@@ -1,0 +1,13 @@
+.microphone-trial { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; padding-top: 13px; margin-top: 4px; border-top: 1px solid var(--border-subtle); font-size: 12px; }
+.microphone-trial .mic-trial-action { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 32px; padding: 0 11px; border: 1px solid var(--border-subtle); border-radius: 7px; background: var(--surface-sunken); color: var(--text-secondary); }
+.microphone-trial .mic-trial-action.primary { background: var(--surface-sunken); border-color: var(--border-subtle); color: var(--text-secondary); }
+.mic-trial-time { color: var(--text-secondary); font-variant-numeric: tabular-nums; min-width: 50px; }
+.mic-trial-status { display: inline-flex; align-items: center; gap: 7px; color: var(--text-secondary); }
+.mic-trial-status.error { width: 100%; color: var(--danger); }
+.mic-trial-comparison { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--border-subtle); border-radius: 6px; }
+.mic-trial-comparison button { border: 0; border-radius: 4px; padding: 5px 10px; color: var(--text-secondary); background: transparent; }
+.mic-trial-comparison button[aria-pressed=true] { background: var(--accent-soft); color: var(--accent); }
+.microphone-trial .mic-help { display: grid; place-items: center; width: 23px; height: 23px; padding: 0; border: 0; border-radius: 4px; color: var(--text-secondary); background: transparent; }
+.mic-connection-help { margin: 0 0 14px; color: #abb7bf; font-size: 13px; }
+.mic-connection-help summary { display: flex; align-items: center; gap: 7px; cursor: pointer; }
+.mic-connection-help p { margin: 9px 0 0; line-height: 1.65; }

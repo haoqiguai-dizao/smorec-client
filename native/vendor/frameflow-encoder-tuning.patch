@@ -1,0 +1,212 @@
+diff --git a/ScreenRecorderLibNative/EncoderTuning.cpp b/ScreenRecorderLibNative/EncoderTuning.cpp
+new file mode 100644
+index 0000000..fbc3229
+--- /dev/null
++++ b/ScreenRecorderLibNative/EncoderTuning.cpp
+@@ -0,0 +1,145 @@
++#include "EncoderTuning.h"
++#include "Log.h"
++#include <mfapi.h>
++#include <mftransform.h>
++#include <codecapi.h>
++#include <icodecapi.h>
++#include <atlbase.h>
++#include <cstdarg>
++#include <cwchar>
++
++namespace {
++void LogTuning(const wchar_t* format, ...) {
++    if (!isLoggingEnabled) return;
++    wchar_t message[768]{};
++    va_list args;
++    va_start(args, format);
++    _vsnwprintf_s(message, _countof(message), _TRUNCATE, format, args);
++    va_end(args);
++    // One-time configuration diagnostics are useful even when frame logs are suppressed.
++    _log(L"%s [INFO] [EncoderTuning] %s\n", GetTimestamp().c_str(), message);
++}
++
++bool ReadEnvironment(const wchar_t* name, wchar_t (&value)[64]) {
++    const auto size = GetEnvironmentVariableW(name, value, _countof(value));
++    if (size >= _countof(value)) {
++        value[0] = 0;
++        LogTuning(L"Ignoring oversized %s", name);
++        return false;
++    }
++    return size > 0;
++}
++
++UINT32 ReadWorkerThreads() {
++    constexpr UINT32 defaultThreads = 2;
++    wchar_t value[64]{};
++    if (!ReadEnvironment(L"FRAMEFLOW_CAPTURE_ENCODER_THREADS", value)) return defaultThreads;
++    if (_wcsicmp(value, L"auto") == 0) return 0;
++    wchar_t* end = nullptr;
++    const auto threads = wcstoul(value, &end, 10);
++    if (end == value || *end != 0 || threads > 16) {
++        LogTuning(L"Ignoring invalid worker thread override; using %lu workers", defaultThreads);
++        return defaultThreads;
++    }
++    return static_cast<UINT32>(threads);
++}
++
++void LogValue(ICodecAPI* codec, const wchar_t* name, const GUID& property) {
++    CComVariant value;
++    const auto hr = codec->GetValue(&property, &value);
++    if (SUCCEEDED(hr) && value.vt == VT_UI4) LogTuning(L"Current %s=%lu", name, value.ulVal);
++    else if (SUCCEEDED(hr) && value.vt == VT_BOOL) LogTuning(L"Current %s=%s", name, value.boolVal ? L"true" : L"false");
++    else LogTuning(L"Read %s status=0x%08lx variantType=%u", name, hr, value.vt);
++}
++
++void SetAndVerify(ICodecAPI* codec, const wchar_t* name, const GUID& property, UINT32 requested) {
++    const auto supported = codec->IsSupported(&property);
++    if (supported != S_OK) {
++        LogTuning(L"Keeping %s default: unsupported status=0x%08lx", name, supported);
++        return;
++    }
++    const auto modifiable = codec->IsModifiable(&property);
++    // The inbox Windows encoder returns E_NOTIMPL for this optional capability query.
++    // Known CodecAPI values are still attempted; SetValue + GetValue are authoritative.
++    if (modifiable != S_OK && modifiable != E_NOTIMPL) {
++        LogTuning(L"Keeping %s default: not modifiable status=0x%08lx", name, modifiable);
++        return;
++    }
++    CComVariant previous;
++    const auto readBefore = codec->GetValue(&property, &previous);
++    if (FAILED(readBefore)) {
++        LogTuning(L"Keeping %s default: cannot save value status=0x%08lx", name, readBefore);
++        return;
++    }
++    CComVariant minimum, maximum, increment;
++    const auto range = codec->GetParameterRange(&property, &minimum, &maximum, &increment);
++    if (SUCCEEDED(range) && minimum.vt == VT_UI4 && maximum.vt == VT_UI4
++        && (requested < minimum.ulVal || requested > maximum.ulVal)) {
++        LogTuning(L"Keeping %s default: requested %lu outside supported range", name, requested);
++        return;
++    }
++    CComVariant next(requested);
++    const auto set = codec->SetValue(&property, &next);
++    CComVariant actual;
++    const auto readAfter = codec->GetValue(&property, &actual);
++    if (SUCCEEDED(set) && SUCCEEDED(readAfter) && actual.vt == VT_UI4 && actual.ulVal == requested) {
++        LogTuning(L"Applied %s=%lu (capability=0x%08lx range=0x%08lx)", name, requested, modifiable, range);
++        return;
++    }
++    const auto restored = codec->SetValue(&property, &previous);
++    LogTuning(L"Could not verify %s=%lu: set=0x%08lx read=0x%08lx restore=0x%08lx",
++        name, requested, set, readAfter, restored);
++    LogValue(codec, name, property);
++}
++
++void LogTransform(IMFSinkWriter* writer, DWORD streamIndex) {
++    CComQIPtr<IMFSinkWriterEx> extended(writer);
++    if (!extended) return;
++    for (DWORD index = 0; index < 8; ++index) {
++        GUID category{};
++        CComPtr<IMFTransform> transform;
++        if (FAILED(extended->GetTransformForStream(streamIndex, index, &category, &transform))) break;
++        if (category != MFT_CATEGORY_VIDEO_ENCODER) continue;
++        CComPtr<IMFAttributes> attributes;
++        if (FAILED(transform->GetAttributes(&attributes))) return;
++        wchar_t name[192]{};
++        const auto named = attributes->GetString(MFT_FRIENDLY_NAME_Attribute, name, _countof(name), nullptr);
++        GUID clsid{};
++        const auto identified = attributes->GetGUID(MFT_TRANSFORM_CLSID_Attribute, &clsid);
++        wchar_t identity[40]{};
++        if (SUCCEEDED(identified)) StringFromGUID2(clsid, identity, _countof(identity));
++        LogTuning(L"Video encoder name=%s clsid=%s", SUCCEEDED(named) ? name : L"unavailable",
++            SUCCEEDED(identified) ? identity : L"unavailable");
++    }
++}
++}
++
++void ConfigureSoftwareEncoder(IMFSinkWriter* writer, DWORD streamIndex, bool hardwareEnabled) noexcept {
++    try {
++        if (!writer || hardwareEnabled) return;
++        CComPtr<ICodecAPI> codec;
++        const auto hr = writer->GetServiceForStream(streamIndex, GUID_NULL, IID_PPV_ARGS(&codec));
++        if (FAILED(hr)) {
++            LogTuning(L"Software encoder tuning unavailable status=0x%08lx; keeping defaults", hr);
++            return;
++        }
++        LogTransform(writer, streamIndex);
++        LogValue(codec, L"QualityVsSpeed", CODECAPI_AVEncCommonQualityVsSpeed);
++        LogValue(codec, L"NumWorkerThreads", CODECAPI_AVEncNumWorkerThreads);
++        LogValue(codec, L"RateControlMode", CODECAPI_AVEncCommonRateControlMode);
++        LogValue(codec, L"Quality", CODECAPI_AVEncCommonQuality);
++        LogValue(codec, L"MeanBitRate", CODECAPI_AVEncCommonMeanBitRate);
++        LogValue(codec, L"LowLatencyMode", CODECAPI_AVLowLatencyMode);
++        wchar_t mode[64]{};
++        if (ReadEnvironment(L"FRAMEFLOW_CAPTURE_ENCODER_TUNING", mode) && _wcsicmp(mode, L"baseline") == 0) {
++            LogTuning(L"Baseline diagnostic: codec values are unchanged");
++            return;
++        }
++        SetAndVerify(codec, L"QualityVsSpeed", CODECAPI_AVEncCommonQualityVsSpeed, 25);
++        SetAndVerify(codec, L"NumWorkerThreads", CODECAPI_AVEncNumWorkerThreads, ReadWorkerThreads());
++    }
++    catch (...) {
++        // Optional performance tuning must never prevent capture from starting.
++        LogTuning(L"Software encoder tuning raised an exception; continuing capture");
++    }
++}
+diff --git a/ScreenRecorderLibNative/EncoderTuning.h b/ScreenRecorderLibNative/EncoderTuning.h
+new file mode 100644
+index 0000000..fac1131
+--- /dev/null
++++ b/ScreenRecorderLibNative/EncoderTuning.h
+@@ -0,0 +1,7 @@
++#pragma once
++#include <Windows.h>
++#include <mfidl.h>
++#include <mfreadwrite.h>
++
++// Optional codec tuning never changes the capture clock or other worker threads.
++void ConfigureSoftwareEncoder(IMFSinkWriter* writer, DWORD streamIndex, bool hardwareEnabled) noexcept;
+diff --git a/ScreenRecorderLibNative/OutputManager.cpp b/ScreenRecorderLibNative/OutputManager.cpp
+index 6ec1164..ccc21ac 100644
+--- a/ScreenRecorderLibNative/OutputManager.cpp
++++ b/ScreenRecorderLibNative/OutputManager.cpp
+@@ -4,6 +4,7 @@
+ #include <concrt.h>
+ #include <filesystem>
+ #include "LogMediaType.h"
++#include "EncoderTuning.h"
+ using namespace std;
+ using namespace concurrency;
+ 
+@@ -462,6 +463,8 @@ HRESULT OutputManager::InitializeVideoSinkWriter(
+ 		RETURN_ON_BAD_HR(pSinkWriter->SetInputMediaType(audioStreamIndex, pAudioMediaTypeIn, nullptr));
+ 	}
+ 
++	ConfigureSoftwareEncoder(pSinkWriter, videoStreamIndex, GetEncoderOptions()->IsHardwareEncodingEnabled());
++
+ 	// Tell the sink writer to start accepting data.
+ 	RETURN_ON_BAD_HR(pSinkWriter->BeginWriting());
+ 
+@@ -642,4 +645,4 @@ HRESULT OutputManager::WriteAudioSamplesToVideo(_In_ INT64 frameStartPos, _In_ I
+ 	SafeRelease(&pSample);
+ 	SafeRelease(&pBuffer);
+ 	return hr;
+-}
+\ No newline at end of file
++}
+diff --git a/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj b/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
+index d258ab8..61c934b 100644
+--- a/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
++++ b/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
+@@ -37,6 +37,7 @@
+     <ClInclude Include="CoreAudio.util.h" />
+     <ClInclude Include="DynamicWait.h" />
+     <ClInclude Include="Exception.h" />
++    <ClInclude Include="EncoderTuning.h" />
+     <ClInclude Include="ImageReader.h" />
+     <ClInclude Include="OutputManager.h" />
+     <ClInclude Include="ScreenCaptureBase.h" />
+@@ -115,6 +116,7 @@
+     <ClCompile Include="VideoReader.cpp" />
+     <ClCompile Include="WindowsGraphicsCapture.util.cpp" />
+     <ClCompile Include="WWMFResampler.cpp" />
++    <ClCompile Include="EncoderTuning.cpp" />
+   </ItemGroup>
+   <ItemGroup>
+     <FxCompile Include="PixelShader.hlsl">

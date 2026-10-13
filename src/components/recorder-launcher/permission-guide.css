@@ -1,0 +1,47 @@
+.capture-theme .launcher-panel.permission-guide {
+  width: min(100%, 488px);
+  align-self: center;
+  border: 1px solid #90999b75;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ffffff04, transparent 44%), linear-gradient(120deg, #30383bfa, #242b2ffa);
+  box-shadow: inset 0 1px 1px #ffffff23, inset 0 -1px 1px #00000035, 0 12px 28px #11171d35;
+  color: #f0f1ef;
+}
+.permission-guide-chrome { display: flex; align-items: center; justify-content: space-between; min-height: 52px; padding: 10px 22px; border-bottom: 1px solid #ffffff15; }
+.permission-guide-brand { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 500; }
+.permission-guide-brand svg { border: 2px solid #f0a69a; border-radius: 50%; padding: 4px; fill: #f0a69a; stroke: #f0a69a; }
+.permission-guide-chrome button { display: grid; place-items: center; width: 30px; height: 30px; background: transparent; border-radius: 6px; color: #bcc4ca; }
+.permission-guide-body { padding: 24px 24px 20px; min-height: 0; overflow: auto; }
+.permission-guide-body h1 { margin: 0 0 9px; font-size: 21px; line-height: 1.4; font-weight: 600; letter-spacing: .1px; }
+.permission-guide-body p { margin: 0 0 13px; font-size: 14px; line-height: 1.7; color: #b9c3cc; }
+.permission-guide-device { display: flex; align-items: center; gap: 17px; padding: 19px 21px; margin: 19px 0 14px; min-height: 67px; border: 1px solid #b4bdc02b; border-radius: 10px; background: #0f15161c; }
+.permission-guide-device strong { flex: 1; font-weight: 500; font-size: 16px; }
+.permission-guide-device > span { display: flex; align-items: center; gap: 7px; font-size: 13px; color: #dcc085; white-space: nowrap; }
+.permission-guide-device i { width: 8px; height: 8px; border-radius: 50%; background: #e5c572; }
+.permission-guide-body p.permission-guide-note { font-size: 13px; margin-top: 12px; }
+.permission-guide-apps { padding: 0 12px; border: 1px solid #b4bdc02b; border-radius: 10px; background: #ffffff02; }
+.permission-guide-apps > div { display: flex; align-items: center; gap: 13px; min-height: 44px; padding: 10px; }
+.permission-guide-apps > div + div { border-top: 1px solid #ffffff13; }
+.permission-guide-apps span { flex: 1; font-size: 14px; }
+.permission-guide-apps small { font-size: 12px; color: #b9c3cc; }
+.permission-guide-apps svg { color: #b8c3c8; }
+.permission-guide-apps > div:first-child svg { color: #f0a69a; }
+.permission-guide-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 11px; margin-top: 23px; }
+.permission-guide-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-width: 106px; min-height: 40px; padding: 9px 18px; border: 1px solid #a8b2b44f; border-radius: 8px; background: #ffffff02; color: #edf0ef; font-size: 14px; box-shadow: inset 0 1px 0 #ffffff06; }
+.permission-guide-actions button.primary { min-width: 144px; border-color: #e8e9e99c; background: linear-gradient(#dadcdf, #b4b9c0); color: #161d22; box-shadow: inset 0 1px 1px #ffffffb0, 0 2px 5px #00000022; font-weight: 500; }
+.permission-guide-actions button:hover:not(:disabled) { filter: brightness(1.07); }
+.permission-guide button:disabled { opacity: .5; cursor: default; }
+.permission-guide button:focus-visible, .permission-guide summary:focus-visible { outline: 2px solid #a5c3af; outline-offset: 3px; }
+.permission-guide-help { color: #b9c3cc; margin-top: 18px; font-size: 13px; }
+.permission-guide-actions .permission-guide-help { margin: 0 auto 0 0; align-self: center; }
+.permission-guide-actions .permission-guide-help[open] { flex-basis: 100%; }
+.permission-guide-help summary { display: flex; gap: 10px; align-items: center; cursor: pointer; width: fit-content; }
+.permission-guide-help p { font-size: 12px; margin: 12px 0; }
+.permission-guide-help button { padding: 6px 10px; color: #edf0ef; border: 1px solid #ffffff20; border-radius: 6px; background: transparent; }
+@media (max-width: 470px) { .permission-guide-body { padding: 20px 18px 18px; } .permission-guide-device { gap: 12px; padding-inline: 15px; } }
+.permission-component { display: flex; align-items: center; gap: 12px; padding: 12px; margin-top: 8px; border: 1px solid #b4bdc02b; border-radius: 10px; background: #ffffff04; }
+.permission-component[draggable=true] { cursor: grab; -webkit-app-region: no-drag; }
+.permission-component > span { display: flex; flex: 1; flex-direction: column; gap: 3px; }
+.permission-component strong { font-size: 14px; font-weight: 500; }
+.permission-component small { color: #b9c3cc; font-size: 12px; }
+.permission-component button { width: 32px; height: 32px; padding: 6px; border-radius: 6px; color: #cbd3d9; background: #ffffff05; }

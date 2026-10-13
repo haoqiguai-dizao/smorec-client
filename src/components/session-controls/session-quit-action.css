@@ -1,0 +1,4 @@
+.session-quit-action { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border-subtle); }
+.session-quit-action .session-quit { display: inline-flex; align-items: center; gap: 7px; min-height: 32px; padding: 6px 8px; border: 1px solid transparent; border-radius: 7px; color: var(--text-tertiary); font-size: 12px; }
+.session-quit-action .session-quit:hover:not(:disabled) { background: var(--surface-hover); color: var(--text-primary); }
+.session-quit-action .session-quit.has-error { color: var(--danger); }

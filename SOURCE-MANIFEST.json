@@ -1,0 +1,5450 @@
+{
+  "schema": 1,
+  "version": "0.9.118",
+  "sourceCommit": "5e9c976a6ecaa46124ad44bfdc98d07410b524b4",
+  "status": "GPL-3.0-or-later client source snapshot",
+  "generatedFrom": "tracked client source and the current open-source preparation files",
+  "transformations": [
+    "developer README",
+    "development update endpoint with no trusted release keys",
+    "no production publish commands",
+    "FFmpeg redistribution preflight",
+    "formal GPL-3.0-or-later license and client license in redistribution materials",
+    "LF text checkout for consistent source hashes across platforms"
+  ],
+  "omitted": [
+    "Git history, internal documents and task records",
+    "production services, deployment tools, credentials and local configuration",
+    "website sources, personal demonstrations and screenshots (except the client icon)",
+    "recordings, user projects, dependencies, build caches and release installers"
+  ],
+  "files": [
+    {
+      "path": ".gitattributes",
+      "size": 86,
+      "sha256": "b777fa4e99a4429fa5046914d33f9157f62900117aaba6ec637428006ca8777d"
+    },
+    {
+      "path": ".gitignore",
+      "size": 1146,
+      "sha256": "95f0f29a7d07fd5c570b19062bdd3aa035ad26612ec8849480d588bd41130485"
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "size": 2095,
+      "sha256": "8c371cbcd4687ff664d93e2e89d90b40d1109fe73093e0e2fcf9da460ddf2e20"
+    },
+    {
+      "path": "ASSETS.md",
+      "size": 1513,
+      "sha256": "b6be79b45df1212cfdbf26caaa0fd371bc83c29ca18e6be71bff973609156387"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "size": 1133,
+      "sha256": "ea95ee057cb4dc6f262fb44f5af44e71d3230530fcd929c1916699b2fa585fb5"
+    },
+    {
+      "path": "DEPENDENCIES.json",
+      "size": 180000,
+      "sha256": "edaf32f4dae09f46ce92e512ded13dd675de5d714fd0d13aab553093abe26504"
+    },
+    {
+      "path": "DEVELOPMENT.md",
+      "size": 5810,
+      "sha256": "b0c140b278caffd39c5416e52b595e374af1f83126cabf86e7d0fdfeed53963c"
+    },
+    {
+      "path": "LICENSE",
+      "size": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    },
+    {
+      "path": "NATIVE-SPEECH-NOTICES.txt",
+      "size": 2848,
+      "sha256": "411aac6ce4b666f70e278cbe04f58c62b11478c5d624fcc0bc798b90ce216e2d"
+    },
+    {
+      "path": "PUBLICATION-PLAN.md",
+      "size": 1666,
+      "sha256": "1f0cf7e4a50bf599158dbb35a5c3f696ca7dd577393965d131e1ee2ef717f0da"
+    },
+    {
+      "path": "README.md",
+      "size": 2107,
+      "sha256": "ac1c78fbcd178ef7eb5084ed2df403881026e9be334a882bd2dc189a9418d2a7"
+    },
+    {
+      "path": "SECURITY.md",
+      "size": 960,
+      "sha256": "c7802731da7fee392ae8a739bfdd8226843ecb191a376485312adbe4caca59f9"
+    },
+    {
+      "path": "THIRD-PARTY-LICENSES.txt",
+      "size": 123250,
+      "sha256": "7b214d3f1a1a5c9a1bc4f10c42930e18d3f95c380d4112bd4d5c358631eaba7c"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "size": 4413,
+      "sha256": "2a5fb479366230c89f91b0ae0f877098dddd4521133200f9d4d0d07130a829a5"
+    },
+    {
+      "path": "VERIFICATION.md",
+      "size": 2406,
+      "sha256": "c01653aa154205b2760690e91db3c16e62f3874ed05b8e580206e1f249aa4e03"
+    },
+    {
+      "path": "build/icon.icns",
+      "size": 48861,
+      "sha256": "954e82fedfdd5574dfdb7edf5ac61c5d834bfdaced11abe7144d99eb4b08cef2"
+    },
+    {
+      "path": "build/icon.ico",
+      "size": 79215,
+      "sha256": "5545ab9418b120a2b06c8a2710e2b9489441df9a7a45595651305a03d33e7e3d"
+    },
+    {
+      "path": "build/installer-branding.nsh",
+      "size": 2795,
+      "sha256": "07ff94df64e7c9158a301c34561a056c42757cc75b1cbfb9ff164871e04921b2"
+    },
+    {
+      "path": "build/mac-bridge-entitlements.plist",
+      "size": 304,
+      "sha256": "9514f770a2782c108266f84fb09eab5499f5b2516ae4cacfee6efb82a0dd66da"
+    },
+    {
+      "path": "build/mac-camera-entitlements.plist",
+      "size": 237,
+      "sha256": "2029dc93bcf7d42441f95e6dfa64b98af67e71d4a168542fd208c6e84da6af17"
+    },
+    {
+      "path": "build/mac-entitlements.plist",
+      "size": 414,
+      "sha256": "72be19218322c9b4d72d2e95003045b06dacb4d82942a6c83775fa6928deafc1"
+    },
+    {
+      "path": "build/mac-legal-README.txt",
+      "size": 1559,
+      "sha256": "8792d0c2383f41573a3dbcf1a72335c344c67f5dff922b037cf7a2dfcf3e7a20"
+    },
+    {
+      "path": "build/mac-local-entitlements.plist",
+      "size": 349,
+      "sha256": "efb072037c43fe2c0d8a5d6dcdf81dc0d4c33ed00143b17aaaa32e667a92920f"
+    },
+    {
+      "path": "build/mac-local.cjs",
+      "size": 339,
+      "sha256": "6eb5bbd63363b3a04fb6c0da2c7f22f7a4f8290d4c2761a8419df76553649d25"
+    },
+    {
+      "path": "build/mac.cjs",
+      "size": 2878,
+      "sha256": "b18ac89965c042c05f63f3578235986a2e7b3608b5caf70a249716dcb75d92ef"
+    },
+    {
+      "path": "build/nsis/install-directory.nsh",
+      "size": 2494,
+      "sha256": "a77e01266f2983dc2f0cef22d90234d01aae33113e49291c3f28dd1c64ee9a7d"
+    },
+    {
+      "path": "build/nsis/install-modes.nsh",
+      "size": 4249,
+      "sha256": "fc41fdf841141d359ad48dbbea936fea0bb69a863ab7c94aa6a80c3bde467e54"
+    },
+    {
+      "path": "build/nsis/installation-receipt.nsh",
+      "size": 2720,
+      "sha256": "8b78e66a74fc328519d505d02fe11c0d58ce1147ca34529e87fd6ce8f04e4011"
+    },
+    {
+      "path": "build/nsis/preferred-drive.nsh",
+      "size": 3528,
+      "sha256": "7389e49c51a4dc6e047ab074a4983b8b7843bcd2fdd99bbb65545f5720b224b2"
+    },
+    {
+      "path": "build/nsis/virtual-camera-uninstall.nsh",
+      "size": 1654,
+      "sha256": "fb833f17a14be50cdbfb36ee7f9aea59ae6c2214bf95ca99c586ec5eed6aa520"
+    },
+    {
+      "path": "config/distribution.json",
+      "size": 94,
+      "sha256": "fc45943ef2c45722ec7a530f7efdf99a794f7f3e84fc87b4c215bd9f262894e0"
+    },
+    {
+      "path": "electron/audio-cache-preload.ts",
+      "size": 311,
+      "sha256": "81d5b5c4f042421ad88265dc19114c982a2ae932ea0ae165ab520876be0441fb"
+    },
+    {
+      "path": "electron/demo-preload.ts",
+      "size": 526,
+      "sha256": "60397c83c32c2f1a6e0ce2ef37925d79dd0d0ef8dc15540fde4424fe04acd7da"
+    },
+    {
+      "path": "electron/distribution-preload.ts",
+      "size": 901,
+      "sha256": "096e039d7e6af96cd872cd8a483074d17469fa30b0f62ea582334dd762156de7"
+    },
+    {
+      "path": "electron/entry.ts",
+      "size": 847,
+      "sha256": "804ab26c462787df52e55671e7a23190ab30489104595ae7fbf7fd24bab4fbc0"
+    },
+    {
+      "path": "electron/export-preload.ts",
+      "size": 1112,
+      "sha256": "3821f8a9a26c94d0efdf7dae49b642a5058c401c86995b0e78c9732202bc5bfb"
+    },
+    {
+      "path": "electron/live-preload.ts",
+      "size": 1775,
+      "sha256": "5550c98c32c344b30f76ae7e87990bc3e50b579608f055fa72636b3cf5169bdb"
+    },
+    {
+      "path": "electron/mac-update-helper.ts",
+      "size": 873,
+      "sha256": "503f5182cc2ea4fad4a01be345a454339e69b6098226a4b15622104b97dbfdfc"
+    },
+    {
+      "path": "electron/main.ts",
+      "size": 23221,
+      "sha256": "43423bf9fe0cbe1cd0746b880c4a80a9b7edd5b5819a53aab3b8793ff284dedc"
+    },
+    {
+      "path": "electron/overlay-preload.ts",
+      "size": 1452,
+      "sha256": "8d03d36682f2b9e1100a47aa07fd4207524119c195989616fccbe7b37da925d6"
+    },
+    {
+      "path": "electron/permission-guide-preload.ts",
+      "size": 1279,
+      "sha256": "f213336a1b64bdfb4e94cf5f6be8140b4ccef153e05365ea7933bd49d24e91fc"
+    },
+    {
+      "path": "electron/permission-window-preload.ts",
+      "size": 425,
+      "sha256": "ac1a1891935d4200681fa2306b4fe8cf441302dd546b4d0a03dafeff1b2fbb94"
+    },
+    {
+      "path": "electron/platform-preload.ts",
+      "size": 1228,
+      "sha256": "db131d58c61a7099e1ffea3cc16b5c6bbb668f0224418b6472297b342796a2dc"
+    },
+    {
+      "path": "electron/preload.ts",
+      "size": 4886,
+      "sha256": "515abb3251884806a4d95d313c34a30d9b4761c32aeb9c8d81a5c94b224bad0f"
+    },
+    {
+      "path": "electron/recorder-preload.ts",
+      "size": 3949,
+      "sha256": "123df9edb6612380be7164845775bbd661ed5a7123d2b1cbe0332e3920196eb7"
+    },
+    {
+      "path": "electron/region-preload.ts",
+      "size": 491,
+      "sha256": "44c261f4c7d0021616be0268f2fd4ca0fcfd66b42dd6226144ed8ec460f5ed4d"
+    },
+    {
+      "path": "electron/services/app-branding.ts",
+      "size": 883,
+      "sha256": "36cf88a940f41310cf04bf47e5e8a1f74f1dd7f7baaa0beb27164a9adbf0a24b"
+    },
+    {
+      "path": "electron/services/app-icon.ts",
+      "size": 648,
+      "sha256": "39816458b16dfc61654399582fa908f2f27376f6fd4fe7f4af13f18242ed5e6c"
+    },
+    {
+      "path": "electron/services/app-tray.ts",
+      "size": 1336,
+      "sha256": "aebf114497ab4ca4b2cd76ecdde3d1ca451116cb1c37b61036101352f65ed48a"
+    },
+    {
+      "path": "electron/services/application-lifecycle.ts",
+      "size": 932,
+      "sha256": "70ed3e570abb9286846ba542f15a921fe96c1dd8bd10d23f4b6324f6201b809c"
+    },
+    {
+      "path": "electron/services/audio-cache-ipc.ts",
+      "size": 429,
+      "sha256": "431cf3339b2a066c85104ae1d5e4d9465778b0c234695e561cb747d861f7de21"
+    },
+    {
+      "path": "electron/services/audio-cache-manager.ts",
+      "size": 14594,
+      "sha256": "683091193a4f0e05e00f60f302b4dc674d73fbdce2968e949e844933f7564bbd"
+    },
+    {
+      "path": "electron/services/audio-cache.ts",
+      "size": 411,
+      "sha256": "06eceb71bf16a95080c10e6f7c4b890c21f9551dcdb7fbf675a66ffa392f545b"
+    },
+    {
+      "path": "electron/services/audio-fingerprint.ts",
+      "size": 2858,
+      "sha256": "95bbb00dea1871279753f91947d7e2b996ccf5c34b28fcf2bf2e29500b549989"
+    },
+    {
+      "path": "electron/services/audio-pcm-process.ts",
+      "size": 5224,
+      "sha256": "03172a8c65974af82313ce36b07f29eb77647515cb03b8c5bc8bfeb13521ecd5"
+    },
+    {
+      "path": "electron/services/audio-readable.ts",
+      "size": 788,
+      "sha256": "ac32b137eaa4bae804406200a8c94f35dd5f4a7d4c2401fbc2941e89f4b5a26f"
+    },
+    {
+      "path": "electron/services/audio-storage.ts",
+      "size": 3350,
+      "sha256": "0b9819f861aa8b2ac90beef14a2a624ab3da7ad177e879e562ea48416c640619"
+    },
+    {
+      "path": "electron/services/audio-wave-response.ts",
+      "size": 4233,
+      "sha256": "c2329a182b93fc467d973a0fa0f324dcb8de618663f16e7a289adf86b9773e86"
+    },
+    {
+      "path": "electron/services/background-asset-validation.ts",
+      "size": 1510,
+      "sha256": "ffbac2bc29b94bd90b6dbedc9fef9f5f93aa8bc4309dfd4810dfa359bec3519f"
+    },
+    {
+      "path": "electron/services/background-image.ts",
+      "size": 3661,
+      "sha256": "55a27afaaf0e5e71ee6efc6e75f552887ef87e307463d35b96474e57491513b4"
+    },
+    {
+      "path": "electron/services/camera-health.ts",
+      "size": 2075,
+      "sha256": "ba7e2194504708bddcb40799c6518634af3510dcd1abe52005fc260a3ed4f925"
+    },
+    {
+      "path": "electron/services/camera.ts",
+      "size": 13087,
+      "sha256": "765df1a4661cb4545f90994c7caa0a1c694a8b872f78f1a240d5b8341a966342"
+    },
+    {
+      "path": "electron/services/canvas-background-defaults.ts",
+      "size": 3387,
+      "sha256": "b8f077e177352f6cbad118fec4d128d25bafe76f134263a945fa682eb225bb7d"
+    },
+    {
+      "path": "electron/services/capture-runtime-configuration.ts",
+      "size": 796,
+      "sha256": "00592e0a2ff25b537f3a98963f880cf392eee05ce42493554d769bb5b07550d0"
+    },
+    {
+      "path": "electron/services/composition-validation.ts",
+      "size": 3350,
+      "sha256": "f38d67c5cf6780e10e9702dab178f1c3c2e2bef2a736a886438fda217ddabc0f"
+    },
+    {
+      "path": "electron/services/demo/camera-policy.ts",
+      "size": 1467,
+      "sha256": "7ef01815b3567f16f230e0fe04c8ec61804a7788c9a741f2a1de4265c7e59a13"
+    },
+    {
+      "path": "electron/services/demo/controller.ts",
+      "size": 4652,
+      "sha256": "4246416e32a8798bea2343e775c4cbbba6ab71cfb90c83be7faaaac249c6d363"
+    },
+    {
+      "path": "electron/services/demo/integration.ts",
+      "size": 8156,
+      "sha256": "c7100e59b474c1d76ce3586105651620aeee4773d50124b4645e1b99d96c8089"
+    },
+    {
+      "path": "electron/services/demo/journal.ts",
+      "size": 2552,
+      "sha256": "53f50a85d31603e1d64ccae0e4e6636cdd5b00e1ea10397b968c8f26260d0445"
+    },
+    {
+      "path": "electron/services/desktop-preferences.ts",
+      "size": 6535,
+      "sha256": "1dded3dcac27a0035e21eba11df314aecf89bc9ee5598c146793061ef1696fde"
+    },
+    {
+      "path": "electron/services/diagnostics.ts",
+      "size": 1202,
+      "sha256": "4edfaef8afae3bef82ef5e81ffd664e9e24a9e113ade8b17356da0645c4ac129"
+    },
+    {
+      "path": "electron/services/distribution.ts",
+      "size": 9936,
+      "sha256": "bad66336d07393633bca49c6994ef446a2148e8b6ab7a2a443f88a3e2f459cc1"
+    },
+    {
+      "path": "electron/services/editor-window.ts",
+      "size": 3371,
+      "sha256": "3a002393fb8c66d53841b946a36218ab55143486adc7bf24ebdd0be92586a9cf"
+    },
+    {
+      "path": "electron/services/export-audio.ts",
+      "size": 1264,
+      "sha256": "302912b4c40a62256e14713693fe81e267edf6f504a1c4eb6ac96d7862b333ab"
+    },
+    {
+      "path": "electron/services/export-codec.ts",
+      "size": 1584,
+      "sha256": "b62ac5dcdf4908a228d6cd9282baac3cfe7f0a1ddc50f38ddaad0d21935cf4f4"
+    },
+    {
+      "path": "electron/services/export-ipc.ts",
+      "size": 1788,
+      "sha256": "15127ab55e451c2f11a871aeb9c739b4d6358ba04c561293a4e2a090786c49a7"
+    },
+    {
+      "path": "electron/services/export-renderer.ts",
+      "size": 6508,
+      "sha256": "39c98359c88c485941f12edea46fc7c8adffd5e4f0ef23ae2aa17ffc0b06b868"
+    },
+    {
+      "path": "electron/services/exporter.ts",
+      "size": 8045,
+      "sha256": "7575c45411a0ae34f2b77e2fa3d128eab273f7a417f6bc3578eea1e85acd27bc"
+    },
+    {
+      "path": "electron/services/ffmpeg.ts",
+      "size": 4030,
+      "sha256": "bae4ea587cba903ba5721ba9d9a07fc7d0f2f301fed860431f7f837285142e18"
+    },
+    {
+      "path": "electron/services/floating-window-anchor.ts",
+      "size": 1546,
+      "sha256": "121a66e58e633f2bbd4314a5692b96cbb598ef6e1a53ce3290fa38c81ce6d0f8"
+    },
+    {
+      "path": "electron/services/input-activity-recovery.ts",
+      "size": 2110,
+      "sha256": "7a40727a2a3cbb34dd06df138a2f5d2d83d143944c1011e339c69ee0ee1ef24f"
+    },
+    {
+      "path": "electron/services/input-activity.ts",
+      "size": 1633,
+      "sha256": "1f8b2afd8bbea5de5587413e46134ff264fb89d153fcd54dec04b572be1f9828"
+    },
+    {
+      "path": "electron/services/live/camera-controls.ts",
+      "size": 1733,
+      "sha256": "e58e7c7eca41f973a9fbc8a884482ce20e0287626d2c03c3e11f85e80687a616"
+    },
+    {
+      "path": "electron/services/live/frame-client.ts",
+      "size": 4408,
+      "sha256": "406979f03ad8bf2994880a67c6710ec10b343eb2e57aee7b1adfabb458ffb54a"
+    },
+    {
+      "path": "electron/services/live/integration.ts",
+      "size": 5207,
+      "sha256": "67b28c84e481640b7fc5a54f96ee50355402f8c0ca45509f85ead50efc49133e"
+    },
+    {
+      "path": "electron/services/live/ipc.ts",
+      "size": 2737,
+      "sha256": "9aa5ffe5b5d938c44a0f2611a044192abfcad88771224ddd9db5d38ec247762c"
+    },
+    {
+      "path": "electron/services/live/preview-output.ts",
+      "size": 810,
+      "sha256": "16991fa7da3eb3b7792fd2968d8daac49c5a14d8176392aad90c7839127682c6"
+    },
+    {
+      "path": "electron/services/live/preview-visibility.ts",
+      "size": 879,
+      "sha256": "23b28c406c28404048b28be41d49a930a6903540f822457ffa71d197defb8a2d"
+    },
+    {
+      "path": "electron/services/live/session.ts",
+      "size": 20130,
+      "sha256": "e9a3a82ed45b24c17995f71800f2e3c8224c98144314def9cf4418a2dcde369b"
+    },
+    {
+      "path": "electron/services/live/validation.ts",
+      "size": 4126,
+      "sha256": "94bceb05c49d287ef1eed7eac7147b26b28f29b6093414e84f323a257deb8716"
+    },
+    {
+      "path": "electron/services/live/virtual-camera.ts",
+      "size": 6767,
+      "sha256": "492e8195e99971de41adce69c0ce8b4388a449f573527899e716a2347c24c0fa"
+    },
+    {
+      "path": "electron/services/live/whiteboard.ts",
+      "size": 2037,
+      "sha256": "77297626d70dababf02df43ce075c0cab1959df82fdbeb4265ed9b228235fe35"
+    },
+    {
+      "path": "electron/services/live-recording-controls.ts",
+      "size": 14311,
+      "sha256": "024ba6c89553b3bf503f2684def9cdd2a59be52d1d0d85090ee9003d64b631c7"
+    },
+    {
+      "path": "electron/services/media-permissions.ts",
+      "size": 2912,
+      "sha256": "a853dab152f25e83c5e65b8ab2eeb508b7050b0c22078e9534ad1a4ab7bf6970"
+    },
+    {
+      "path": "electron/services/microphone-effects/cache.ts",
+      "size": 10180,
+      "sha256": "0be8935a71881b31e30edf1ba1c650623658c7379e5e6a807bf56025c9d86d0d"
+    },
+    {
+      "path": "electron/services/microphone-effects/filters.ts",
+      "size": 2875,
+      "sha256": "199e5dfcaaae5a97f2874447845ccf8ff15faee350c4e81914f366118ee48175"
+    },
+    {
+      "path": "electron/services/microphone-effects/process.ts",
+      "size": 1382,
+      "sha256": "8d5cda8f1af298f1514cbb7b5fe069a4c35152294345dfa2c691da1505916a29"
+    },
+    {
+      "path": "electron/services/microphone-effects/wave.ts",
+      "size": 5637,
+      "sha256": "bbf4aa9efc5e3c655500b91321a34d9a5a6c0449e04781757c95df2e124a6ad1"
+    },
+    {
+      "path": "electron/services/microphone-effects.ts",
+      "size": 952,
+      "sha256": "de7e5151fb855e1fdfff0e40ef987f0e950668b819756655548da037feddc5c8"
+    },
+    {
+      "path": "electron/services/microphone-ipc.ts",
+      "size": 1958,
+      "sha256": "7d0ddbb12f601e1b5fdda7ae919ab49b7e83cfe1476a892f1c4904f99f9af07e"
+    },
+    {
+      "path": "electron/services/microphone-session.ts",
+      "size": 8283,
+      "sha256": "3058075059ce7669d2567fc3433c277739994fee818bda46d3a04fa730bc85c2"
+    },
+    {
+      "path": "electron/services/native-client.ts",
+      "size": 9336,
+      "sha256": "ec637d066063414572519c61dbca3864d4bd35ac1a1a0dbd2b8319180c2463e7"
+    },
+    {
+      "path": "electron/services/platform/capture-runtime.ts",
+      "size": 2032,
+      "sha256": "b7f8738c8f8bb353f87b605d4be3b69e5427cbae8338485e063bb9e6d567f4f3"
+    },
+    {
+      "path": "electron/services/platform/live-address.ts",
+      "size": 491,
+      "sha256": "e5a4a8a23d797f34a81c7f98da4ba4783bdff21ddd6a38d42739f95349c1507b"
+    },
+    {
+      "path": "electron/services/platform/mac-capture-process.ts",
+      "size": 3782,
+      "sha256": "2b8a246663f952077a11d72b974f5a5769c29a88df55bb4fb728d46e268b24ee"
+    },
+    {
+      "path": "electron/services/platform/mac-launch-receipt.ts",
+      "size": 683,
+      "sha256": "8750a3c6cc4849ab7fb3b9a75144f7f2910e4e32598a3919cc9cdd4e42ff304c"
+    },
+    {
+      "path": "electron/services/platform/permission-components.ts",
+      "size": 4379,
+      "sha256": "054224cf24c78d504c6e6665b93ded697ba03e1d4ae0755ac4914e5ae9bc7d5f"
+    },
+    {
+      "path": "electron/services/platform/permission-guide-geometry.ts",
+      "size": 1595,
+      "sha256": "6f4a85b3a7f29c9108612fe0f38593d3e699be904a1762b52388ed0208ccad22"
+    },
+    {
+      "path": "electron/services/platform/permission-guide-help.ts",
+      "size": 2276,
+      "sha256": "cbc8c0a0c696a288bebe3ce9e2cb8417153a415a2512e0ab69a9a4cf33e45b53"
+    },
+    {
+      "path": "electron/services/platform/permission-guide-window.ts",
+      "size": 9698,
+      "sha256": "1f5a3a02e9afbe8512968493694077afd6ac0c5397d22fe4f2f6066b618f547e"
+    },
+    {
+      "path": "electron/services/platform/permission-startup-window.ts",
+      "size": 3904,
+      "sha256": "f34f7ef441417e43406e0ad60b854c0c4d44532363b9ea1d18c187709cbc5cc4"
+    },
+    {
+      "path": "electron/services/platform/permission-status.ts",
+      "size": 1261,
+      "sha256": "534bc2f060709f9006932e885271dc534bb777b45170c960e3f165eccbe2e11f"
+    },
+    {
+      "path": "electron/services/platform/permissions.ts",
+      "size": 4647,
+      "sha256": "7dd6230dc416578d966b26399214e811584d98a249bac5ff0a90c817c6584fbe"
+    },
+    {
+      "path": "electron/services/platform/system-permission-focus.ts",
+      "size": 2086,
+      "sha256": "11c5521775d4c779e29f023dbf8b39dc99232cb31847bc74b4350830ebd39b0a"
+    },
+    {
+      "path": "electron/services/platform/window-regions.ts",
+      "size": 2555,
+      "sha256": "514959369dab20e10221246f2a47daef1b547408aa061efff675186e29b75e1c"
+    },
+    {
+      "path": "electron/services/project-audio/cache.ts",
+      "size": 8822,
+      "sha256": "6d941d66efb32dee4547f56ccb217980e0ef9eef9bc1e15297fd55069da90f82"
+    },
+    {
+      "path": "electron/services/project-audio/filters.ts",
+      "size": 1017,
+      "sha256": "547f44594bbc308aa35b9fb38802139dbfc7cdd033520d4ec0f77b3af4ed3b9e"
+    },
+    {
+      "path": "electron/services/project-audio/source.ts",
+      "size": 592,
+      "sha256": "b6d2044fb7cdfe3f1cbc0aeb7593eaffc71174b21f58dc6ca4445574b1cb8ebd"
+    },
+    {
+      "path": "electron/services/project-audio.ts",
+      "size": 2076,
+      "sha256": "4abab1ce3d8d40c6c32c96d3389878c47435d7c96ceab67d4d1ba15c37f5b486"
+    },
+    {
+      "path": "electron/services/project-backgrounds.ts",
+      "size": 2873,
+      "sha256": "282486c0dd5b4fedcaa013d8a8d39d8b21c770361b653b25f3706e0df99cc3fc"
+    },
+    {
+      "path": "electron/services/project-directory.ts",
+      "size": 2027,
+      "sha256": "3ff87412612a9b2051a5c2d0554b369f0bd4b8ff9774ce57aa456e419a8b0131"
+    },
+    {
+      "path": "electron/services/project-operations.ts",
+      "size": 1160,
+      "sha256": "960c33d25a85939907fb3bb70c4fc4288944f61dfcd4ad0c6d8f1db50d3b618c"
+    },
+    {
+      "path": "electron/services/project-paths.ts",
+      "size": 2064,
+      "sha256": "5917ff00dad3204b35ea8373e3607199f18342e430357326d35a9650e46f32ff"
+    },
+    {
+      "path": "electron/services/project-preferences.ts",
+      "size": 3548,
+      "sha256": "2e76dc48799e21df1b113f013dfae3ab6aaf9b4774eb415901cf6f2acc99813e"
+    },
+    {
+      "path": "electron/services/projects.ts",
+      "size": 27072,
+      "sha256": "3afbf9120326d6c1e5ce343b63a2e5b80dcd77decb593927bf6972ea27bba268"
+    },
+    {
+      "path": "electron/services/protocol.ts",
+      "size": 6497,
+      "sha256": "07961e019a67fad0efec1d07484d8becbd30702fb1630798c820b32c2916d0bf"
+    },
+    {
+      "path": "electron/services/recorder-launcher/geometry.ts",
+      "size": 1336,
+      "sha256": "4bf27072b2895f2e7ecd655442179c06fcab51bdc101a5d3870607f6a4a4f94d"
+    },
+    {
+      "path": "electron/services/recorder-launcher/panel-drag.ts",
+      "size": 1823,
+      "sha256": "51157f9ae49a70f9a99cad6a32c5fb4a0590206dd4e359e4a4d2c1a08e7038c0"
+    },
+    {
+      "path": "electron/services/recorder-launcher/validation.ts",
+      "size": 547,
+      "sha256": "cf1370ac6ab522857a0827d79d22b53f46d16fd8f811adb4b7cb95b13e67f133"
+    },
+    {
+      "path": "electron/services/recorder-launcher.ts",
+      "size": 16472,
+      "sha256": "56691c406a5b8c341c0a503acddf17c192dae4db4133c736a3bec4d6806c4fba"
+    },
+    {
+      "path": "electron/services/recording/presentation.ts",
+      "size": 2912,
+      "sha256": "fd420f8b4a3ebea375b5bc0a724cd7a0adeb2bba146e47692ef9c6181cdca037"
+    },
+    {
+      "path": "electron/services/recording-camera-callbacks.ts",
+      "size": 3536,
+      "sha256": "831c5b82aeec0d28937e16cda7c8efbf03b59234b4c7e10c44ff38f0b36c43cc"
+    },
+    {
+      "path": "electron/services/recording-hud.ts",
+      "size": 27879,
+      "sha256": "beac8a12d2b5583c34599fd7c839971185b2d14e887acdfd302161ea78455fdd"
+    },
+    {
+      "path": "electron/services/recording-overlay/camera-settings-geometry.ts",
+      "size": 2276,
+      "sha256": "c852d6bc8644b843e59cb4cd60fd71145dec8c3ee3718b608c1215c666d24f27"
+    },
+    {
+      "path": "electron/services/recording-overlay/camera-settings-window.ts",
+      "size": 5111,
+      "sha256": "8b29d0fc8e94499b425658f408319d343dfcdeb1f6af1b38b98cd2a14a376d87"
+    },
+    {
+      "path": "electron/services/recording-overlay/geometry.ts",
+      "size": 4975,
+      "sha256": "a7258f823d7a6731cfbf65a2bd6df5459531fa4350a1c35446ff38c8f8e11f4f"
+    },
+    {
+      "path": "electron/services/recording-overlay/ipc.ts",
+      "size": 1851,
+      "sha256": "c274c72ba924946d7df23cb51086d5ecc4b4a00b522ceeb8c86366952aab4e38"
+    },
+    {
+      "path": "electron/services/recording-overlay/validation.ts",
+      "size": 5722,
+      "sha256": "02b3d411510c9fa79cc82e55735bec29e1414995fc91deb5b3733625329ca48e"
+    },
+    {
+      "path": "electron/services/recording-start.ts",
+      "size": 1720,
+      "sha256": "ee45db05f74a536e3fd003db463f9307ce09a646c7b932e7139529d82ec3f011"
+    },
+    {
+      "path": "electron/services/recording.ts",
+      "size": 16765,
+      "sha256": "c2b57ffe96a0459e15f2e962bf3bf1b87f20f4820d475321f2e1582b7a0fa97e"
+    },
+    {
+      "path": "electron/services/recovery-duration.ts",
+      "size": 1003,
+      "sha256": "f60a5a213f6d4ad331df4165ce27245474bbda954ad22946d04c0bc51756d48d"
+    },
+    {
+      "path": "electron/services/recovery.ts",
+      "size": 7798,
+      "sha256": "5b98638e5169ea47729f50252cb39d952f13175139b2a4a3fa1a05ec8e2f650d"
+    },
+    {
+      "path": "electron/services/region-selection.ts",
+      "size": 4729,
+      "sha256": "977720afb560e6bce1da4301feb0d9dddc6caff2d8a77419869f744f62a8d8a7"
+    },
+    {
+      "path": "electron/services/streaming/audio-channel.ts",
+      "size": 1966,
+      "sha256": "6102c71ba28b50fe535f76f56e1cc2ab0fd5d579211c09aaaed487072b17022b"
+    },
+    {
+      "path": "electron/services/streaming/encoder.ts",
+      "size": 827,
+      "sha256": "2acb98f1cdecf02693c742ba95b78ea896de7036d5d5824cf078cff43f277615"
+    },
+    {
+      "path": "electron/services/streaming/encoding.ts",
+      "size": 3657,
+      "sha256": "2f1f7f65d79aa3839b771428fad0584991395ffe7ae8da91cec92370fd2f4e17"
+    },
+    {
+      "path": "electron/services/streaming/media-buffer.ts",
+      "size": 2284,
+      "sha256": "381e51910285a0f8c954ff81b0a015bd2d74a51e051edf12d7f25ec5e71957d8"
+    },
+    {
+      "path": "electron/services/streaming/profiles.ts",
+      "size": 5331,
+      "sha256": "b668973f03eaf2a2ee05e7f7bcbe151c44cdeca2836b9ac51cad54e02762d5bd"
+    },
+    {
+      "path": "electron/services/streaming/proxy-handshake.ts",
+      "size": 3528,
+      "sha256": "396a5ecbdb4ed55b3e159a33390a918eba9b71e7645a259da12761c71ec00bf2"
+    },
+    {
+      "path": "electron/services/streaming/proxy-routing.ts",
+      "size": 2050,
+      "sha256": "344e43954f30a6598e33f7809a7d0f6b911f345c4e7e8043044bcc19169d0fbf"
+    },
+    {
+      "path": "electron/services/streaming/store.ts",
+      "size": 159,
+      "sha256": "dadb2db6bfd485498d620fc80bd1d7cc6cb99aff9cc580e8a65c0dc39403e3fd"
+    },
+    {
+      "path": "electron/services/streaming/system-proxy.ts",
+      "size": 680,
+      "sha256": "65951e756b4ca3c6c71039e1fc8c47cd39c53ffdbe47b371e8d8d23838b2c95c"
+    },
+    {
+      "path": "electron/services/streaming/tls-relay.ts",
+      "size": 3475,
+      "sha256": "964633c7ec0d44f8ce0b55dc66a316714eeeb2167bc9a1754068f3e369a2ae9f"
+    },
+    {
+      "path": "electron/services/streaming/transport-socket.ts",
+      "size": 3636,
+      "sha256": "af1b0164a71eda8e6dfe9e460237a3fc3b172698d92e6c8efb417380615e0ddd"
+    },
+    {
+      "path": "electron/services/streaming/validation.ts",
+      "size": 2468,
+      "sha256": "b2bcedd42dc47aebf0ff3b4f724134a8a44c2d8829012e536d31f9ac80d4008f"
+    },
+    {
+      "path": "electron/services/streaming/writer.ts",
+      "size": 11512,
+      "sha256": "1844f9b6095f8d49de3f712dc030c648bc20889ba81e0cc3bcedbc5b9561f04c"
+    },
+    {
+      "path": "electron/services/telemetry/atomic-replace.ts",
+      "size": 1092,
+      "sha256": "9f2b009fb4000afbc48923608534c07505384f449a31d088efa787b1aa5d2794"
+    },
+    {
+      "path": "electron/services/telemetry/index.ts",
+      "size": 8179,
+      "sha256": "282e6bd3e6331e6ec3492f82cbe0ecb27dd98b335d6fd3efb2bd3d19a2bce2e7"
+    },
+    {
+      "path": "electron/services/telemetry/store.ts",
+      "size": 3334,
+      "sha256": "9a0cfaa132679dd5be60366ef522cb1a4516fe6c90fccac22da9ae9356babd24"
+    },
+    {
+      "path": "electron/services/telemetry/transport.ts",
+      "size": 1807,
+      "sha256": "c8545ec24bb2d72a5286fa75b9ee8d47fdd4799a7bb573d08b365f52ef49a6e4"
+    },
+    {
+      "path": "electron/services/telemetry/validation.ts",
+      "size": 4178,
+      "sha256": "bfb666bff0facbfa895aada22d43a62d4dfa2f2f4167e1c7585ac084b2f7989b"
+    },
+    {
+      "path": "electron/services/toolbar-integration.ts",
+      "size": 2441,
+      "sha256": "d192832a326b8f2f5b8659714e0b5d98ea44c87d59d08a22306f7bc2df331651"
+    },
+    {
+      "path": "electron/services/toolbar-presentation.ts",
+      "size": 2707,
+      "sha256": "b302d1cddf16ed0c4730657c44b942aee5f2f69dbed98a40355f21364653ea94"
+    },
+    {
+      "path": "electron/services/tray-icon.ts",
+      "size": 1763,
+      "sha256": "88a350cccb30bcb21d0ce2540fc338a07b6bb1d0de5eeeecc81f0394fd1d4595"
+    },
+    {
+      "path": "electron/services/updates/electron-fetch.ts",
+      "size": 1985,
+      "sha256": "2007a0cc0db9d9a1d6856153ac4ebc2112718b09d3113e926f9a56565f6908bd"
+    },
+    {
+      "path": "electron/services/updates/mac/apply.ts",
+      "size": 6399,
+      "sha256": "d011c6045fbffbb9ffaf01fa963b3eeb6198c93b4c852911647dba2ebcbe29f2"
+    },
+    {
+      "path": "electron/services/updates/mac/bundle.ts",
+      "size": 5567,
+      "sha256": "1241b05b7070554f33f13edcb7d2c3f0db0246199a70a9b45954e9cd624afe0d"
+    },
+    {
+      "path": "electron/services/updates/mac/launch.ts",
+      "size": 1771,
+      "sha256": "137761460acd4f646ff1d1bfab4242837c25bf1a98e021167c1fa43859490c5b"
+    },
+    {
+      "path": "electron/services/updates/mac/legacy-launch.ts",
+      "size": 5515,
+      "sha256": "cc26b751ded19caabe1ce04ac5a08021121e2a89be036b6668517a3398cdf4e6"
+    },
+    {
+      "path": "electron/services/updates/mac/package.ts",
+      "size": 4279,
+      "sha256": "5246a24e78b94be0e6977d2a28e8a501b9519ac24c69d76f9d8ec42d87a92fdf"
+    },
+    {
+      "path": "electron/services/updates/mac/paths.ts",
+      "size": 3911,
+      "sha256": "78810ff64cb0675032c9b17df9703d10fe7f28c0c9febf6a94b149427f15f03a"
+    },
+    {
+      "path": "electron/services/updates/mac-install.ts",
+      "size": 3925,
+      "sha256": "facff313b3609633b68e4c2fa5a8e08cc0eb7c982b3e4f3a03620ae535704d1f"
+    },
+    {
+      "path": "electron/services/updates/manager.ts",
+      "size": 15540,
+      "sha256": "e0d4f107aa18db011d8c88cef93433082a85ffbd76774a84fde7f3dd374c6c96"
+    },
+    {
+      "path": "electron/services/updates/manifest.ts",
+      "size": 5320,
+      "sha256": "6e86595733027b7615a7449384558e12ac237b5cff6ee75f0a8a9620f8eb7918"
+    },
+    {
+      "path": "electron/services/updates/outcome.ts",
+      "size": 2421,
+      "sha256": "0be33ebded72f0888800836f1d1116209fa58dbb076a068d56dd2b4baecb3336"
+    },
+    {
+      "path": "electron/services/updates/package-download.ts",
+      "size": 2354,
+      "sha256": "25b61f5086e8b09948d60f593b489a576d7e92168bb350493d2af3fa584890ca"
+    },
+    {
+      "path": "electron/services/updates/signed-provider.ts",
+      "size": 1418,
+      "sha256": "4dd7cc84538ec9ac480ea0c63ccbe7fddb1e3706083b08263d525bd2af4ad1c5"
+    },
+    {
+      "path": "electron/services/updates/staged-handoff.ts",
+      "size": 3251,
+      "sha256": "5502e5c020189a9e3b3553cac8ad2e0d6adb6041c2f81d796cb5ba35b5374bf0"
+    },
+    {
+      "path": "electron/services/updates/staged-package.ts",
+      "size": 7444,
+      "sha256": "9a3384f1450c6fd66cdc70e1fcbfdc99f64d5e8c5de50a5e9a0843a85597ce3c"
+    },
+    {
+      "path": "electron/services/updates/windows-environment.ts",
+      "size": 6043,
+      "sha256": "002f107da5d68c5c751cb7981c496a2a7a94501ccd826bb52f6fd3fcbbdd60cb"
+    },
+    {
+      "path": "electron/services/updates/windows-installer.ts",
+      "size": 12942,
+      "sha256": "7066df98cc05e0194dac808b8bb6f4e8d9dd5bf8058203b8f2320366a422a26f"
+    },
+    {
+      "path": "electron/services/user-preferences.ts",
+      "size": 179,
+      "sha256": "95834586bf308237b7906289fa9ce422bee8ff50f6744f62e5340002f262e6cd"
+    },
+    {
+      "path": "electron/services/validation.ts",
+      "size": 13889,
+      "sha256": "2c792ca4c7644f33054f2d60067aa783452583ff97de3f22c5fa6d5c1bfed7a7"
+    },
+    {
+      "path": "electron/services/whiteboard/camera-mode.ts",
+      "size": 6128,
+      "sha256": "cc86b6ab57e9527eb8e065f7f5b22c7c26ec1a461610a2c933da4dbc614f574e"
+    },
+    {
+      "path": "electron/services/whiteboard/camera-preview.ts",
+      "size": 2889,
+      "sha256": "a46a0c3eecae243e15fe69c900ee332bfedc28f79f8c44576b701f3f87561256"
+    },
+    {
+      "path": "electron/services/whiteboard/capture-policy.ts",
+      "size": 977,
+      "sha256": "b08e4e035ce561cea299a88756355a7afb29a681ba5536e138342542dced38c6"
+    },
+    {
+      "path": "electron/services/whiteboard/draft.ts",
+      "size": 850,
+      "sha256": "506d3a320a2b315a2f583b7372c5593270075994f7d92dba62d2efadfe1acac6"
+    },
+    {
+      "path": "electron/services/whiteboard/geometry.ts",
+      "size": 3276,
+      "sha256": "b95770fb68524e8e51e745215df622a2dffb532951ddbb81bb11691a2433127a"
+    },
+    {
+      "path": "electron/services/whiteboard/image-ipc.ts",
+      "size": 2325,
+      "sha256": "993cdfcbe555bad48a1506347fddd9abbd957bc9e6dda7a39270c7a6ab40b64b"
+    },
+    {
+      "path": "electron/services/whiteboard/images.ts",
+      "size": 3835,
+      "sha256": "3feab5c49e043a249f8bbd015e6f42ed66a8f39c679f031cae308dc920da870e"
+    },
+    {
+      "path": "electron/services/whiteboard/journal.ts",
+      "size": 8519,
+      "sha256": "1a20590caf1c943430b39c2585ac1ee9d2e8bf6bb5293515563e9ac9940ab2a4"
+    },
+    {
+      "path": "electron/services/whiteboard/mode-selection.ts",
+      "size": 846,
+      "sha256": "46ea2349028e6acaac2e79ca40947100bfa54e22fbccc89461c96bb28f89df5e"
+    },
+    {
+      "path": "electron/services/whiteboard/prepare-video.ts",
+      "size": 2436,
+      "sha256": "8f69a91488041ef6ecc8c1fa34e424e8d655322e060db4678bc8fedfc92ef94b"
+    },
+    {
+      "path": "electron/services/whiteboard/presentation.ts",
+      "size": 3436,
+      "sha256": "e7fd86382a61e150e5814d9c23ce6646e7b0e8838ae3ab35228efbdf8714ba2d"
+    },
+    {
+      "path": "electron/services/whiteboard/recorded-video.ts",
+      "size": 1987,
+      "sha256": "bc2c940d8a22727f4966a85aa520c8bfeb4716d548954bf09e09074bae5da180"
+    },
+    {
+      "path": "electron/services/whiteboard/speech-model-download.ts",
+      "size": 2639,
+      "sha256": "e82da2517ee3a045ada3427169ec16a827e9cfd8cf797f35f84ae1889592ea09"
+    },
+    {
+      "path": "electron/services/whiteboard/speech-model-files.ts",
+      "size": 636,
+      "sha256": "1637d8a6fc2404808d4a77bf22abbea6c0088ef7b4a4f391e5c92519dce60281"
+    },
+    {
+      "path": "electron/services/whiteboard/speech-model.ts",
+      "size": 4501,
+      "sha256": "dfbf9a753349fa88eac926f169bf444af06273aa493d4270edeb583c13841c5d"
+    },
+    {
+      "path": "electron/services/whiteboard/speech-session.ts",
+      "size": 7295,
+      "sha256": "b43a666a4eed321d09cf3f776066f74296128962a56591074373981d16dd3482"
+    },
+    {
+      "path": "electron/services/whiteboard/speech-worker.ts",
+      "size": 4469,
+      "sha256": "42907d2f6c294b7a82afdecf1618f6bc1ee9197097071af961eab5d46b8f2c64"
+    },
+    {
+      "path": "electron/services/whiteboard/visibility-gate.ts",
+      "size": 1053,
+      "sha256": "b0814b92e6d445e6a93140a86f1630aba258461bf44945e68c4aa89087ecbbfd"
+    },
+    {
+      "path": "electron/services/whiteboard/window-options.ts",
+      "size": 1569,
+      "sha256": "1792826069a8ba2ae569e845f31cb49760d10505f3f23dd19ade71e23c01d61a"
+    },
+    {
+      "path": "electron/services/whiteboard/window.ts",
+      "size": 27861,
+      "sha256": "c2058753e7806d0f575da409f9cebbfb2b87a8db4d1209eb62e9b92831a66017"
+    },
+    {
+      "path": "electron/services/window-visibility.ts",
+      "size": 2388,
+      "sha256": "1ee1f6823af0b5ad9f4137240797de78a303344bde66564bb7c613419370186a"
+    },
+    {
+      "path": "electron/toolbar-preload.ts",
+      "size": 365,
+      "sha256": "c20a5e243936316648d9788c47ed25a41c0348e4abeef47c1733064c9c70d2d3"
+    },
+    {
+      "path": "electron/verify-backend.ts",
+      "size": 6278,
+      "sha256": "a234c3531f9e5c0166823f2f2ae07fa9aba817298af190c8e1fd76a9a22e87f7"
+    },
+    {
+      "path": "electron/verify-camera-quality.ts",
+      "size": 2123,
+      "sha256": "b461ee9b590eb4bc4e47a499f595376993d2c3a0ec9a771de3bdb813d9288591"
+    },
+    {
+      "path": "electron/verify-camera-resize.ts",
+      "size": 4922,
+      "sha256": "28846cbb6d9a1363496be7cd6b4d23353d556b515c5885fb85b7fd47f4d25127"
+    },
+    {
+      "path": "electron/verify-camera.ts",
+      "size": 8154,
+      "sha256": "4e0ce80c34d26a55112a5b25eeae0eab2924b7b64ac51cd92c52a511c8c81846"
+    },
+    {
+      "path": "electron/verify-demo-camera.ts",
+      "size": 11606,
+      "sha256": "28b703fe40ccb116d0deb99c796224e3f1d0b3bd67cf6fe75fe5dcad57341a88"
+    },
+    {
+      "path": "electron/verify-demo-launcher.ts",
+      "size": 4981,
+      "sha256": "6740f06e853511777217092ab3582500f139b3abc1e0a5612aebee2756580d37"
+    },
+    {
+      "path": "electron/verify-demo-live.ts",
+      "size": 4059,
+      "sha256": "ae3c7d4422120ee1b4d9fa92ef114d22a9ab22e7c4feafed8e91ef8e9fcaf7c6"
+    },
+    {
+      "path": "electron/verify-demo.ts",
+      "size": 10499,
+      "sha256": "a978574d427d385014bace6732cc69b56cbd169825801d8ea5ea4aee644d0e01"
+    },
+    {
+      "path": "electron/verify-live-display.ts",
+      "size": 7816,
+      "sha256": "1c3d1caa03bae820588f3acdadb575275a75621320e566afb565d06026a4b10b"
+    },
+    {
+      "path": "electron/verify-live.ts",
+      "size": 6974,
+      "sha256": "611b61f1f664a2d7b187f8488cf7e00ea899ea8c43b9634dc1a9e95a4d03f986"
+    },
+    {
+      "path": "electron/verify-overlay-lifecycle.ts",
+      "size": 13012,
+      "sha256": "c1184e99d645a65d00c602560fff62d65d43a8ee9abc2f69528303f0dce272f4"
+    },
+    {
+      "path": "electron/verify-preview-tail.ts",
+      "size": 9543,
+      "sha256": "310065ba844178a34126ead113630e7bf9353d5ac58fbf6345ae5d543fe6a3cd"
+    },
+    {
+      "path": "electron/verify-unified-toolbar-fixture.ts",
+      "size": 2567,
+      "sha256": "c73180a59f6917bf8a9179d95a4f80e80bf21656e543f3ff82357a926d096546"
+    },
+    {
+      "path": "electron/verify-unified-toolbar.ts",
+      "size": 15508,
+      "sha256": "645e1df4d341698ca25cb4d6c74abd077630a1f7e9bf1833c91451357968166a"
+    },
+    {
+      "path": "electron/verify-webcam-hook.ts",
+      "size": 7414,
+      "sha256": "02ce99b0c69a37b9e1e2f389d7aa43a8b5a4a4069b4f1fd49721e3489832bafb"
+    },
+    {
+      "path": "electron/whiteboard-preload.ts",
+      "size": 2711,
+      "sha256": "6bb4cd7e8c7facb77bb1244807152646b661c9374f843ed1369b0aac2146f663"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "size": 863,
+      "sha256": "eb049c56f9718a5a18259f0562761d427d1222e8e9cdd3026b71c27165396a33"
+    },
+    {
+      "path": "index.html",
+      "size": 654,
+      "sha256": "0af8cbda7dc6c6c4551d18368f48387fe9089d91bdbb8df0e3b0d70a4d1eb331"
+    },
+    {
+      "path": "native/CAPTURE-SPECIFICATION.md",
+      "size": 4624,
+      "sha256": "fa5d74e8561148ae50e5cb3d8fd3496ff86e035f8169d2c9caa648df6f3df172"
+    },
+    {
+      "path": "native/ENCODED-SAMPLE-TIMING.md",
+      "size": 19678,
+      "sha256": "6ade36747cea3e8e40aea8c01a649f87ccdf372d845add3f701667ab9186f7d9"
+    },
+    {
+      "path": "native/FrameFlow.Capture/AudioCaptureGroup.cs",
+      "size": 5462,
+      "sha256": "cd81677865a77a2ffb88bc31b0b7b7bdf666b2f0762422b8dc660906f9ee1ced"
+    },
+    {
+      "path": "native/FrameFlow.Capture/AudioLevel.cs",
+      "size": 1092,
+      "sha256": "aa7920fe8abebf210dfbc06b79f29cbfc16361cddace7cf3238180fa695a67e6"
+    },
+    {
+      "path": "native/FrameFlow.Capture/AudioMuteGate.cs",
+      "size": 452,
+      "sha256": "5b5626fe2d9e1da62ecd32fc8692eb1782986e790123ee27c4017195603f2eab"
+    },
+    {
+      "path": "native/FrameFlow.Capture/AudioPacketPlanner.cs",
+      "size": 4267,
+      "sha256": "df52574269af8396be3a307e524a06642c1f870d882d873ae01066dcb98dddb2"
+    },
+    {
+      "path": "native/FrameFlow.Capture/AudioTrack.cs",
+      "size": 11013,
+      "sha256": "5a08f392ea1e829d87ce9def78981903d68068939fc1bd927f201be2921e18ba"
+    },
+    {
+      "path": "native/FrameFlow.Capture/CaptureClock.cs",
+      "size": 1001,
+      "sha256": "b23b8a50ce3b966c0808e69cd61f965547894f763eed8b9530b547863d4c14cf"
+    },
+    {
+      "path": "native/FrameFlow.Capture/CaptureExclusions.cs",
+      "size": 847,
+      "sha256": "2b9dacee45131defc23579a1b2291ad2df2263fee12deaf05019eaacc75cdfb5"
+    },
+    {
+      "path": "native/FrameFlow.Capture/CaptureSpecification.cs",
+      "size": 2387,
+      "sha256": "268808c2e672d197924e741720ab570f8ed9854a68599ee669a54e0dcd863783"
+    },
+    {
+      "path": "native/FrameFlow.Capture/Contracts.cs",
+      "size": 5061,
+      "sha256": "79e9f87bb38153643bc953797c0cc0a6564b2ed00f4db04adf0285aad023e359"
+    },
+    {
+      "path": "native/FrameFlow.Capture/CursorRecorder.cs",
+      "size": 7725,
+      "sha256": "c8e6e55a81667a4a875aff351cb9bec79d797595f3218fda349e625484057717"
+    },
+    {
+      "path": "native/FrameFlow.Capture/DictationTap.cs",
+      "size": 3278,
+      "sha256": "052cbbe67c5df307c0dffeb61d4ad1d179a8b67e98929c63226f8f0d8cab9fbb"
+    },
+    {
+      "path": "native/FrameFlow.Capture/FrameFlow.Capture.csproj",
+      "size": 903,
+      "sha256": "cf1813f5eb35f707fac70614a6850a73dcd0c21a465ba5039d8a236297eb40a8"
+    },
+    {
+      "path": "native/FrameFlow.Capture/InputActivityJournal.cs",
+      "size": 3641,
+      "sha256": "04c7e689dfcb8a1a80ce4adc03f333d5cc277e50e8597e350795e46d262d1916"
+    },
+    {
+      "path": "native/FrameFlow.Capture/InputActivityRecorder.cs",
+      "size": 8863,
+      "sha256": "0cab84687eac61f3f3c8968ffe3d2497ae18a2bbe32225ad715254686756b771"
+    },
+    {
+      "path": "native/FrameFlow.Capture/InputLatencyDiagnostics.cs",
+      "size": 4276,
+      "sha256": "81f828626fe22e33614a902baa595db74716222818ca660255f2736b148633dc"
+    },
+    {
+      "path": "native/FrameFlow.Capture/LiveAudioCapture.cs",
+      "size": 3169,
+      "sha256": "943a0e236803d0d2629318476a2e83d19f3144598cc3feea3451e79ea4f8d7fd"
+    },
+    {
+      "path": "native/FrameFlow.Capture/LiveAudioResampler.cs",
+      "size": 2218,
+      "sha256": "c6e88188f6524c0844a6fe2dd1bc28045a2a02c81af03202bc8d11bdcb5cd4e6"
+    },
+    {
+      "path": "native/FrameFlow.Capture/LiveAudioTrack.cs",
+      "size": 4834,
+      "sha256": "1f76d897631b996dd2cacca62670fa7ad8bb3eb736a490b21d3d6dc604732a08"
+    },
+    {
+      "path": "native/FrameFlow.Capture/LiveCaptureProducer.cs",
+      "size": 4737,
+      "sha256": "3a542b99a89290ad0b5470e600d986f90bcbc4fd0d9883a6ea05178c1208272a"
+    },
+    {
+      "path": "native/FrameFlow.Capture/LiveCaptureSession.cs",
+      "size": 6152,
+      "sha256": "81ca32752802f01f52b5392bb205366f0e0b2ad9d1146698cd354cffaa3965ef"
+    },
+    {
+      "path": "native/FrameFlow.Capture/LiveCaptureStartup.cs",
+      "size": 4206,
+      "sha256": "2ca7dd5b0f00d110809f4a7f5c06d14689ec556ace9e67fad134e85518dafa66"
+    },
+    {
+      "path": "native/FrameFlow.Capture/LiveFrameServer.cs",
+      "size": 4625,
+      "sha256": "44dece8de9b6612b50fe56e81fb4097c9c0143b428f87c446622810db60d58a4"
+    },
+    {
+      "path": "native/FrameFlow.Capture/LiveInputMonitor.cs",
+      "size": 6544,
+      "sha256": "cb1e02a02ae486234852822cba513967029256a61f039c4669957233c22233ac"
+    },
+    {
+      "path": "native/FrameFlow.Capture/LivePcmMixer.cs",
+      "size": 3020,
+      "sha256": "60ebf1c1ae487dc5e147f16768186e6e3c8853dbd0605834878228da0a0288de"
+    },
+    {
+      "path": "native/FrameFlow.Capture/LiveStereoSampleProvider.cs",
+      "size": 2648,
+      "sha256": "1f12db92c72e53b35f8553e909c58c733508412d1305fb5456c87b5e4e43cb33"
+    },
+    {
+      "path": "native/FrameFlow.Capture/LiveWindowExclusions.cs",
+      "size": 5166,
+      "sha256": "f164a5fbed097d68c8bfd559567f05a67d11e39233d56914dac6ba10fe8727ed"
+    },
+    {
+      "path": "native/FrameFlow.Capture/MicrophoneCatalog.cs",
+      "size": 1953,
+      "sha256": "326814df7f6b4fb914fcc823af4342a45b4bb8a495ab89102e0b67c43f757716"
+    },
+    {
+      "path": "native/FrameFlow.Capture/MicrophoneTrial.cs",
+      "size": 2489,
+      "sha256": "c933ad0e332275cf8291d043b3ece5c4eac46eba21421418a63654c6d543529c"
+    },
+    {
+      "path": "native/FrameFlow.Capture/Mp4Timing.cs",
+      "size": 5032,
+      "sha256": "ecfc3b9d378105ca33440b32f9b5da502010406cfbcf96ac43992cecd1069d08"
+    },
+    {
+      "path": "native/FrameFlow.Capture/Program.cs",
+      "size": 10257,
+      "sha256": "17a61ef3b681246ea135f686af033ff7fac50190f1bf896fbc0e6beea17e4ad5"
+    },
+    {
+      "path": "native/FrameFlow.Capture/RawInputWin32.cs",
+      "size": 3427,
+      "sha256": "9119f52da6bc90d7f7cae427459572fcbeaa7501bbd5693e023c6d94d3bee517"
+    },
+    {
+      "path": "native/FrameFlow.Capture/RawKeyboardActivityCollector.cs",
+      "size": 9823,
+      "sha256": "e2e9a849ebdf7f5e1b6229d53e8cbfda27e696d7adff1b6c55b53fa325db4bed"
+    },
+    {
+      "path": "native/FrameFlow.Capture/RawMouseInputCollector.cs",
+      "size": 15416,
+      "sha256": "6d259eba250802d925b29c05d1dc3b8e9fe9e5858a42a40076bdc3fae0e5e56a"
+    },
+    {
+      "path": "native/FrameFlow.Capture/RawMousePacket.cs",
+      "size": 2582,
+      "sha256": "7e154b6a7af064be70224f35f609ede009ed3c1214323db4a038914b4a0c8bbc"
+    },
+    {
+      "path": "native/FrameFlow.Capture/RecordingSession.cs",
+      "size": 15416,
+      "sha256": "089760094ee62477725119f7e72e2c54175608eadfa5a2f764f7f6e2be1c5362"
+    },
+    {
+      "path": "native/FrameFlow.Capture/SessionDiagnostics.cs",
+      "size": 1035,
+      "sha256": "c2e659e798ee75f5a4e8b910893e16d4a66587349ab0a55759db8fcf4444e9b6"
+    },
+    {
+      "path": "native/FrameFlow.Capture/SourceCatalog.cs",
+      "size": 4743,
+      "sha256": "927fcc24e422704b7eea85ca7396cbd0dbb19ca18d6a08464d9d801e4e96620e"
+    },
+    {
+      "path": "native/FrameFlow.Capture/StandaloneDictation.cs",
+      "size": 1214,
+      "sha256": "e2a486172d3ee17236d2600b303cf2b54771f5b538201e0b524ca750cdd30848"
+    },
+    {
+      "path": "native/FrameFlow.Capture/TypingActivityState.cs",
+      "size": 4742,
+      "sha256": "023ac8ce4eef0eba2358a1216a2d8d8a4b3ef1e137f2440a9eded05ae4b907aa"
+    },
+    {
+      "path": "native/FrameFlow.Capture/TypingFocusAutomation.cs",
+      "size": 3933,
+      "sha256": "becb48ee24361d5b7058572085a3462657b032a3b363f6a25a466c46bc69e09c"
+    },
+    {
+      "path": "native/FrameFlow.Capture/TypingFocusGeometry.cs",
+      "size": 1341,
+      "sha256": "a8746ce61c6df7772fe53e41f5834e0344c796692781a68e86dced69b63d2cb2"
+    },
+    {
+      "path": "native/FrameFlow.Capture/TypingFocusLocator.cs",
+      "size": 3083,
+      "sha256": "58d93cea08bccfef52895fd3668d06dbf54ec196d4ca35fe32384a65a5a8f890"
+    },
+    {
+      "path": "native/FrameFlow.Capture/TypingFocusWin32.cs",
+      "size": 5253,
+      "sha256": "9313dce93e83966472dc4a57320c965639ee68c41248992d08321b431d0e1b1c"
+    },
+    {
+      "path": "native/FrameFlow.Capture/VideoCapture.cs",
+      "size": 11490,
+      "sha256": "4c1ce6309db202b37c0c8fe9c8b0a4b1097ba89e57f2c7086603b283169074f8"
+    },
+    {
+      "path": "native/FrameFlow.Capture/VideoClockCorrelation.cs",
+      "size": 1263,
+      "sha256": "58cc0a2362be4de10a48e2da4f93eda072596c7202b0a2ecb7d88b5b3f2460b4"
+    },
+    {
+      "path": "native/FrameFlow.Capture/WhiteboardCapture.cs",
+      "size": 5456,
+      "sha256": "f52d2dcee8c4a27bc2560b48f7d2e1719a0d5d536b285761e5eff19954149471"
+    },
+    {
+      "path": "native/FrameFlow.Capture/WhiteboardTrackProcess.cs",
+      "size": 2330,
+      "sha256": "84c9dc36fef7370238e4863b6f57c6ba0bae285c18ce4444e9b9d776c28cd54d"
+    },
+    {
+      "path": "native/FrameFlow.Capture/WhiteboardVideoSession.cs",
+      "size": 3392,
+      "sha256": "2d0f85b45329c33d09a02728f454de601fdeacd6b18579d6d41298677716be7b"
+    },
+    {
+      "path": "native/FrameFlow.Capture/Win32.cs",
+      "size": 3451,
+      "sha256": "026c1eadee5afbe73f886913e76a47de8695227b0e5f0ba3ecd801fe136d057e"
+    },
+    {
+      "path": "native/FrameFlow.Capture/WindowsApplicationCatalog.cs",
+      "size": 4368,
+      "sha256": "2bf4deda0d1f7024b1cc9f036d41b485792e121e9721b72f1cd5742333b1362a"
+    },
+    {
+      "path": "native/FrameFlow.Capture/app.manifest",
+      "size": 711,
+      "sha256": "b7a9d51b8ff4cc16582418cb8e953be46d9533878f15a27803bd1d27ef1d5054"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/AudioPacketPlannerTests.cs",
+      "size": 16427,
+      "sha256": "853d8af7ac5f9b62803743d1a6701cd808b756e96e62e2756e3f641844d6c11a"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/CaptureSpecificationTests.cs",
+      "size": 3034,
+      "sha256": "4f95aa76ded8957ce4f51b3b01b03647ee7bd32624552c36a4d07fc95823c78a"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/DictationTapTests.cs",
+      "size": 2564,
+      "sha256": "0869ffbc75a2ad4108d991705ea7426d138145b102ac8d08b1cc650184f6dfc3"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/FrameFlow.Capture.Tests.csproj",
+      "size": 3076,
+      "sha256": "f93ad87358f28275cab34f28cf3e1d9dd9d858dde876be721db6468e5afca02a"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/InputLatencyDiagnosticsTests.cs",
+      "size": 2858,
+      "sha256": "099f79a5f84215aace56ce8ead89931417d926d4168e0a985b67b4dddb518ac4"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/LivePcmMixerTests.cs",
+      "size": 4429,
+      "sha256": "860ae6c130a7c1dffd1d146953b56c132f8a7bf285ceacd7092d98de38caf8cf"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/LiveWindowExclusionsTests.cs",
+      "size": 14556,
+      "sha256": "e6e978194bcb368e99115813c7159777c8e11aad5f2bcabfbeb351b3bae68123"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/MouseInputLifecycleTests.cs",
+      "size": 7265,
+      "sha256": "f89d9871bbfbf44dcee8d182710ac9df536aac8afbba60b3111a60d7138053ac"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/Program.cs",
+      "size": 5873,
+      "sha256": "c59920bdce0b4650858814c33d512b14d7a32aa11b4182f9f87417e50069925e"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/RawMousePacketTests.cs",
+      "size": 9725,
+      "sha256": "577e6249d90e8e779f2b20d868f521c5166e522b9881ac30035b165727e87609"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/RecordingExclusionInputTests.cs",
+      "size": 3657,
+      "sha256": "6aa7b2d2bd544e3372ebf98a753a408e5cd4d6e31a01962e229f4ec19dc21900"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/RecordingExclusionTests.cs",
+      "size": 1242,
+      "sha256": "3242a0e16f20112cd0b89d2447e9fa9faea7b36c3f79db323626b6a3d9551953"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/TypingActivityTests.cs",
+      "size": 10734,
+      "sha256": "71f3e61d78d6cabfe6044b6172ce364a19e74a0ab47bc20129ee9e49eea9c274"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/TypingFocusNativeTests.cs",
+      "size": 6494,
+      "sha256": "8b805ab1dd38bccb5c43126646249cf746243553298f339adef68be36a91ee33"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/TypingFocusPositionTests.cs",
+      "size": 6387,
+      "sha256": "93848ef8913f1ebdaae603f9dbb2e45d4fde2319df6699cfab090b4cbb4b7869"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/TypingFocusRaceTests.cs",
+      "size": 4357,
+      "sha256": "83d493d63f2a53c7dd345d852f87c8ecde6ebe3da2d103bdaa1ef5cfe9c56add"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/TypingInputLifecycleTests.cs",
+      "size": 6451,
+      "sha256": "8e8134ab1fe71526605a6b08af24da8bc1fb1e73ea5923219f6d1c370819bf4b"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/VideoClockCorrelationTests.cs",
+      "size": 1536,
+      "sha256": "199e55e5f84ab43d53a5a623ab4cdb64aa480e96d282ca7f55e692329aeb4b9e"
+    },
+    {
+      "path": "native/INPUT-LATENCY-DIAGNOSTICS.md",
+      "size": 7034,
+      "sha256": "134d1961919c229a1c6e8e82b2a2e5fa64f532922a9fed09dbb9e75387c8ea49"
+    },
+    {
+      "path": "native/README.md",
+      "size": 34484,
+      "sha256": "58ce643028d2a8c602f680f59c030b103f52621d6074d01d8ae555bddb040c46"
+    },
+    {
+      "path": "native/THIRD-PARTY-NOTICES.txt",
+      "size": 4685,
+      "sha256": "d053a2b3b69ab614f0908f56d610b9a691cfc3dd54dcfdd27df2521aebb21e93"
+    },
+    {
+      "path": "native/VIDEO-SAMPLE-DIAGNOSTICS.md",
+      "size": 12339,
+      "sha256": "f84177d6e271f2b52544180171378daed8234cc3772cbc9540537cfa0f803ace"
+    },
+    {
+      "path": "native/XiaoLu.Speech/Program.cs",
+      "size": 1949,
+      "sha256": "62c1f6f32db40c9e7adf33b975358db44ec3b28da8743977c5e5f2000627cfe8"
+    },
+    {
+      "path": "native/XiaoLu.Speech/THIRD-PARTY-NOTICES.txt",
+      "size": 1451,
+      "sha256": "3d08f32a49fc65e049ea48a59b143da51f5269f7ca8963d924fd9a6421d94d34"
+    },
+    {
+      "path": "native/XiaoLu.Speech/Utf8Recognizer.cs",
+      "size": 4637,
+      "sha256": "18323817ef11d208c62bdf85435c1cdb51d5b21e849ac123e7f17ae08a797b97"
+    },
+    {
+      "path": "native/XiaoLu.Speech/XiaoLu.Speech.csproj",
+      "size": 677,
+      "sha256": "ea88aa134a21adfe39525a999a42b32377e630a46ecb5f5841702ca40e436664"
+    },
+    {
+      "path": "native/XiaoLu.Updater/Contracts.cs",
+      "size": 1513,
+      "sha256": "07e24d95f4ce081d68ce23cf686676e2a1eee56ed5c5fa3da3eb8969e413b3e3"
+    },
+    {
+      "path": "native/XiaoLu.Updater/Package.cs",
+      "size": 5514,
+      "sha256": "fba564f578c0aecd8a0e393c38cdef371d2dbe73bbb1f183801808c9dd043d1e"
+    },
+    {
+      "path": "native/XiaoLu.Updater/Paths.cs",
+      "size": 3075,
+      "sha256": "7b5a849df4ee53c479b34ce9a0d2bc5615afc95b9aca82c245e7991d0f7ce636"
+    },
+    {
+      "path": "native/XiaoLu.Updater/Program.cs",
+      "size": 5496,
+      "sha256": "cfe4c3fe4ee5288a523d953b115ae65bff118bfb7354f8616eb847036043a88d"
+    },
+    {
+      "path": "native/XiaoLu.Updater/Transaction.cs",
+      "size": 4991,
+      "sha256": "32f1387afa1c28a1a70788bea2ab1abbc646eef9bd45def1c5555cec88935fa5"
+    },
+    {
+      "path": "native/XiaoLu.Updater/XiaoLu.Updater.csproj",
+      "size": 575,
+      "sha256": "8bc44e015aa453a58b1bbc7ab76ace725d9fdf5487090e2308bd484529f8e33a"
+    },
+    {
+      "path": "native/XiaoLu.Updater/app.manifest",
+      "size": 600,
+      "sha256": "c66d72f26ae9aa00ad943f525a39b763d8e13a27c2785b414f66dcc81dd68152"
+    },
+    {
+      "path": "native/XiaoLu.Updater.TestTarget/Program.cs",
+      "size": 525,
+      "sha256": "7369d11a8f05b88d645fc0d304abb1b982c69e2e526e33e79e41f4ab5ca32be7"
+    },
+    {
+      "path": "native/XiaoLu.Updater.TestTarget/XiaoLu.Updater.TestTarget.csproj",
+      "size": 238,
+      "sha256": "3da66f2555e614283d07f8cb1ccd7972834781b9fa0aed00e61156b1ef9c35e6"
+    },
+    {
+      "path": "native/macos/Package.swift",
+      "size": 980,
+      "sha256": "9d7d1b38a28e98aade69f303c7795978af2135c475ba8f8397450e258a94538e"
+    },
+    {
+      "path": "native/macos/Sources/AppLaunch/main.swift",
+      "size": 2600,
+      "sha256": "505449e1a797d16edd486bf76e35cb733bdbe1be767b45f53fca637babf88daf"
+    },
+    {
+      "path": "native/macos/Sources/CameraBridge/CameraHardware.swift",
+      "size": 3501,
+      "sha256": "582fe8f4a0a06e0c7ca69b795b397de83dcb002a797ffb56d65a21db5bca8085"
+    },
+    {
+      "path": "native/macos/Sources/CameraBridge/CameraWriter.swift",
+      "size": 3000,
+      "sha256": "677d3daf1e7bec59a19daca917e8b39f9133231fe8ecc5681bcf58a4ba1220ef"
+    },
+    {
+      "path": "native/macos/Sources/CameraBridge/ExtensionActivation.swift",
+      "size": 1920,
+      "sha256": "d342850a693c5f32315849c2e3184b01829b10c633909c3d25b0aec4abeec0a5"
+    },
+    {
+      "path": "native/macos/Sources/CameraBridge/InstallationPreflight.swift",
+      "size": 1211,
+      "sha256": "0bb546889ebc8dc232c12392893277ca90be8d9996eefb7bd839d3a7d7a2f2ef"
+    },
+    {
+      "path": "native/macos/Sources/CameraBridge/main.swift",
+      "size": 1457,
+      "sha256": "4b15456d377144eb404a41dae7e779150249865051f6137672f68cae9bcdd335"
+    },
+    {
+      "path": "native/macos/Sources/CameraCore/CameraFormat.swift",
+      "size": 4184,
+      "sha256": "b666e17aa3b966b0ca6d7398afd50536447d98ae9f797ed183b6bedc1918aa3d"
+    },
+    {
+      "path": "native/macos/Sources/CameraCore/CameraFramePool.swift",
+      "size": 1268,
+      "sha256": "23701d899bff9fa3d66c5219703568827535cd68cf51639801a4e0f3081d1e0e"
+    },
+    {
+      "path": "native/macos/Sources/CameraExtension/CameraDevice.swift",
+      "size": 6616,
+      "sha256": "fd188a2a6a4221fc11269b6bf94ba16e8e414f18d2301dec8cb7cc3cdb020a17"
+    },
+    {
+      "path": "native/macos/Sources/CameraExtension/CameraProvider.swift",
+      "size": 1334,
+      "sha256": "0cb8206c87237288beecb3ece6d895dbc48b4663fc4e62ddf6eea154e69b4081"
+    },
+    {
+      "path": "native/macos/Sources/CameraExtension/CameraStream.swift",
+      "size": 3146,
+      "sha256": "f47163d50679d06fa487eb25ba522440dc147cce8ccbf07d4bb12eed921e6bc3"
+    },
+    {
+      "path": "native/macos/Sources/CameraExtension/main.swift",
+      "size": 145,
+      "sha256": "227584aa0ec8359b5b9e36468875d665e9b18b3700333b4e12047861c08adc75"
+    },
+    {
+      "path": "native/macos/Sources/CaptureCore/CameraCapturePolicy.swift",
+      "size": 376,
+      "sha256": "32dd09bfd58de1422ec7e53d12a4d52e017be2a736c50230b05c538c364f957a"
+    },
+    {
+      "path": "native/macos/Sources/CaptureCore/Contracts.swift",
+      "size": 4900,
+      "sha256": "ec9b70861927c233c828de4672da2434fd2966a4cdf0f90af78ec63787e1b796"
+    },
+    {
+      "path": "native/macos/Sources/CaptureCore/WhiteboardReadiness.swift",
+      "size": 657,
+      "sha256": "1afe27e9e22ea182b7901e69dbe093d994190cdd64b16cf038b956d0bdaa0c17"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/AudioTrack.swift",
+      "size": 7073,
+      "sha256": "6468268bcd16a9a3819984c4b99abb600e6a31a963df02b5cae1c95ab2336eb0"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/CoreAudioInputDevice.swift",
+      "size": 2143,
+      "sha256": "8906a4f1c3a6cfa1225ef3227a1140d03fb21c4fa6ae61300084666bd711f452"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/CursorShape.swift",
+      "size": 717,
+      "sha256": "450ec43e746d0eca6281ee30679b91c55f4e000f03d65432bb2934aaea4ec60c"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/DictationTrack.swift",
+      "size": 1666,
+      "sha256": "f18a46f32c160bb8bb896db951860be50316d0ec5359c81c806e34b70b7a4a6d"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/FocusLocator.swift",
+      "size": 2639,
+      "sha256": "0ee2b561dd2a11cc42ea00fa59ea4caf92e0c034348c41357c94203551072d3f"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/FrameServer.swift",
+      "size": 6578,
+      "sha256": "f7a213893b9d3f0b18af1ca14a34ce5f58523d7de7a2a281e967e67c415bf277"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/HALMicrophoneCapture.swift",
+      "size": 5907,
+      "sha256": "b83f76ff1b187a9d82d21cfefd0da079c939eebad372fb63c037199b91fa1a5a"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/InputEventMonitor.swift",
+      "size": 2939,
+      "sha256": "83fb865996092a59fa7ca5c5f91d8a9e721f6923c593cd57f7d41e2d22a4461b"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/InputJournal.swift",
+      "size": 9992,
+      "sha256": "4bb51c1fd3f775d97dbf465224b1b1751a5959289d21c254e26e15562e815587"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/LiveAudio.swift",
+      "size": 5026,
+      "sha256": "a45ba82fa7632f86fbcbcf67c9ce250f5abd21450698a0e18c08574a76d4b038"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/LiveSession.swift",
+      "size": 13064,
+      "sha256": "370f1c62691a4280f8eba449568408f7f2835c7cc36437c0825797133f5ff817"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/Main.swift",
+      "size": 11340,
+      "sha256": "9dd96db42c467fb307bb636429c8fc226ff34f44dc849f783ff4c5c8743b47a2"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/MicrophoneInputRing.swift",
+      "size": 5414,
+      "sha256": "f5d2ea6ef9a5b40fb68ba3998319a28c0ecf69bd02f25d26340bfe8f0be5c4b4"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/MicrophoneTrial.swift",
+      "size": 6028,
+      "sha256": "f38d93746ec786fff708dbf3d0b4678a3b6c5c71b1d741911757f7561c384bb7"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/PermissionSettingsWindow.swift",
+      "size": 1479,
+      "sha256": "90785599ce379380291de32ec861c521f9133d3178ac8074e7b2f5be13485e41"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/PreparedMicrophoneInput.swift",
+      "size": 2440,
+      "sha256": "80eeeefc30609fd5619a19238b447341c60c8e6541f0fc770e64b38576fd092a"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/Protocol.swift",
+      "size": 1732,
+      "sha256": "a373460ea326c219f93503de17d5eee8d6b5b22aac8f08bf1256859322e7f3c8"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/ProtocolSocket.swift",
+      "size": 2257,
+      "sha256": "1a0f144889c92d492f578b4ec70e7e60ab7a768289c4fb504d8d367f9f502e18"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/RecordingAudioTrack.swift",
+      "size": 3385,
+      "sha256": "1deb1099ee455d228e72740638b9e8cce35524cb6bdd333367b6b5ac0b53231f"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/RecordingSession.swift",
+      "size": 24196,
+      "sha256": "71fc9051b2658d98a19d151cfd888b1b5dcf7eb79ad242c37bfa37423e56e3f1"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/SourceCatalog.swift",
+      "size": 8889,
+      "sha256": "5aec43b133a267159799f9699e5186207774636b6c02c7002d6c9ebf23f98809"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/VideoEncoding.swift",
+      "size": 1304,
+      "sha256": "1e963898d998aa27ec0253e47e8b9b4aba9fb0632a65faa7fccefcf1bf253c15"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/VideoTrack.swift",
+      "size": 3482,
+      "sha256": "36f8a4e3aedbdab26ea10f054956051d867c2a9f78013ac2e59d0fcbe36ef496"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/WhiteboardCapture.swift",
+      "size": 6051,
+      "sha256": "7848b2db1869334dd0ac5ec3681c097e66c19a943d56ab647d7e5de92a0a1319"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuCapture/WhiteboardGeometry.swift",
+      "size": 2262,
+      "sha256": "1f54b6e47a2b51ee581f8600aaf728097168f753dbe4a0b13af36014a89c6242"
+    },
+    {
+      "path": "native/macos/Sources/XiaoLuSpeech/main.c",
+      "size": 4165,
+      "sha256": "15ad28a70b19bad4b4adb5728218e9a33d238d5bddd3bd56c4b7937d3a426d61"
+    },
+    {
+      "path": "native/macos/Tests/CaptureCoreTests/CameraCapturePolicyTests.swift",
+      "size": 809,
+      "sha256": "af8b9a4b49540d034a9f9c2aeca7b0c89336456c838f60695b9b9add95bad616"
+    },
+    {
+      "path": "native/macos/Tests/CaptureCoreTests/CameraFrameTests.swift",
+      "size": 1851,
+      "sha256": "7e2023fc038b01df7c390e46c6b7f5cee9cbc687ec88aee2bd95dde8cbbce19a"
+    },
+    {
+      "path": "native/macos/Tests/CaptureCoreTests/FrameServerTests.swift",
+      "size": 3191,
+      "sha256": "e495386c068409744a1c1d04cca0aa2304499a08047ff80c3cf2413c4c1c7671"
+    },
+    {
+      "path": "native/macos/Tests/CaptureCoreTests/GeometryTests.swift",
+      "size": 2951,
+      "sha256": "ed4e3ccb50fbd64b47eb95b3c616d5b72c6233ad3427bf09b913158b5335817e"
+    },
+    {
+      "path": "native/macos/Tests/CaptureCoreTests/LiveAudioTests.swift",
+      "size": 3002,
+      "sha256": "cbbc75893eaf198e031c799638fe6b27cfaf205b1b237ef2cbe0361c946a8c9f"
+    },
+    {
+      "path": "native/macos/Tests/CaptureCoreTests/MediaTests.swift",
+      "size": 11060,
+      "sha256": "c7cd263773453490e222be59a9dff278b4e5c215e992b103cbda416f763edb78"
+    },
+    {
+      "path": "native/macos/Tests/CaptureCoreTests/MicrophoneInputTests.swift",
+      "size": 2555,
+      "sha256": "368ea9c37758316db58bf748c783dd9aa3b77e0c880f5d5f72ac3003da2ff794"
+    },
+    {
+      "path": "native/macos/Tests/CaptureCoreTests/PreparedMicrophoneTests.swift",
+      "size": 3023,
+      "sha256": "bb1ce85a4001c9b0a0c32f621530ea02715fe0c270bfc9769a4fcfbaae8dfece"
+    },
+    {
+      "path": "native/macos/Tests/CaptureCoreTests/WhiteboardReadinessTests.swift",
+      "size": 1659,
+      "sha256": "dc3f148a0b952a41036aa504a031ec521b5e35a5675407f07e32895e5b64e763"
+    },
+    {
+      "path": "native/macos/Vendor/SherpaOnnx/LICENSE-APACHE-2.0.txt",
+      "size": 10173,
+      "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9"
+    },
+    {
+      "path": "native/macos/Vendor/SherpaOnnx/NOTICE.txt",
+      "size": 2848,
+      "sha256": "411aac6ce4b666f70e278cbe04f58c62b11478c5d624fcc0bc798b90ce216e2d"
+    },
+    {
+      "path": "native/macos/Vendor/SherpaOnnx/ONNXRUNTIME-THIRD-PARTY-NOTICES.txt",
+      "size": 326866,
+      "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc"
+    },
+    {
+      "path": "native/macos/Vendor/SherpaOnnx/PUBLIC-RUNTIME.json",
+      "size": 680,
+      "sha256": "12d50274ffd7af8109e29ae336e7c586f9cefe87b96dd8417b55beb60365b0fe"
+    },
+    {
+      "path": "native/macos/Vendor/SherpaOnnx/c-api.h",
+      "size": 77696,
+      "sha256": "7eb1b528e125c730c36036d2df0d663d7ca2bdbadbc1c172a5611ee687907534"
+    },
+    {
+      "path": "native/scripts/build-recorder-fork.ps1",
+      "size": 3853,
+      "sha256": "187be9c83292efc8ce3f6cf6ff3ca6b0b297054c5c572b25cfe147ad2ede11ee"
+    },
+    {
+      "path": "native/scripts/capture-test-window.cs",
+      "size": 4299,
+      "sha256": "96e826be2a990357438ceccabe785d3d7029784aa04747acf6692679739b1549"
+    },
+    {
+      "path": "native/scripts/exclusion-test-windows.ps1",
+      "size": 2683,
+      "sha256": "91b7190b0deb68aa5bc8ad7f882f75093f5dc3ccf90959dbcbbfe729cc08a347"
+    },
+    {
+      "path": "native/scripts/fetch-recorder-fork.ps1",
+      "size": 2668,
+      "sha256": "6fcbf33ba8235ef3ce7d25d61f3c9c4ed622bc2108a74c9be450f000c5a2e304"
+    },
+    {
+      "path": "native/scripts/live-exclusions-fixture.ps1",
+      "size": 6011,
+      "sha256": "73f3d344dcf3b26230608880ee25c6dc96c4fe4de3d64e4016438871c7c93f8d"
+    },
+    {
+      "path": "native/scripts/live-preview-fixture.ps1",
+      "size": 325,
+      "sha256": "7de2bdb3e8b9dc1af90c53187014be384692fd36d219f21ccc6ebc5b0214cd7f"
+    },
+    {
+      "path": "native/scripts/live-preview-window.ps1",
+      "size": 3524,
+      "sha256": "575d7eca7f2f082e770f0607d44a62d611149479a4b57986e09b7ba959821551"
+    },
+    {
+      "path": "native/scripts/smoke-capture.ps1",
+      "size": 7720,
+      "sha256": "5b844110650ec912d35cf7750ccc9f6d5551048a63da49c04ef40e8deeb14add"
+    },
+    {
+      "path": "native/scripts/test-encoded-timing-ledger.ps1",
+      "size": 1919,
+      "sha256": "10b93d30893a1ca1e860edd502ddc0b499ba6da2bc5854523958e4b2ed611e55"
+    },
+    {
+      "path": "native/scripts/test-video-sample-metrics.ps1",
+      "size": 807,
+      "sha256": "2aaa69704b6f00a8b50c8154d9f72b7104186feafc7244f6f304ae98af96abcf"
+    },
+    {
+      "path": "native/scripts/test-window.ps1",
+      "size": 3943,
+      "sha256": "17cae6267eba6357ff68564f9287ee0b13d0a27100f73a9dbb8db7daf4662804"
+    },
+    {
+      "path": "native/scripts/verify-audio-controls.ps1",
+      "size": 3117,
+      "sha256": "910a6cf78df67b66192376b2560c79a2c562ef47f6a0ba745e3edd2fbaccaadd"
+    },
+    {
+      "path": "native/scripts/verify-exclusion.ps1",
+      "size": 5299,
+      "sha256": "1808230dc6b0906f38dc4b38667135345806216331045ecebe0ff8dede7c94d2"
+    },
+    {
+      "path": "native/scripts/verify-live-preview.ps1",
+      "size": 5277,
+      "sha256": "b8cdd1eb586a59f68af2a87888bc6f48abde1a4f5b60e477392841fc1bb98253"
+    },
+    {
+      "path": "native/scripts/whiteboard-modes-fixture.ps1",
+      "size": 2804,
+      "sha256": "83bf52a3f61df3ba168e1f462de5428097819310ff3d328ff7c2771bdee969c9"
+    },
+    {
+      "path": "native/tests/EncodedTimingFailures.tests.cpp",
+      "size": 3375,
+      "sha256": "5f56ad5d16e3eb2327d91ab748c1aff1c565f8b3bb2c188c75334ee2ec18a094"
+    },
+    {
+      "path": "native/tests/EncodedTimingLedger.tests.cpp",
+      "size": 4739,
+      "sha256": "3b2451295d34d1f087c30e08ea3ac71947568ef4230384af136f5de491385c14"
+    },
+    {
+      "path": "native/tests/MediaClockOrigin.tests.cpp",
+      "size": 1732,
+      "sha256": "605251acdd7078906253daa45e905166344079e38c13b967081211426d4b053a"
+    },
+    {
+      "path": "native/tests/VideoSampleMetrics.tests.cpp",
+      "size": 4835,
+      "sha256": "8d74e471764048a72c07d2c768912b307eef49c43c06c6a7a3c56560f0ea66c4"
+    },
+    {
+      "path": "native/tools/.gitignore",
+      "size": 13,
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b"
+    },
+    {
+      "path": "native/tools/README.md",
+      "size": 4607,
+      "sha256": "51f52b3e6e08436e37182dc79e887963c0429ba719ba1289bf9fd3d1d2b3d47d"
+    },
+    {
+      "path": "native/tools/bootstrap_toolchain.py",
+      "size": 8163,
+      "sha256": "246dad4340536dd534b310bcbbe7d01469313bf39c42ebb2b4f1b51abb51a3a1"
+    },
+    {
+      "path": "native/tools/components.lock.json",
+      "size": 5387,
+      "sha256": "0d968e49daaf23afe3f2d44433444cb044690dc0f47d49f928a378cf9c876f0e"
+    },
+    {
+      "path": "native/tools/enter-toolchain.ps1",
+      "size": 2539,
+      "sha256": "6855a0c9b4eb6b62c60391e0740d22b2299bf86e3abf7bbca853c319b9d6804a"
+    },
+    {
+      "path": "native/tools/test-toolchain.ps1",
+      "size": 3911,
+      "sha256": "3dc4406724cf695d72adc0435fde3bfaab56b16fe2983d7873f5aefb9bb2b01b"
+    },
+    {
+      "path": "native/vendor/ENCODER-TUNING.md",
+      "size": 6886,
+      "sha256": "57ba3039010477f3fc3e2965272b09c494427aafb85d1f2df97f62f32705f78f"
+    },
+    {
+      "path": "native/vendor/README.md",
+      "size": 11718,
+      "sha256": "c83629c0e1109a89cd4c114625402f213df227a9e9debdac7b503a4ee6021085"
+    },
+    {
+      "path": "native/vendor/artifacts/ScreenRecorderLib.dll",
+      "size": 1190400,
+      "sha256": "545d1103444d5dbd38b5f44cdfd41036d189ed34043170b5980ee157b4e432f8"
+    },
+    {
+      "path": "native/vendor/frameflow-encoded-timing.patch",
+      "size": 42781,
+      "sha256": "125bcc03442b0cc71fecef05117e87d6bf20a95f2bd9591cb8a00a78c6edd9f0"
+    },
+    {
+      "path": "native/vendor/frameflow-encoder-tuning.patch",
+      "size": 9312,
+      "sha256": "3a3a6fa3fc9af64e1a7492fc1e32d742860052248cf9c4ee37aca2047d823868"
+    },
+    {
+      "path": "native/vendor/frameflow-exclusion.patch",
+      "size": 12338,
+      "sha256": "e7d658d501ac441abe452e126bec2b0a5b4f80008521a0493d25e17367460c08"
+    },
+    {
+      "path": "native/vendor/frameflow-live-preview.patch",
+      "size": 12172,
+      "sha256": "d186468b5cbf16d50e7e0e73665a4ea09ec07d9cfc7b93075779e2b4b889c8ee"
+    },
+    {
+      "path": "native/vendor/frameflow-recording-exclusions.patch",
+      "size": 37550,
+      "sha256": "f08ebe2d844f2b1ce85f8a27c222e34eb48bdbf4c7bf80cf717847324f885375"
+    },
+    {
+      "path": "native/vendor/frameflow-sample-diagnostics.patch",
+      "size": 10745,
+      "sha256": "14c3c989665dbad2a70761bfe881b0c436c4068df35329a7a62e02e55ae6a6d2"
+    },
+    {
+      "path": "native/virtual-camera/README.md",
+      "size": 11604,
+      "sha256": "5c853f31abc6f8ad8353d5684325d6d523402a2ad7c70f0d3452333dd6864c0f"
+    },
+    {
+      "path": "native/virtual-camera/bridge-setup.cpp",
+      "size": 5201,
+      "sha256": "c8f4cca5aef69107946e8e06156eb77d5abca807c8085ae381ef0b2560a6a61b"
+    },
+    {
+      "path": "native/virtual-camera/bridge-test.cpp",
+      "size": 9472,
+      "sha256": "d7dde808d86b350870a3a7da34a3bc62fe9642ca8c3a6ece249afca8119f25b4"
+    },
+    {
+      "path": "native/virtual-camera/bridge.cpp",
+      "size": 3826,
+      "sha256": "553d52ed06d1d3e956aaa1a6914410593579a0e1de4cc9df59a39f6acaa96d42"
+    },
+    {
+      "path": "native/virtual-camera/bridge.hpp",
+      "size": 398,
+      "sha256": "2946369dbaa471461c0951dec4aff8387f8c2ed9b0f253127c334d29fabe4491"
+    },
+    {
+      "path": "native/virtual-camera/camera.def",
+      "size": 163,
+      "sha256": "f40662443282d42c6d1918ba7fdc464f41eb5ef441514a0e73470ca8381527b2"
+    },
+    {
+      "path": "native/virtual-camera/camera.hpp",
+      "size": 5933,
+      "sha256": "12dc54d959fe0d68628a28e1f385d459669d011705ca2feca59a145600d4db68"
+    },
+    {
+      "path": "native/virtual-camera/dll.cpp",
+      "size": 5841,
+      "sha256": "35e57a2320e433b106d1949faf5de5e56c2f634ef1ca1a6100879b83d3166bd5"
+    },
+    {
+      "path": "native/virtual-camera/enumerators.cpp",
+      "size": 4238,
+      "sha256": "fd931ce9081d5e5738408737f13163c128526b5b42a18399d755d1683a15c14c"
+    },
+    {
+      "path": "native/virtual-camera/filter.cpp",
+      "size": 5718,
+      "sha256": "2eee5f7d16619b478e50e7264972b8a50c16268765dd24ab4a4e9ac1fcc08656"
+    },
+    {
+      "path": "native/virtual-camera/media.cpp",
+      "size": 6197,
+      "sha256": "a841f5e54969b38583e141073c2174a0ea421e98efc78ea947c8a5aa70608879"
+    },
+    {
+      "path": "native/virtual-camera/ownership.hpp",
+      "size": 1698,
+      "sha256": "198517489324480c1e424774d3e58043dc1a97525bf2ae714d0a3c1e19dc315b"
+    },
+    {
+      "path": "native/virtual-camera/pin-config.cpp",
+      "size": 3057,
+      "sha256": "832838b2d4991119c1e8fac456b81797d9ac14803417805b82eff91d3adfe515"
+    },
+    {
+      "path": "native/virtual-camera/pin.cpp",
+      "size": 7109,
+      "sha256": "75ffbf647cd816a8792ddcae10f51a36ab574fa0bb11753f513e9ebe42e4e16d"
+    },
+    {
+      "path": "native/virtual-camera/protocol.hpp",
+      "size": 5545,
+      "sha256": "b06a7367961c3f3bf4d75a30d87402df2e27974867938c29183c73093859841c"
+    },
+    {
+      "path": "native/virtual-camera/tests/uninstall-fixture.cpp",
+      "size": 681,
+      "sha256": "d520b8f60f3d98c055a1bee31295d07fc7857158626bb5035c4a8b593072355c"
+    },
+    {
+      "path": "native/virtual-camera/tests/verify-uninstall.mjs",
+      "size": 4116,
+      "sha256": "9967fb644276544e05e5eadf5a33ad93b33fa2241cd534c029f94f659371b52a"
+    },
+    {
+      "path": "native/virtual-camera/tests/verify-uninstall.ps1",
+      "size": 757,
+      "sha256": "5e64c3e5c735d99bb4e6536919f02339fbaaf89d88fd9a754f171196775c97c1"
+    },
+    {
+      "path": "native/virtual-camera/verify-protocol.mjs",
+      "size": 4425,
+      "sha256": "16e20465c79fa6286e9dc3261ec489238c8c2759c09175fbbe279c9504a1ec5e"
+    },
+    {
+      "path": "package-lock.json",
+      "size": 223563,
+      "sha256": "aafad7c71c52569a43778fc5ec5ec31f99bffc7549f925a6e5364fbf0a100ed5"
+    },
+    {
+      "path": "package.json",
+      "size": 5976,
+      "sha256": "1c5abfea8d05e0d4e118ccc414a3e4949727ac4c286aa4a892620ed02e09157f"
+    },
+    {
+      "path": "public/beauty/MEDIAPIPE-LICENSE.txt",
+      "size": 12331,
+      "sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8"
+    },
+    {
+      "path": "public/beauty/THIRD-PARTY-NOTICES.txt",
+      "size": 1011,
+      "sha256": "51fd89499b8de6071a32910df3a97e40ac330edfec9072e0bf08f50e12119bff"
+    },
+    {
+      "path": "public/beauty/face_landmarker.task",
+      "size": 3758596,
+      "sha256": "64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff"
+    },
+    {
+      "path": "scripts/after-pack-mac.cjs",
+      "size": 5224,
+      "sha256": "83785be40693bde838288c728b043d17d02be392801c5c87640209b57c1b75fa"
+    },
+    {
+      "path": "scripts/after-pack.cjs",
+      "size": 1696,
+      "sha256": "f708e7474860c805f3dc5d7fcd450eb1389c4c15178591bd0756201d08838e5b"
+    },
+    {
+      "path": "scripts/before-pack.cjs",
+      "size": 2568,
+      "sha256": "e802adf7fcd2803182cb303b3d5891c8e7e4d15ab6334bf96e741664c21f79a0"
+    },
+    {
+      "path": "scripts/build-app-update.py",
+      "size": 1241,
+      "sha256": "ce9c42929b2ed2c5a70a2fea5e1cde70f8898e3e13f66fbdc08d27d513037ff9"
+    },
+    {
+      "path": "scripts/build-electron.mjs",
+      "size": 714,
+      "sha256": "d0b6aba41cf80936b9afafdf10ea4877794840e52ac7480121f68d9eec84b927"
+    },
+    {
+      "path": "scripts/build-mac-native.mjs",
+      "size": 1513,
+      "sha256": "28e6f4986019997f94939a4a26b072a8d1c82a71e6ae8c4fe635e3231bd3919e"
+    },
+    {
+      "path": "scripts/build-virtual-camera.ps1",
+      "size": 2162,
+      "sha256": "5be7655f14ac1453b45d7e98e4b712ecd4693874ae5d778e5f0120eb1be21542"
+    },
+    {
+      "path": "scripts/clean-build.mjs",
+      "size": 1258,
+      "sha256": "5e594c3e2aee4a3aeb643753d7df64ee5e8fcbb42e75920e8c352449463bc748"
+    },
+    {
+      "path": "scripts/dev.mjs",
+      "size": 699,
+      "sha256": "168100dde0ef81d8c63d3475c5a116e4ded4b8e97978b6e44e31097709940edb"
+    },
+    {
+      "path": "scripts/distribution/release-artifacts.ts",
+      "size": 2711,
+      "sha256": "27f7c92d737a0beab6c8cb35fada429e7afbec0516ae6d47f70ea09ece322ad8"
+    },
+    {
+      "path": "scripts/installer-branding.cjs",
+      "size": 5450,
+      "sha256": "c1f6867c9e7fe56de93b060268c9869b3e0b6e88de7af3f26a33c9af8735a493"
+    },
+    {
+      "path": "scripts/installer-targets.cjs",
+      "size": 291,
+      "sha256": "83f8654a1729860436f3b1a04a0d1c3541828014fab97826e75e328742a5a87a"
+    },
+    {
+      "path": "scripts/installer-verification/cases.mjs",
+      "size": 4402,
+      "sha256": "be6f8dc30b6dd4c208deaecb7b5310a0d153f39df82cf745177711142a10cdd2"
+    },
+    {
+      "path": "scripts/installer-verification/drive-cases.mjs",
+      "size": 1454,
+      "sha256": "f0f05ec01e51c4d0e7a9f3e909846f4aab33924bfb0eb5ee364f1360fc2d013b"
+    },
+    {
+      "path": "scripts/installer-verification/drive-harness.mjs",
+      "size": 3261,
+      "sha256": "832cbc528e80aedda51f32f0e86522b4a31326c5e1125985d40b153d160ba7a8"
+    },
+    {
+      "path": "scripts/installer-verification/nsis-harness.mjs",
+      "size": 3241,
+      "sha256": "f9e8b403b0eeebf179d2e216a08e4a7b63c2c02fd8f095dbd4fffe59d653530a"
+    },
+    {
+      "path": "scripts/installer-verification/process-runner.mjs",
+      "size": 3042,
+      "sha256": "6fe828fda80db9b088e86ffd6050a4359a27132ea07ecd48d951d891296ba009"
+    },
+    {
+      "path": "scripts/installer-verification/update-locks.mjs",
+      "size": 2586,
+      "sha256": "0e8ca26c5d4b2b6d4612ce50f9317ec39ccc84be903329b630b3b5f6dc45dbb9"
+    },
+    {
+      "path": "scripts/installer-verification/verify-drive-results.mjs",
+      "size": 3675,
+      "sha256": "c7b47bdd5a66c7c623cbfdd92d672681dd6e27281e968083d90a118bee71e655"
+    },
+    {
+      "path": "scripts/mac-release-inputs.cjs",
+      "size": 8315,
+      "sha256": "46d5c984aa0c0c030a80dea23ce819955584f57424568ac3c29be75a18b6fb9c"
+    },
+    {
+      "path": "scripts/mach-o-release.cjs",
+      "size": 2800,
+      "sha256": "49067420fb28f3b06fffd9d48a769437949b4223d66f49827ddc3fc47d898ef4"
+    },
+    {
+      "path": "scripts/open-source/audit-dependencies.mjs",
+      "size": 2647,
+      "sha256": "00c622b8273ab4c881a9fb9d1bdb6bb5c98240982f3980efeaaadcf5d080f4e3"
+    },
+    {
+      "path": "scripts/open-source/build-gpl-ffmpeg.py",
+      "size": 11873,
+      "sha256": "1395afd1113c57bf40459e021ac2a5c1504ccd689a564585dc8add4b263b3a04"
+    },
+    {
+      "path": "scripts/open-source/prepare-mac-release-legal.mjs",
+      "size": 2191,
+      "sha256": "d94d8a50dd3d40ff1f003210ad13afadfcb7224cf69806c8a2191e91f4250a04"
+    },
+    {
+      "path": "scripts/open-source/prepare-speech.py",
+      "size": 3534,
+      "sha256": "5b6bf2af1c06b4a001027b54eec5e207ef0a79470cb651e1e8864bebf68de1bf"
+    },
+    {
+      "path": "scripts/open-source/verify-ffmpeg.mjs",
+      "size": 1548,
+      "sha256": "e8c77978d26360954bd4482fc2befc0fb9cd6ac2cfd3861e8da30efba471cdc8"
+    },
+    {
+      "path": "scripts/prepare-beauty.mjs",
+      "size": 788,
+      "sha256": "486d41f660fc6dad18d2d05052489fc4b0a0c7f218ae6c8347a241323906ac41"
+    },
+    {
+      "path": "scripts/start.mjs",
+      "size": 385,
+      "sha256": "425175664a4f590ff7b5bc44866234acb052421b3c06c8bf4906d4c6847aac12"
+    },
+    {
+      "path": "scripts/verify-installer-directory.mjs",
+      "size": 7216,
+      "sha256": "cc622487cf7e82f691f9bf9a4517342003bd5ed32e6ff20acb8c65078c3db4c4"
+    },
+    {
+      "path": "shared/COMPOSITION.md",
+      "size": 5349,
+      "sha256": "1a706b436eac6a2364b11997c66aa9cdafba82e5241728a76c630d92b807df99"
+    },
+    {
+      "path": "shared/application-identity.ts",
+      "size": 435,
+      "sha256": "3d69cde35be165b7645f922d49fe19443f381ef85abcced086a3c3b415a19c31"
+    },
+    {
+      "path": "shared/audio-cache.ts",
+      "size": 1065,
+      "sha256": "81eba93efdcc27a3d5535fb8e880ce94cf105b0265cccd245758028162188d14"
+    },
+    {
+      "path": "shared/audio-mix.ts",
+      "size": 437,
+      "sha256": "7ba09437c601d590ba91184cb3f7637c15bd3dbdb76b60c26de831a4b370179f"
+    },
+    {
+      "path": "shared/auto-zoom/camera.ts",
+      "size": 2276,
+      "sha256": "bd7c60d51a1bd3c6580013f5d9e418755f1d4d7a22836904ebf42182b78b0db0"
+    },
+    {
+      "path": "shared/auto-zoom/click-zooms.ts",
+      "size": 1952,
+      "sha256": "603d022bda916fc89dc04378de49435db1fd1b8f21a5cce3e2459a6a51ed2d86"
+    },
+    {
+      "path": "shared/auto-zoom/constants.ts",
+      "size": 82,
+      "sha256": "3c4828862353eecabf085bf651530cf238b8f458c4518a1efc3e527547d24589"
+    },
+    {
+      "path": "shared/auto-zoom/index.ts",
+      "size": 7043,
+      "sha256": "c60b66435246ff567139ff7a4e3d839a117b7091c8952620fbcd4e41e85dadf3"
+    },
+    {
+      "path": "shared/auto-zoom/text-selection.ts",
+      "size": 2912,
+      "sha256": "dc29ab42ffe510123610e453eba7e6e6682927a9e2bd2d7fb7a768522931f88e"
+    },
+    {
+      "path": "shared/auto-zoom/whiteboard.ts",
+      "size": 5909,
+      "sha256": "e20efeb4b5c93b11f47bbde67a779f32971ff287340736219e755f5151258fd5"
+    },
+    {
+      "path": "shared/backgrounds.ts",
+      "size": 366,
+      "sha256": "1bf7057a18144a6463fe8e0279a0e1c95960a755f8742176eeeabc529c9522f6"
+    },
+    {
+      "path": "shared/beauty.ts",
+      "size": 793,
+      "sha256": "d7f2ea052514913843f47f0d82aebb3a747a123873b2cf59987db5240db7a789"
+    },
+    {
+      "path": "shared/brand.ts",
+      "size": 371,
+      "sha256": "4486e76eba9f9c43aacfd0c4a1fd2d5d292a91a070529417f49ac0836af50216"
+    },
+    {
+      "path": "shared/camera-container.ts",
+      "size": 1596,
+      "sha256": "e3333cdcb122e57e8c170e25eb5a62fd266266ffdb63b8a324f8d4a3e7a1e230"
+    },
+    {
+      "path": "shared/camera-effects.ts",
+      "size": 2204,
+      "sha256": "08bbebbc28e5d4eeb5588d12aa1ecec66b56eaebb338af129b3488902dcfae7f"
+    },
+    {
+      "path": "shared/camera-layout.ts",
+      "size": 1810,
+      "sha256": "39dc983581596c0a108f6b816cee33cc101d1ff957196b2fbf5ddf0a2a35c557"
+    },
+    {
+      "path": "shared/camera-modes.ts",
+      "size": 718,
+      "sha256": "09da010c767a1afe41990d08d8db2a9be05e9d302e4df9fa7e4c038763e40f22"
+    },
+    {
+      "path": "shared/camera-preview.ts",
+      "size": 3349,
+      "sha256": "65d6fbf735dc6d1dc0183ef0095390d30a0d62d3cd7c27efca753eb4e86a2c3a"
+    },
+    {
+      "path": "shared/camera-shapes.ts",
+      "size": 1811,
+      "sha256": "83977ed2a831990813a61df48f70536ed79a1e7175bc76af86091fbace8a4e93"
+    },
+    {
+      "path": "shared/camera-zoom.ts",
+      "size": 363,
+      "sha256": "2f625f778defd911cc71bff71fdc90e70e7efe85a4b61659369750235d03cf9e"
+    },
+    {
+      "path": "shared/canvas-style.ts",
+      "size": 633,
+      "sha256": "aaccad6b7b74995e9c522ba60b810fa671e38c6e3d5f03ef5af4a9d48ab30232"
+    },
+    {
+      "path": "shared/canvas.ts",
+      "size": 2880,
+      "sha256": "9b94d13e0da6ac6637843ce9791481be81172bd72617da2aa9f5e105985d88dc"
+    },
+    {
+      "path": "shared/composition-camera.ts",
+      "size": 2582,
+      "sha256": "23023c79961bb9c7db579b79379c36077d4049678894ba52669654723fba9fef"
+    },
+    {
+      "path": "shared/composition-selection.ts",
+      "size": 4468,
+      "sha256": "ccba3ed12e8e1d1618b0062892ea6bf18ca5ddb9781f3ff91c71f6b0838afa9f"
+    },
+    {
+      "path": "shared/composition-validation.ts",
+      "size": 1988,
+      "sha256": "f3f52e834318bcfc4f292eb8cd7b1fa82af56ad209bbca1fcb681c0b4bf3523f"
+    },
+    {
+      "path": "shared/composition.ts",
+      "size": 5060,
+      "sha256": "e27ea38c0bc8890565e223d8044b938450ca7b14e72a7b84cb1e3b349fe6ef35"
+    },
+    {
+      "path": "shared/compositions.ts",
+      "size": 201,
+      "sha256": "19529fb6ea7b6c2524687335b14f583ebcb6aa404d2e9d3fc7c40c3b17c6d916"
+    },
+    {
+      "path": "shared/constants.ts",
+      "size": 772,
+      "sha256": "360a2ea507730e72424878fab68be8acf833bf0f9eda72937cb05f7184e56a5c"
+    },
+    {
+      "path": "shared/demo.ts",
+      "size": 1768,
+      "sha256": "19466ce9dc0cea4ee6c9ff6b036102f536cb667728e213f0360fb1b6d2c1c206"
+    },
+    {
+      "path": "shared/distribution-types.ts",
+      "size": 626,
+      "sha256": "db60edf784997016a1eb3ecb59e71b3048de5e9504ff7c9d75d64416f34103e9"
+    },
+    {
+      "path": "shared/editor-selection.ts",
+      "size": 888,
+      "sha256": "cd694cf01e1180c6305d3fabff341dc81b673224806f67c429bbae5bfcb3af2d"
+    },
+    {
+      "path": "shared/export-render.ts",
+      "size": 612,
+      "sha256": "87b79d6f07411972bf6bcc6030130158866350544259c929fb66812ca8d2f3ea"
+    },
+    {
+      "path": "shared/frame-content.ts",
+      "size": 1659,
+      "sha256": "0799b24fa601bc0c1255f259002d6e2122454c3c80f7c7237ace0e7b97de3b70"
+    },
+    {
+      "path": "shared/input-regions.ts",
+      "size": 378,
+      "sha256": "91aa58a3a706221b52f421b2596de6b7ca50b9d220d8996bc17de3bb84afebf5"
+    },
+    {
+      "path": "shared/live-issues.ts",
+      "size": 982,
+      "sha256": "f6c8e5e2503dc4b19f793367d2aa81c7ba70680d28c8ca85c403c537a64a5847"
+    },
+    {
+      "path": "shared/live-types.ts",
+      "size": 2961,
+      "sha256": "875ade7ed30e40c60dd2ece275fa8a322d34bd3be4206ecfb8cc66e2f8cfd327"
+    },
+    {
+      "path": "shared/live-zoom.ts",
+      "size": 6031,
+      "sha256": "3bc57cd1d0c3cec353ea73b5655743057a45960fd1cd6fa7c5fb76298cf0ad4d"
+    },
+    {
+      "path": "shared/microphone-effects.ts",
+      "size": 5034,
+      "sha256": "a2528d153cee60173ff4478e434dae7f81a1ac7e35e688b167d1436555fc8b31"
+    },
+    {
+      "path": "shared/permission-guide.ts",
+      "size": 1111,
+      "sha256": "3ee37060286abee84e73aec9f92e7b555dba19abd9872e1e006632b10fe2e238"
+    },
+    {
+      "path": "shared/permission-startup.ts",
+      "size": 174,
+      "sha256": "664a6eb25e535cb82302f6ed4251705f572426dbf573aa3fe1f8320de6c2dd0c"
+    },
+    {
+      "path": "shared/platform-permissions.ts",
+      "size": 1308,
+      "sha256": "69968f377d988b692902920ab786f99f60ed75d3df0371320d5fc0d61af769ca"
+    },
+    {
+      "path": "shared/presenter.ts",
+      "size": 1707,
+      "sha256": "6add208b20f49db4f3435950d04d8c7dcddf36bb6accb4e01c3a96264ce98959"
+    },
+    {
+      "path": "shared/recording.ts",
+      "size": 1703,
+      "sha256": "07c52ed25b7c1337a6b8d1b5e2055b2cc8fdffaa7f6c129e82fb477e23071af2"
+    },
+    {
+      "path": "shared/region-selection.ts",
+      "size": 1824,
+      "sha256": "c16689325b8e2faf25ed6555e374abbe5a8a3c5b446b8cdd5068ec3733029bb5"
+    },
+    {
+      "path": "shared/shortcut-label.ts",
+      "size": 389,
+      "sha256": "984c6984d3eb3d8ebce9795ec880a57b84fb519e9851945a04f948602536f894"
+    },
+    {
+      "path": "shared/streaming.ts",
+      "size": 1039,
+      "sha256": "5ef881f5a4c4020f7e923c3cc95bff3c0f81403419df887344f13acd2493cf3f"
+    },
+    {
+      "path": "shared/telemetry-types.ts",
+      "size": 1717,
+      "sha256": "920820ce7852a47e5277d3191097e6205ddda154a8fe8888e46cfcd0ee5a754d"
+    },
+    {
+      "path": "shared/timeline.ts",
+      "size": 4849,
+      "sha256": "3e322685ffa2b501c4252ef475b6083b6e9b933315e9c9daad71efe3f78cb884"
+    },
+    {
+      "path": "shared/toolbar-types.ts",
+      "size": 405,
+      "sha256": "c4e06e826b0f53e1ecd562a8f17f7e6fcb98123dbc2358024adf9a32826ec43b"
+    },
+    {
+      "path": "shared/types.ts",
+      "size": 13952,
+      "sha256": "cfb4d19bf4a7fa689539dabf13c8fd5c376679871f2c5d8fe43c5f50ed7de3d1"
+    },
+    {
+      "path": "shared/update-types.ts",
+      "size": 1292,
+      "sha256": "c6b4b051631d5e628a19edd7acb23b49c586f722fccca2e52def4da85875c171"
+    },
+    {
+      "path": "shared/whiteboard/camera-scene.ts",
+      "size": 2629,
+      "sha256": "d538eac06989e5f1b18c25e0d73c68feb565b07f2cc6bb753cf5dc1357c101e9"
+    },
+    {
+      "path": "shared/whiteboard/camera.ts",
+      "size": 1338,
+      "sha256": "8b25dfe97bb13f20892eaa15cd887d4c091f74e7488da903512de87a7ef11c2b"
+    },
+    {
+      "path": "shared/whiteboard/erase.ts",
+      "size": 4101,
+      "sha256": "ee1e764c0592d13aebad339fbecf25337870a57e10d393426ebff8de2cc992a1"
+    },
+    {
+      "path": "shared/whiteboard/geometry.ts",
+      "size": 6992,
+      "sha256": "dd20151b5b26de961ed2aadcbf7997d3bf30b3880d5d2a4dc92006096e579eef"
+    },
+    {
+      "path": "shared/whiteboard/layout.ts",
+      "size": 1079,
+      "sha256": "f98447539bf6a9ade24e663d6169fe64e4e47dd95eaa04818d83f842506e09e4"
+    },
+    {
+      "path": "shared/whiteboard/model.ts",
+      "size": 5755,
+      "sha256": "1904f7fe92e0a1fc6e978300c6a1a3eab49519d4fd7f16ac11dc938d3cc15e22"
+    },
+    {
+      "path": "shared/whiteboard/motion.ts",
+      "size": 3502,
+      "sha256": "3c4d12edeb7f60106c1008d641c578337d5b9f072393c4adb5a0b7ad7c90f373"
+    },
+    {
+      "path": "shared/whiteboard/speech-text.ts",
+      "size": 239,
+      "sha256": "799e2c44760c8cea380ef26ef713fbe7cb3bfdfdb5d96dfe490cda2843331d05"
+    },
+    {
+      "path": "shared/whiteboard/types.ts",
+      "size": 5448,
+      "sha256": "012db0a8821f5c753f9b143b4769d9b2662daecc455e0f6990c2091b94c5ce0b"
+    },
+    {
+      "path": "shared/whiteboard/validation.ts",
+      "size": 9779,
+      "sha256": "1fe7c80990d40a95ac6a28a96222d74c5e8e8afefad8927bed33b924c0043667"
+    },
+    {
+      "path": "shared/whiteboard/video.ts",
+      "size": 1113,
+      "sha256": "45f91982bd171bc44c9d8ec6a6da142336d3046697515df3f734e9b3761df863"
+    },
+    {
+      "path": "shared/whiteboard/viewport.ts",
+      "size": 2739,
+      "sha256": "bed0a007290499219d446e429c7f2f17b5643100d4dac15106289452a4c8693a"
+    },
+    {
+      "path": "sites/website/assets/xiaolu-icon.png",
+      "size": 48845,
+      "sha256": "b10015f6e9b0b4cb234f5e41999737dade406543187330f2f87b847d04c02286"
+    },
+    {
+      "path": "src/App.tsx",
+      "size": 7335,
+      "sha256": "af36a13c6c8bc030970cfa6196fb298ebabb81161848628577c53af2b1e2e173"
+    },
+    {
+      "path": "src/app.css",
+      "size": 1363,
+      "sha256": "8d85a931ff1298d367a7423abec764174a5b0ceb4612dce98caa75ac8cb3cea6"
+    },
+    {
+      "path": "src/assets/xiaolu-icon.png",
+      "size": 48845,
+      "sha256": "b10015f6e9b0b4cb234f5e41999737dade406543187330f2f87b847d04c02286"
+    },
+    {
+      "path": "src/components/CameraCanvasControls.tsx",
+      "size": 1976,
+      "sha256": "cd4d61f7bf741145582e217f02505d26dc97163a5b7620311a576d9497f2ed34"
+    },
+    {
+      "path": "src/components/CameraTransformOverlay.tsx",
+      "size": 2558,
+      "sha256": "bb2d0c36e4ab9e290eb297648d1b9544325c8c8bb8e448ecb74f850dd7cb4d81"
+    },
+    {
+      "path": "src/components/EmptyCanvas.tsx",
+      "size": 973,
+      "sha256": "b0c84bda0b1cf927eef3053a22a261c179813bfc4ab83afd8bcec1b2bd010a63"
+    },
+    {
+      "path": "src/components/ExportDialog.tsx",
+      "size": 1751,
+      "sha256": "76177c278cd96ea8669b3836396334719708108fbee7ff04eda77e8b30dad5b3"
+    },
+    {
+      "path": "src/components/Inspector.tsx",
+      "size": 4835,
+      "sha256": "693a0231de4a2c574b4a2a4fb08339ffd9313ff142ba800a3ea0c81c22d0c73e"
+    },
+    {
+      "path": "src/components/LibraryPanel.tsx",
+      "size": 5353,
+      "sha256": "a7b17ef1ce1000e0fa6b13bbc90f697b9acbb1b4ca25d97ab8d19f879120c148"
+    },
+    {
+      "path": "src/components/RecordingDialog.tsx",
+      "size": 216,
+      "sha256": "640347ff9c6920568e5fa33ed6bcbf5a43bc776544315ab3f342aa2d7a4ba9d1"
+    },
+    {
+      "path": "src/components/Timeline.tsx",
+      "size": 13357,
+      "sha256": "6bb6047f1df76930255e2ae3f3bd7218d59f6031cfc5e65a49325a109acc6fbd"
+    },
+    {
+      "path": "src/components/TitleBar.tsx",
+      "size": 3145,
+      "sha256": "e3d7b63fa2f59a99b2a0aeea4e3ae427fe5f42139ab20b85b5ee32fdf1bdec64"
+    },
+    {
+      "path": "src/components/camera-effects/BeautyParameters.tsx",
+      "size": 4712,
+      "sha256": "8d565366f23adf460891f7b5a9d9b11f98f819ed345db72ba6566941d9b8f2be"
+    },
+    {
+      "path": "src/components/camera-effects/CameraEffectsControls.tsx",
+      "size": 3579,
+      "sha256": "d965bd76d9bc16db7f7e454046e2026a5a10f9907e71845f53a165ee3c34ff81"
+    },
+    {
+      "path": "src/components/camera-effects/beauty-controls.ts",
+      "size": 1886,
+      "sha256": "f4c8cb6a269b7006061b126c7f0eafd89298cf2a8d27537a820824b28410014d"
+    },
+    {
+      "path": "src/components/camera-effects/camera-effects-controls.css",
+      "size": 8197,
+      "sha256": "d9c6462c41ee82fe69cdf9880a6d7a38a2a011c10f749e277197c26a43f258fe"
+    },
+    {
+      "path": "src/components/camera-shapes/CameraShapePicker.tsx",
+      "size": 1233,
+      "sha256": "7cf5924f7f678f913d0dbef3d4503e6d258f9f282b674845968ed1dbd794e3b5"
+    },
+    {
+      "path": "src/components/camera-shapes/camera-shapes.css",
+      "size": 1190,
+      "sha256": "4f7331c7e6937088212eba52a2dec358e10b099d60ac38c78b0335950a7e206d"
+    },
+    {
+      "path": "src/components/composition-types.ts",
+      "size": 663,
+      "sha256": "6b601839b511af65ac0216346f74104939e72264339672e49b41e1572a074073"
+    },
+    {
+      "path": "src/components/inspector/AudioPanel.tsx",
+      "size": 1554,
+      "sha256": "d4da2bbcc45affb3538802f7e7b2b533b08c9272be6834860be486118df9a7d3"
+    },
+    {
+      "path": "src/components/inspector/CameraEmbeddedNotice.tsx",
+      "size": 805,
+      "sha256": "e5110b8cd8abede44a1cf0a280c1128f06c2fa96fdcc90dd044452ef57e5bbc6"
+    },
+    {
+      "path": "src/components/inspector/CanvasBackgroundPanel.tsx",
+      "size": 2110,
+      "sha256": "b8688adc2d2cb818376036e136781caa333ca0c2226614a2ea89f94008293f58"
+    },
+    {
+      "path": "src/components/inspector/CanvasLayoutPresets.tsx",
+      "size": 913,
+      "sha256": "12c3b1cba6290376ea1d42f3f9e3f4cf997e8c822a622c9cce4b8f8ee3c79299"
+    },
+    {
+      "path": "src/components/inspector/CanvasPanel.tsx",
+      "size": 1541,
+      "sha256": "ba6cfecc1a9386689faa93d11b4424d8713ac325ecbbbf973d12f86589438020"
+    },
+    {
+      "path": "src/components/inspector/CompositionNumberField.tsx",
+      "size": 1197,
+      "sha256": "60d6da4f51e9b8135087cac81e789fec0027bfdb0cf9139a92b465d91e41a914"
+    },
+    {
+      "path": "src/components/inspector/CompositionPanel.tsx",
+      "size": 7491,
+      "sha256": "599deb48b37cfc37401ae3563a21a65f55ba790b8a7816c053a25723c94f8b11"
+    },
+    {
+      "path": "src/components/inspector/CompositionPresetPicker.tsx",
+      "size": 1027,
+      "sha256": "ae81482b27cbb8cc6ba65f01b6847967f6caccce93ec390b401164f63c643e59"
+    },
+    {
+      "path": "src/components/inspector/CompositionSlider.tsx",
+      "size": 3262,
+      "sha256": "4bc7f88243645cb1635fc31c048b04e654b32113edccca3d5860ff9b847efcfa"
+    },
+    {
+      "path": "src/components/inspector/Controls.tsx",
+      "size": 2032,
+      "sha256": "cf78857f98f0fafd205ee20ac3102e104cffea20759a96e84464805a8cae42b9"
+    },
+    {
+      "path": "src/components/inspector/CursorPanel.tsx",
+      "size": 1415,
+      "sha256": "ff7e075220fe28495bcf8cdb977ed1add202edb5d5f6357b6143c243c3730e7f"
+    },
+    {
+      "path": "src/components/inspector/WebcamModeControls.tsx",
+      "size": 1485,
+      "sha256": "9fc530d90fab64c09a72c96b0751980533276c6efb745951464a6baa9ae3e393"
+    },
+    {
+      "path": "src/components/inspector/WebcamPanel.tsx",
+      "size": 5841,
+      "sha256": "16bc9652596357b66edd7f5c2621dd190e2bcc9311d6e876209e4dbfb1a2bf47"
+    },
+    {
+      "path": "src/components/inspector/ZoomPanel.tsx",
+      "size": 3836,
+      "sha256": "acffbeaca010d927f842c5c3593dfe654aadf0d6e5c79153296fe34cb5236fdb"
+    },
+    {
+      "path": "src/components/inspector/composition-presets.css",
+      "size": 302,
+      "sha256": "bc096ece3778ebb72fadc4ce6fda400e4b69e58972a49c9a4049ca9b6cbe64b4"
+    },
+    {
+      "path": "src/components/inspector/webcam-mode.css",
+      "size": 790,
+      "sha256": "54cfc66531a1213a1fa96d7d8cca58c6b3a6c66f0804871b92a397de92dafbfb"
+    },
+    {
+      "path": "src/components/library/LibraryDialogs.tsx",
+      "size": 4151,
+      "sha256": "36c846a874ecd0c86b9177034cf38ff7c893a0628cbd14f15a4e1a31e1570427"
+    },
+    {
+      "path": "src/components/library/ProjectMenu.tsx",
+      "size": 3030,
+      "sha256": "093e76b2cb8608b4399df6653201dcd54360883a62e85d2c96e986db08a41978"
+    },
+    {
+      "path": "src/components/library/ProjectRow.tsx",
+      "size": 2379,
+      "sha256": "b87684bd03165bec0685c368de666aa836aea38ce8db5fdef6d098bd0e9bd060"
+    },
+    {
+      "path": "src/components/microphone-effects/MicrophoneAdvanced.tsx",
+      "size": 5453,
+      "sha256": "fd3d5a1c1b3760ece1ec46092f5d9115a90377059b62288c6e1c794ce9bf27d2"
+    },
+    {
+      "path": "src/components/microphone-effects/MicrophoneEffectsControls.tsx",
+      "size": 4173,
+      "sha256": "bb766f7f6a2280a8b42f8f36ca57e7ec2cc4962ae242bf024ce4b92f6d9160e4"
+    },
+    {
+      "path": "src/components/microphone-effects/microphone-effects.css",
+      "size": 6895,
+      "sha256": "ba97f7a11f82ff10e97f17c694f41a5b5ab17b09299cdc4d359c3f238dc70e0c"
+    },
+    {
+      "path": "src/components/permission-guide/PermissionCompanion.tsx",
+      "size": 2673,
+      "sha256": "ffc79afe1034cdae87319a48750a4194f3063be6c33bc6ced7360586b83f333c"
+    },
+    {
+      "path": "src/components/permission-guide/PermissionComponentStrip.tsx",
+      "size": 946,
+      "sha256": "1715d57f2ae6748a43f9e5927d1dd502294d773b8865ccec6788d3dc8801ee0b"
+    },
+    {
+      "path": "src/components/permission-guide/PermissionStartup.tsx",
+      "size": 3852,
+      "sha256": "e0a7b4ad252790327ef63e064f763c8ebdc1fde779d0809d1a3b8872f78c3673"
+    },
+    {
+      "path": "src/components/presenter/PresenterFramingControls.tsx",
+      "size": 3682,
+      "sha256": "4dc6aea6f34ea409af0bfd5f796804bf8f4617a2f1ea13d90d48486d472cb902"
+    },
+    {
+      "path": "src/components/presenter/presenter-framing.css",
+      "size": 1751,
+      "sha256": "31ddb49adb2848cac4b5af62c3fcbacbf091ab53c3d29669ff6c9514db15cd42"
+    },
+    {
+      "path": "src/components/recorder-launcher/AudioCacheSettings.tsx",
+      "size": 3130,
+      "sha256": "5130d0226a5573ebb58757452ce2d6c8111ae812c86d2804b2e973e1caa61273"
+    },
+    {
+      "path": "src/components/recorder-launcher/CaptureRecoveryPanel.tsx",
+      "size": 794,
+      "sha256": "621c85a617336bdd6e3d0e343153d811efe3137254f5401cac2b42aefc1fe92b"
+    },
+    {
+      "path": "src/components/recorder-launcher/DistributionSettings.tsx",
+      "size": 3286,
+      "sha256": "88a825bdd83e47942c5406e070ab269967629fee2b0b446e4f7d4c1d3483548f"
+    },
+    {
+      "path": "src/components/recorder-launcher/DistributionUpdateNotice.tsx",
+      "size": 2021,
+      "sha256": "44e5085760f5947e02128a12a58edd29cf7aa43c81a65ccda73b8c8982707d54"
+    },
+    {
+      "path": "src/components/recorder-launcher/LauncherCameraPanel.tsx",
+      "size": 4937,
+      "sha256": "d2345527f731aa379b2a19c702855f5e7d012da174fdd5ca4be1c55e3425f4c8"
+    },
+    {
+      "path": "src/components/recorder-launcher/LauncherCameraRecovery.tsx",
+      "size": 1763,
+      "sha256": "34c86c7e79a1730580c62fafbedf1e1d18fbd0704bb0cd4b44758ce30568a5c0"
+    },
+    {
+      "path": "src/components/recorder-launcher/LauncherMicrophonePanel.tsx",
+      "size": 4456,
+      "sha256": "99682888d56a4ed86c942ec8d57b64f17616484b109def6c07ba7f5c3ec8ed7d"
+    },
+    {
+      "path": "src/components/recorder-launcher/LauncherModeMenu.tsx",
+      "size": 1947,
+      "sha256": "30bb5592ecea2de6dc0241546943e3d6ae16f81b2e043379664db47eef5b86a2"
+    },
+    {
+      "path": "src/components/recorder-launcher/LauncherPanel.tsx",
+      "size": 4834,
+      "sha256": "3d8d7fcc321164e19a59738f7883772cf785950ff82f0cec327e08f7827ad212"
+    },
+    {
+      "path": "src/components/recorder-launcher/LauncherPictureControls.tsx",
+      "size": 787,
+      "sha256": "4bbdedb414f8e5ea31154ca14cec45a6fddcad3f3f4129e05066ba2592c4af4f"
+    },
+    {
+      "path": "src/components/recorder-launcher/LauncherRecordingSettings.tsx",
+      "size": 3088,
+      "sha256": "18f3ebc18a4446ef52e30613a6842d0afec9aac6b609d9c82c7e54e181d858a4"
+    },
+    {
+      "path": "src/components/recorder-launcher/LauncherSourceTrigger.tsx",
+      "size": 1056,
+      "sha256": "c08913d08eb936160b4af51a826746f289d2184c5651f9b168f66a49167a5486"
+    },
+    {
+      "path": "src/components/recorder-launcher/LauncherSources.tsx",
+      "size": 2353,
+      "sha256": "481d88bc2239189256891819b7286497728a1ac3ffd46f0e6f7e66c2017f1200"
+    },
+    {
+      "path": "src/components/recorder-launcher/LauncherToolbar.tsx",
+      "size": 4588,
+      "sha256": "e69e4f6110a78252ecf4d732631173bbcbf90e6b9af45eb6bce6a269ecd28370"
+    },
+    {
+      "path": "src/components/recorder-launcher/LiveApplicationSettings.tsx",
+      "size": 2917,
+      "sha256": "4ce9db10ca254d996a3e80805acf0f1d33bf59a598374ff7fef0042fd408196c"
+    },
+    {
+      "path": "src/components/recorder-launcher/LiveConnectionSettings.tsx",
+      "size": 4305,
+      "sha256": "59bdb137ff7695b9155db9ef89472c6b1188625d27edb4eb9b5c06a373edd218"
+    },
+    {
+      "path": "src/components/recorder-launcher/LiveControls.tsx",
+      "size": 4850,
+      "sha256": "92bb998ced62e5467acedcd8c13cfdfc9208c3d27ba1e63e081a291c2d419b85"
+    },
+    {
+      "path": "src/components/recorder-launcher/LivePreviewSettings.tsx",
+      "size": 6693,
+      "sha256": "8a5282ea3d44fa59ad441d8800f18fc863327a66a3bdf60632f29cddd1cdf26b"
+    },
+    {
+      "path": "src/components/recorder-launcher/LiveWorkflow.tsx",
+      "size": 3393,
+      "sha256": "75a8537d8ffcd67b45ef01ef8e7bdb06371b0cd3bdf2f3a0e0f7a8bc27f232f2"
+    },
+    {
+      "path": "src/components/recorder-launcher/MacPermissionSettings.tsx",
+      "size": 3651,
+      "sha256": "f7b0fb0b516c02e05965f3488a023b5220dc0b211b71717512d7fe0d8c471f43"
+    },
+    {
+      "path": "src/components/recorder-launcher/PermissionComponents.tsx",
+      "size": 2148,
+      "sha256": "7020a5ab57e97df3541e1271b1c82afb4d565af2c22eedd3b8e12fb6391ed2ac"
+    },
+    {
+      "path": "src/components/recorder-launcher/PermissionGuide.tsx",
+      "size": 1965,
+      "sha256": "914389e0f67c87be1a2c27964d995403c89c9e1933b1a182cc55b7d21fef709b"
+    },
+    {
+      "path": "src/components/recorder-launcher/RecorderLauncher.tsx",
+      "size": 6701,
+      "sha256": "9bffce8e4a8c882a06f799f20419cf30a6ea5e67416a528d306f2d5ac031254e"
+    },
+    {
+      "path": "src/components/recorder-launcher/RecordingSessionControls.tsx",
+      "size": 1176,
+      "sha256": "6f879d2f5bf59eb9dc2fe7fef95acdbe857cf31b7eac4825bfc42bde2894b3e6"
+    },
+    {
+      "path": "src/components/recorder-launcher/RecordingSessionDevicePanel.tsx",
+      "size": 5241,
+      "sha256": "0a0fffd76b699d42cf7c60fb0e73c57039f7e03cda79bb553767bfe365f3c21d"
+    },
+    {
+      "path": "src/components/recorder-launcher/RecordingSessionMenu.tsx",
+      "size": 2343,
+      "sha256": "dc025bd46efa42f17417c7f6e1808d82321afca553cd7bd4362a6964398398e4"
+    },
+    {
+      "path": "src/components/recorder-launcher/RecordingSessionToolbar.tsx",
+      "size": 3344,
+      "sha256": "412090fa9c6b3df73120f94b4fbbeb9d14fcd4f47be0cb82ce56d147f105df4a"
+    },
+    {
+      "path": "src/components/recorder-launcher/StreamAudioSettings.tsx",
+      "size": 1523,
+      "sha256": "3e01e19c44d9a2485c941c23693695f8cc7ed24c9e9bfa5e160bd9552ba14e9b"
+    },
+    {
+      "path": "src/components/recorder-launcher/StreamEncodingSettings.tsx",
+      "size": 1244,
+      "sha256": "80603ee4b8c6e5364bbb16b1cf2a3b9433e7368111ce6b94cc6a8d86d47ff8e7"
+    },
+    {
+      "path": "src/components/recorder-launcher/StreamSettings.tsx",
+      "size": 5097,
+      "sha256": "67c7eeb332528e3230557bc9aa953d01761372fc97ee2954a65b5481b1c91fc5"
+    },
+    {
+      "path": "src/components/recorder-launcher/audio-cache-settings.css",
+      "size": 793,
+      "sha256": "abafd621c27009df6ddca0907603336d4edbbdedd84a8f9165dafb0ad566ceef"
+    },
+    {
+      "path": "src/components/recorder-launcher/camera-format.css",
+      "size": 405,
+      "sha256": "b9d07b1d2729b9560b88d8273d89ce73e647d9a1f2f647627fd108ba845a1b92"
+    },
+    {
+      "path": "src/components/recorder-launcher/camera-recovery.css",
+      "size": 929,
+      "sha256": "d0abdaaccadb11a02368e8c58a2edfdba0d128a91cdc53fbebe3e22929c87cf5"
+    },
+    {
+      "path": "src/components/recorder-launcher/live-workflow.css",
+      "size": 7500,
+      "sha256": "c177a752da4f61d7078cfdbf29a778fb1acd3b350125da64746ac30e9cbf861a"
+    },
+    {
+      "path": "src/components/recorder-launcher/mac-permissions.css",
+      "size": 1944,
+      "sha256": "d2ca036c010597f953b5380684b203046e1648e0349a0a35fd50c088b6e81c61"
+    },
+    {
+      "path": "src/components/recorder-launcher/microphone-trial.css",
+      "size": 1677,
+      "sha256": "298bd6c1c2644e8993444ad0f11b3b41c243399497d8b96375a0db903b540b88"
+    },
+    {
+      "path": "src/components/recorder-launcher/permission-guide.css",
+      "size": 4673,
+      "sha256": "946721501ec343ea20ac7ea261d9c866a51b89172f2cbfeb27913fc7aaa2cbed"
+    },
+    {
+      "path": "src/components/recorder-launcher/preparation-toolbar.css",
+      "size": 2663,
+      "sha256": "5b0485ca2c2d99534af247a937076ee1d01d8f3965432c4d3ea6e741286d64e9"
+    },
+    {
+      "path": "src/components/recorder-launcher/recording-session.css",
+      "size": 3640,
+      "sha256": "aa7e9ee87d6a46746f58a856c0df389eff2ee94e162cd68daa7f85d26013046e"
+    },
+    {
+      "path": "src/components/recorder-launcher/stream-settings.css",
+      "size": 2525,
+      "sha256": "f6b38766d53161be4c4da32622147997fae389ac274474b2639d161be878ea20"
+    },
+    {
+      "path": "src/components/recorder-launcher/toolbar-picture.css",
+      "size": 3927,
+      "sha256": "4c2db367721db69502b735a4a944d0ed6ad7f37d44002b1878c77cf0b9f0bd01"
+    },
+    {
+      "path": "src/components/recorder-launcher/utils.ts",
+      "size": 335,
+      "sha256": "49e8c4eeee6334d31b1a3f8ad49573c48cdc4e708c7cd64c4e5216b6dcf1f616"
+    },
+    {
+      "path": "src/components/recording/CameraPreview.tsx",
+      "size": 2715,
+      "sha256": "2bd5969e6fa1870c113a99b3424c7eb5ed030dce67be11c394b7cc367280caac"
+    },
+    {
+      "path": "src/components/recording/MicrophoneSelector.tsx",
+      "size": 1456,
+      "sha256": "8cff4b820e36f5b654002e9cdccdafdbd8050756048b87988a1aa52ee6d0b3ec"
+    },
+    {
+      "path": "src/components/recording/RecordingSetup.tsx",
+      "size": 9173,
+      "sha256": "917d23832ee186124506a32237eb41ff310d22f35c13ae3071da0085cf264317"
+    },
+    {
+      "path": "src/components/recording/RegionEditor.tsx",
+      "size": 1384,
+      "sha256": "5b6c2b2ca169d3b501f8acf731512914aea23f9bfb442440ad1a5d3816c7b0b9"
+    },
+    {
+      "path": "src/components/recording/RegionPicker.tsx",
+      "size": 3073,
+      "sha256": "be8101f1cff195aeb3073cd19cbf77e005ca1665b7db6e0d5c5310f70246f016"
+    },
+    {
+      "path": "src/components/recording/SourcePicker.tsx",
+      "size": 1105,
+      "sha256": "89f5baae888ed06db0e29b4a7c7abc4256a461e6240c74a9928f769aa5df205f"
+    },
+    {
+      "path": "src/components/recording/microphone-selector.css",
+      "size": 1249,
+      "sha256": "919539646075631276e5f8c73d4dfab95d56f85a86eec5112d83bf5c5c77550f"
+    },
+    {
+      "path": "src/components/recording-overlay/CameraControls.tsx",
+      "size": 3806,
+      "sha256": "c90bf1ee1b0a7299ba3693566e2afde6ea24b3ecd12dbbe943764b721e580fb5"
+    },
+    {
+      "path": "src/components/recording-overlay/CameraModeButton.tsx",
+      "size": 1131,
+      "sha256": "d653b0f6c85a416dd6366b3451a08de3b9a2e41ad20a1bb72549ec050c040af9"
+    },
+    {
+      "path": "src/components/recording-overlay/CameraOverlay.tsx",
+      "size": 5703,
+      "sha256": "2f3058c233e17d5f4db46ea763e1c0655f935cd0ad1e52b78d4915fd398e288e"
+    },
+    {
+      "path": "src/components/recording-overlay/CameraResizeHandles.tsx",
+      "size": 2093,
+      "sha256": "7bd65dd2d291d8af6d8a1de564beda2a86d790c1ac3b57994665c53b561e7492"
+    },
+    {
+      "path": "src/components/recording-overlay/CameraSettingsPanel.tsx",
+      "size": 2927,
+      "sha256": "903adc4fefe6c0a7c8d186066937cb5a8d909f865e8188ff74f07fe5310583ac"
+    },
+    {
+      "path": "src/components/recording-overlay/CameraZoomControl.tsx",
+      "size": 1185,
+      "sha256": "979edee59d15c7cc96627199ed651f341441e88be74e71e2c8765b99090daaf7"
+    },
+    {
+      "path": "src/components/recording-overlay/CompactToolbar.tsx",
+      "size": 1239,
+      "sha256": "fc1708812a329a079f1da28098c2395af4f9b1839408ad7117606eac0c6b5f69"
+    },
+    {
+      "path": "src/components/recording-overlay/DemoButton.tsx",
+      "size": 1081,
+      "sha256": "8be7aabaae93232e3e783918935c7e4395158c6e6096b709d33a7df1fbe2ed1c"
+    },
+    {
+      "path": "src/components/recording-overlay/RecordingToolbar.tsx",
+      "size": 1831,
+      "sha256": "75c8cb4a2b38eae769ab146b251df92b2fbbf4b9adedc244ebe706c74a289ea8"
+    },
+    {
+      "path": "src/components/recording-overlay/Teleprompter.tsx",
+      "size": 3369,
+      "sha256": "47f60f1badabdd8122abab68e68eb07dbe62d84abede0fec513a894c6a703714"
+    },
+    {
+      "path": "src/components/recording-overlay/WhiteboardButton.tsx",
+      "size": 1991,
+      "sha256": "91aa38509932d563539c51296a7f0eabbcbd221d3fa6eebae1f614d81348efe6"
+    },
+    {
+      "path": "src/components/recording-overlay/camera-resize.css",
+      "size": 902,
+      "sha256": "0c9409cd9b8ef260fe3d849c1c520068b50e876635a0b8f976f7090c6dde507f"
+    },
+    {
+      "path": "src/components/recording-overlay/camera-settings-panel.css",
+      "size": 2506,
+      "sha256": "93c5b9ee9d0e6f1bb7cf6e62e9494198f3ee079f7e6a440d2573a33751f85569"
+    },
+    {
+      "path": "src/components/recording-overlay/camera-zoom.css",
+      "size": 2345,
+      "sha256": "f9e455e2224130250e41bfcffa20d42a17e82efa300a50d3d653f15661b929c0"
+    },
+    {
+      "path": "src/components/recording-overlay/compact-toolbar.css",
+      "size": 2064,
+      "sha256": "c481da86afbe3564902d9c9eb08a796e620959f98024c204d3698412fd7b8745"
+    },
+    {
+      "path": "src/components/recording-overlay/teleprompter.css",
+      "size": 3525,
+      "sha256": "1d8e04f44648ae2bafbd434f2dc410c2c6575176e6580d31392f472c253ba77e"
+    },
+    {
+      "path": "src/components/session-controls/SessionDevices.tsx",
+      "size": 907,
+      "sha256": "27ff95db64b5277b24245154df8b7713b5a6cc124abe3a81e35be7593737b490"
+    },
+    {
+      "path": "src/components/session-controls/SessionQuitAction.tsx",
+      "size": 391,
+      "sha256": "d43c343bf25fa4bd22c8deab6db682b12a499ce9866eb823d308086c78ecd2e3"
+    },
+    {
+      "path": "src/components/session-controls/SessionToolbar.tsx",
+      "size": 2170,
+      "sha256": "41e2e529cb26ed43350c2d28446f8300225801b3ad5d569313f189c09c750f1c"
+    },
+    {
+      "path": "src/components/session-controls/SessionWhiteboard.tsx",
+      "size": 1077,
+      "sha256": "95cb61ee135541327b57db81313e0edc6e4039012ddc02e90bc6d3d457af6ef4"
+    },
+    {
+      "path": "src/components/session-controls/ToolbarDevice.tsx",
+      "size": 1477,
+      "sha256": "9defebf2202dc5a876e72a3d486fb41dd0f7c9d44390c3715a5bdd53f18f74e1"
+    },
+    {
+      "path": "src/components/session-controls/ToolbarExclusions.tsx",
+      "size": 885,
+      "sha256": "c3828d042b2ce40ef0f80d1dc028124200f7009a1a69e970d49f97ae70906461"
+    },
+    {
+      "path": "src/components/session-controls/ToolbarFrame.tsx",
+      "size": 1000,
+      "sha256": "42b66dd76b1de70592eeee2e71c8628b62a17b627e09461095775026773f930d"
+    },
+    {
+      "path": "src/components/session-controls/ToolbarQuitButton.tsx",
+      "size": 1183,
+      "sha256": "4725aee922457d8245d5385bbcdf687729a339d512a556b469cfa70c1ceba3ee"
+    },
+    {
+      "path": "src/components/session-controls/session-quit-action.css",
+      "size": 524,
+      "sha256": "56032b499e5bd9e62148fff511ece32c22ceb42acf1d9951b47de684605efefa"
+    },
+    {
+      "path": "src/components/session-controls/session-toolbar.css",
+      "size": 8303,
+      "sha256": "83c60047fb3cc174b47799ab13b867106d12da0aa8499274b283a478cb5ec488"
+    },
+    {
+      "path": "src/components/session-controls/types.ts",
+      "size": 567,
+      "sha256": "50ec4df9b0c7a73512ef6fd7074f47cc206128ce841651e0934eddf21eb1701c"
+    },
+    {
+      "path": "src/components/timeline/CompositionTimelineTools.tsx",
+      "size": 568,
+      "sha256": "7e29de24f3caf2f0bc17155a59e11ce074ebb85d2c624a4ab6893dd30c0a2138"
+    },
+    {
+      "path": "src/components/timeline/CompositionTrack.tsx",
+      "size": 1877,
+      "sha256": "20e3e45f083f37dc2a7b0da0b86c045b225466abd8f76e5225a7bc992a0f2388"
+    },
+    {
+      "path": "src/components/timeline/RangeBlock.tsx",
+      "size": 6047,
+      "sha256": "d1b948bf8805aea969555d25ccdbfa1342c33da7f3c9d7527ccfa394342f73f6"
+    },
+    {
+      "path": "src/components/whiteboard/Whiteboard.tsx",
+      "size": 12051,
+      "sha256": "782c58689387e5c52957653a24fd82a820b88e725a1c31522eb28c91b198bceb"
+    },
+    {
+      "path": "src/components/whiteboard/WhiteboardCameraBackdrop.tsx",
+      "size": 4071,
+      "sha256": "f5ab752b1a3a62b831b67f9338add27393a78c956af5a95a2d3c3a79af39ef47"
+    },
+    {
+      "path": "src/components/whiteboard/WhiteboardHeader.tsx",
+      "size": 4325,
+      "sha256": "602db64b137fca842d473c6256aa99216a935835897ecd56c1e76b58869f182c"
+    },
+    {
+      "path": "src/components/whiteboard/WhiteboardModelProgress.tsx",
+      "size": 813,
+      "sha256": "54afd6445ca90778b89772829df28a15a4c40a62ddddf02b3ac0039806c2a1dc"
+    },
+    {
+      "path": "src/components/whiteboard/WhiteboardSceneControls.tsx",
+      "size": 2200,
+      "sha256": "f841d6504d6539597114349bc15646f1672f0c3f0950661bb278982dee88c8eb"
+    },
+    {
+      "path": "src/components/whiteboard/WhiteboardSelectionMenu.tsx",
+      "size": 2965,
+      "sha256": "ca2695e7b59c43c49eef8c260eb284e30e1db063b6206e0adb795ccbd92c900f"
+    },
+    {
+      "path": "src/components/whiteboard/WhiteboardSpeechStatus.tsx",
+      "size": 2276,
+      "sha256": "52339c8e252a1a983494cb88d2b9bab07ced5ab80ad55608a11d36f459b4cd9c"
+    },
+    {
+      "path": "src/components/whiteboard/WhiteboardToolOptions.tsx",
+      "size": 3989,
+      "sha256": "5c3960dce637aa052381f76e70d4f2ac6a6a46c0f85b96796c0380e5e90ae2d1"
+    },
+    {
+      "path": "src/components/whiteboard/WhiteboardTools.tsx",
+      "size": 7244,
+      "sha256": "5197ee2a4701b5109b89a7fa8ea537f09c0b3d05f1dca208a4ebe1bbc7104e5b"
+    },
+    {
+      "path": "src/components/whiteboard/WhiteboardVoiceOptions.tsx",
+      "size": 834,
+      "sha256": "a61e357d5c85f6af31096b0ac587364b7c8492884d5c7ad03f98e0c3db54f303"
+    },
+    {
+      "path": "src/components/whiteboard/WhiteboardWindowControls.tsx",
+      "size": 3197,
+      "sha256": "9de6cb3eb466156e7f603520b8a4a87e758c768f72466d253c96d74f8071e66e"
+    },
+    {
+      "path": "src/hooks/useAudioUrlLease.ts",
+      "size": 388,
+      "sha256": "17c946c624c46dc34ad8d3d936a556a1643a25e8e54ec69161d98b2cd7df02d7"
+    },
+    {
+      "path": "src/hooks/useCameraEffectPreview.ts",
+      "size": 4879,
+      "sha256": "365889a8b95a38640f70fd5bf3528f7e24d066db8d4c630b56bbe51182c1eea2"
+    },
+    {
+      "path": "src/hooks/useCameraPreviewReceiver.ts",
+      "size": 5375,
+      "sha256": "8375b2772e55d7f4034f5ede97de7b514917bf8efcb3e7be746b5786791386c0"
+    },
+    {
+      "path": "src/hooks/useCameraPreviewSender.ts",
+      "size": 397,
+      "sha256": "b042bccd15073b6059bc4f3e637a229f7e7b3d152b829f1119b61752b876bcb7"
+    },
+    {
+      "path": "src/hooks/useCameraPreviewViewport.ts",
+      "size": 2164,
+      "sha256": "f0b9c10ce2125944fda25d07c1446729f293fa1a19523fdf507ac4d6e943132b"
+    },
+    {
+      "path": "src/hooks/useCameraResize.ts",
+      "size": 3374,
+      "sha256": "6ca6d53d44715fbcafa35d454957667ab09e724bcbba2d4965e67dbf6765cd61"
+    },
+    {
+      "path": "src/hooks/useCameraSettings.ts",
+      "size": 1194,
+      "sha256": "da152f66e70efdd29fe5778f48ffbe87c2a5bcc53e0926ebf9681a89ec59fad7"
+    },
+    {
+      "path": "src/hooks/useCanvasBackgroundEditor.ts",
+      "size": 1231,
+      "sha256": "9a8e23b2076459999b7b6b4144fa76dc7d8603d84a99775b91cb1096a055e1b7"
+    },
+    {
+      "path": "src/hooks/useCanvasOverlayBounds.ts",
+      "size": 1223,
+      "sha256": "6b50374973f2e80b8bc3daaf28248de30ca984798728126c8a13ac4f4096e367"
+    },
+    {
+      "path": "src/hooks/useCapturePermissions.ts",
+      "size": 1958,
+      "sha256": "2f6d9e3a470afc4896a4a9d30efa8197f7601056a8b8eac9a0d19c18cf2cb781"
+    },
+    {
+      "path": "src/hooks/useCompositionBackground.ts",
+      "size": 1467,
+      "sha256": "ed9110c7cddac00698bd223e2f1918051c743209fb96589bd8916e3f67dffa50"
+    },
+    {
+      "path": "src/hooks/useCompositionEditor.ts",
+      "size": 5097,
+      "sha256": "d57d10368ee07d779f5459742a28467fb8f70330343491de39f501bc639dae41"
+    },
+    {
+      "path": "src/hooks/useCompositionTransform.ts",
+      "size": 3554,
+      "sha256": "a0256bfc440936ace9d73a11d748650c6c04522a6502255f0d9e627a3d8d9f98"
+    },
+    {
+      "path": "src/hooks/useDemoMode.ts",
+      "size": 883,
+      "sha256": "9497884ac0531e9aaa89399a5200d4e402909f86588b91c2c306380cb7d04225"
+    },
+    {
+      "path": "src/hooks/useDialogFocus.ts",
+      "size": 1945,
+      "sha256": "0a6575051f1938abeac3e6f495908fdbde14b40bb975af86196294ce330683ac"
+    },
+    {
+      "path": "src/hooks/useDistributionSnapshot.ts",
+      "size": 715,
+      "sha256": "c1bc6c6bea6b845dd4641fddbf1282078a5858e213fcf0ed77eaeea694cf93dd"
+    },
+    {
+      "path": "src/hooks/useEditorSelection.ts",
+      "size": 1536,
+      "sha256": "9a378db037b1e39f21ca244e904069276187b898529ab6811d0c1bb55807134e"
+    },
+    {
+      "path": "src/hooks/useExport.ts",
+      "size": 1834,
+      "sha256": "3141fd50a94797a78d20d4210a328b921f6389626fddee602da1996c7e5beaa4"
+    },
+    {
+      "path": "src/hooks/useKeyboard.ts",
+      "size": 3260,
+      "sha256": "4a410bc9974eee95fe34dc2b676f85dd71d36c3f8df7aa2ad9cee61feeda0749"
+    },
+    {
+      "path": "src/hooks/useLauncherPanelDrag.ts",
+      "size": 2652,
+      "sha256": "9cc8d93549b1ce83273944a830697e9cfb71e8d1636fe2b7d77d3b10b564c198"
+    },
+    {
+      "path": "src/hooks/useLauncherRecordingControls.ts",
+      "size": 852,
+      "sha256": "8fe703abd1ddc0146fd0e18b0307be4db5367297e5f102e00f4739e896d63a30"
+    },
+    {
+      "path": "src/hooks/useLauncherSession.ts",
+      "size": 4230,
+      "sha256": "35d098e991d458a33548e901b6f6b4c3347e6b62e8f8495b799c52effc574e8a"
+    },
+    {
+      "path": "src/hooks/useLiveApplications.ts",
+      "size": 5283,
+      "sha256": "cc375fc86e05be4d0eaf7f9241a5fdc9f62058427cc6946b48d00f3680e6928e"
+    },
+    {
+      "path": "src/hooks/useLiveSession.ts",
+      "size": 7336,
+      "sha256": "f69b6710869a9bd5ce3a00b596108cc27bdc8f6de284371ca9addfd77a2a671d"
+    },
+    {
+      "path": "src/hooks/useMacPermissions.ts",
+      "size": 2628,
+      "sha256": "94787aa314539a09002a74e94b23f2b69fd03050655a1bf31464cde366408dfd"
+    },
+    {
+      "path": "src/hooks/useMicrophoneDevices.ts",
+      "size": 1518,
+      "sha256": "faf1393b20baf244502a73e4a474944dfe9f0def06f985072c3a0f428432ddb6"
+    },
+    {
+      "path": "src/hooks/useMicrophoneSettings.ts",
+      "size": 756,
+      "sha256": "24ce32c80d7cb6bb0041d682de742af5a36c26c0d1a7ad6f4ecd3dc68e39f7d9"
+    },
+    {
+      "path": "src/hooks/useMicrophoneTrial.ts",
+      "size": 5389,
+      "sha256": "9b8efedf04384f6d705004219fd74c730d0484db57b27c1f2284c47178153897"
+    },
+    {
+      "path": "src/hooks/useOperationRecording.ts",
+      "size": 1106,
+      "sha256": "a925ef4a7ecda507ea78d4fef7aaa30ab2e12bc5e24d27e1a88198e1c935fd82"
+    },
+    {
+      "path": "src/hooks/usePermissionCompanion.ts",
+      "size": 4077,
+      "sha256": "7cecc01dc371d1939d767f56175475828d93326ecb445e3038ae50c0faeabf82"
+    },
+    {
+      "path": "src/hooks/usePermissionComponents.ts",
+      "size": 2311,
+      "sha256": "f367a53b3d20824d74301b8ac73484a9fde1c6c549dcc93392c232e872763c9c"
+    },
+    {
+      "path": "src/hooks/usePermissionStartup.ts",
+      "size": 3359,
+      "sha256": "3a8196459aec5f8ac2f6f0b36a58413f8f2152960ec9014df154e0d9ef08d30f"
+    },
+    {
+      "path": "src/hooks/usePreparedCameraPreview.ts",
+      "size": 979,
+      "sha256": "eefe2f71c92ad80e2123d2dffc2c4920a0e4c2c41c51e44388d7207b5b5206df"
+    },
+    {
+      "path": "src/hooks/usePreview.ts",
+      "size": 15660,
+      "sha256": "0dcd189a72ec97aeacfc654a8cb74e2a598f935ddc6efcc7e1f5a84086a2234a"
+    },
+    {
+      "path": "src/hooks/usePreviewAudioTracks.ts",
+      "size": 1694,
+      "sha256": "fa44aa71309eb215dfa8df8e9029d8374daabb6688634cac18bfafa9a968bc30"
+    },
+    {
+      "path": "src/hooks/usePreviewResolution.ts",
+      "size": 2837,
+      "sha256": "935f8047147fb4cc51cf06fdd4a240caf1e31a34396a105659a5b9a40413cd1b"
+    },
+    {
+      "path": "src/hooks/useProcessedMicrophone.ts",
+      "size": 2188,
+      "sha256": "940edce91504098e0ec58b06b8356784a32f6e22c7d2f4544773f73fdc35c995"
+    },
+    {
+      "path": "src/hooks/useProjectAudio.ts",
+      "size": 3300,
+      "sha256": "0886bab41de5f8b495d057e4ce8154fa6a68ec3a2dc2297f8f3a4095b255ca77"
+    },
+    {
+      "path": "src/hooks/useProjectEditor.ts",
+      "size": 11507,
+      "sha256": "db353972956b86552d80d5a81aad14420f10bec1b7abd712c2011b1ec476536f"
+    },
+    {
+      "path": "src/hooks/useProjectLibrary.ts",
+      "size": 5372,
+      "sha256": "c12fe6edf7a39b4b21b5e8b7e590e466d3c8fb74eb824e7a67111b73c1614e39"
+    },
+    {
+      "path": "src/hooks/useRecorderLauncher.ts",
+      "size": 19500,
+      "sha256": "645e5ac6f585dc38c0c9f6a6be73db7034d2530d450268ef62b12ffdbfdf03db"
+    },
+    {
+      "path": "src/hooks/useRecording.ts",
+      "size": 1542,
+      "sha256": "45dfaabebf3a5515228378010cffd8501ca414c744bd5a643a2c40c9e198c60f"
+    },
+    {
+      "path": "src/hooks/useRecordingOverlay.ts",
+      "size": 2138,
+      "sha256": "a497a5609b0b4c55530e7a6367691a3bc5ce223f7bfda2355f2cf021a0c6358b"
+    },
+    {
+      "path": "src/hooks/useRegionDrag.ts",
+      "size": 2717,
+      "sha256": "5a7820af5e1d689d79315f3f71519835bf7342909bdb3ae9f38051ee19b986a0"
+    },
+    {
+      "path": "src/hooks/useSessionControls.ts",
+      "size": 5179,
+      "sha256": "ba53c48fbf4335cc17c67f3c65134dbf4da4742d5c8af3492dde73a69eca36d6"
+    },
+    {
+      "path": "src/hooks/useStreamProfiles.ts",
+      "size": 3921,
+      "sha256": "66b7a0e422b3b3c7e93d16410c7e4cc76b8986128c686885a2d97fb9ba03b443"
+    },
+    {
+      "path": "src/hooks/useStudioController.ts",
+      "size": 7191,
+      "sha256": "dad1f617c630c3682be3f78f254e6cd970041a5c5bd4def3f01fc0498e1afb89"
+    },
+    {
+      "path": "src/hooks/useTeleprompter.ts",
+      "size": 4933,
+      "sha256": "31560ea2817ac547da10150373ed8ebb0777c92ed5d9c0286a45a57fbfaba49f"
+    },
+    {
+      "path": "src/hooks/useToolbarApplications.ts",
+      "size": 1760,
+      "sha256": "b642f7cc011b41fc61bef41636df637ed62d21405f0e9646a2a76fa5dccfe4b4"
+    },
+    {
+      "path": "src/hooks/useToolbarAutoCollapse.ts",
+      "size": 5701,
+      "sha256": "d23d29e6de9504dc45fd89959878fe9ab0d9df60bdaa4d0791e0e260c89fb538"
+    },
+    {
+      "path": "src/hooks/useWebcam.ts",
+      "size": 12174,
+      "sha256": "ff8b6912bfa885949604f3ee8b4c3a5ea7d4ca90cf61f14ec5735452fc796e05"
+    },
+    {
+      "path": "src/hooks/useWebcamMedia.ts",
+      "size": 2098,
+      "sha256": "1af514f8a40f9d180b3dcd38f5e1f3d0ae1329dcf39c7c86de77936ed6ebcb03"
+    },
+    {
+      "path": "src/hooks/useWhiteboard.ts",
+      "size": 3666,
+      "sha256": "421f780a2be63da658e512b271b10565dcf90e6e9cccc95bf33b02754de58384"
+    },
+    {
+      "path": "src/hooks/useWhiteboardBackdrop.ts",
+      "size": 1251,
+      "sha256": "42bb31fade4d5424fa83d79640ee9087c1fc713f4892533815643354cc06cc7f"
+    },
+    {
+      "path": "src/hooks/useWhiteboardCanvas.ts",
+      "size": 24230,
+      "sha256": "37548a9e665c87bbfb95ba674e2e47c50fc1b260fa1df68e9eb5d9b2f4189692"
+    },
+    {
+      "path": "src/hooks/useWhiteboardImageImport.ts",
+      "size": 3775,
+      "sha256": "e426bd641f5f110263a89618496a7b665356f312344e6833fe03922cb9566574"
+    },
+    {
+      "path": "src/hooks/useWhiteboardMedia.ts",
+      "size": 2631,
+      "sha256": "8480c0f2bedd0d93625acacf46073689afd0d7422475b36a5a476b68f3c6be28"
+    },
+    {
+      "path": "src/hooks/useWhiteboardReveal.ts",
+      "size": 924,
+      "sha256": "89999045002c31f9a588b3eb661db0b83fde7a7b219a7e1ce1590b1ca7ffa1c5"
+    },
+    {
+      "path": "src/hooks/useWhiteboardSpeech.ts",
+      "size": 6557,
+      "sha256": "de4f399ee71c956aa0b2f8d121b149b4d6ec0d5b04386b61043f30bf8cca92ff"
+    },
+    {
+      "path": "src/hooks/useWhiteboardSpeechLevel.ts",
+      "size": 963,
+      "sha256": "0076962d87d19a42c29c20a20526c6dc03c392a3a8f29aa94230498aa2948499"
+    },
+    {
+      "path": "src/hooks/useWhiteboardViewReady.ts",
+      "size": 694,
+      "sha256": "cb3db7a4a952764829d4d9dc70fc787a4253c21d3648245247f5a5b608dc0f78"
+    },
+    {
+      "path": "src/hooks/useWhiteboardViewport.ts",
+      "size": 6631,
+      "sha256": "46a5af62b0714d6869a60e8900a586e4b463d193f57badaab19021d6445a4f82"
+    },
+    {
+      "path": "src/hooks/whiteboard-gestures.ts",
+      "size": 5707,
+      "sha256": "5580b8d46f9a5329c4e521f2681f4cd386baebffc7447fe527ee0df2f4b447b9"
+    },
+    {
+      "path": "src/main.tsx",
+      "size": 2677,
+      "sha256": "18c80728b7b74aa9f475425008ca909b17bc8418882fdc71c2dbc0cd821fe287"
+    },
+    {
+      "path": "src/services/abortable-operation.ts",
+      "size": 854,
+      "sha256": "72aa85448fe8a12bafd948fe48d8c4878b616644d68d48b435f8b9acd9d67e42"
+    },
+    {
+      "path": "src/services/app-preferences.ts",
+      "size": 9498,
+      "sha256": "e9cec97178ec451d761fe19b678ac41c396b853128d1e36c4fe20b2ba6efc087"
+    },
+    {
+      "path": "src/services/audio-url-leases.ts",
+      "size": 1296,
+      "sha256": "119ddb2ac24078b649d4aa367e0bf8ff7867a2c973aa00130b9714ef73560872"
+    },
+    {
+      "path": "src/services/camera-acquisition.ts",
+      "size": 8674,
+      "sha256": "b55777b1f5df5024177720127f6c0fd1a1597ac6c72c3a873947d9e933accb09"
+    },
+    {
+      "path": "src/services/camera-effects/README.md",
+      "size": 15318,
+      "sha256": "aa974c89d705889148cb29c05a437d449fec843b63ab0acef515da953824ca0a"
+    },
+    {
+      "path": "src/services/camera-effects/canvas.ts",
+      "size": 2151,
+      "sha256": "79d195f2dbb34912521cd72b56113f7cfc81596a33634af68e18b2ce2afd6656"
+    },
+    {
+      "path": "src/services/camera-effects/face/bounds.ts",
+      "size": 1146,
+      "sha256": "3f559e4e2c4b68e699223096be70ad6b103e36655ed93307642d9aebf4554c85"
+    },
+    {
+      "path": "src/services/camera-effects/face/continuity.ts",
+      "size": 2673,
+      "sha256": "9a908221385bf124fdc7d75fef8da78f34cb7d210af258fe40b5039b892382a8"
+    },
+    {
+      "path": "src/services/camera-effects/face/geometry.ts",
+      "size": 5073,
+      "sha256": "175b658866ab126b6e02f89f207d9111743303336cd9868f9b941bc002cb9a1d"
+    },
+    {
+      "path": "src/services/camera-effects/face/gpu-uniforms.ts",
+      "size": 1936,
+      "sha256": "2e7569aaf294b1d2fe942a2d5816403430a44cbd18e8384f2d81bbb35da7d645"
+    },
+    {
+      "path": "src/services/camera-effects/face/kernel.ts",
+      "size": 2731,
+      "sha256": "11abdae7acb11f027b6446ff5983b343cac216980dfdbd95171e6147a9bff64c"
+    },
+    {
+      "path": "src/services/camera-effects/face/preparation.ts",
+      "size": 2247,
+      "sha256": "5d17d9fe5cc832f5ea47d6aa88e0cdd4de629f232d522d16571335478e625eaf"
+    },
+    {
+      "path": "src/services/camera-effects/face/processor.ts",
+      "size": 1638,
+      "sha256": "c4a587e76c9efb33ddc2bb6a3ed101c629263552987aa80200768f90ecf7a7a1"
+    },
+    {
+      "path": "src/services/camera-effects/face/shader.ts",
+      "size": 3378,
+      "sha256": "32222de4179a76ca9397882fc0153765da2d13b464d292ff3093dcff01265c32"
+    },
+    {
+      "path": "src/services/camera-effects/face/tracker.ts",
+      "size": 6125,
+      "sha256": "6a0e775a9f90e5d4cdc14fc2a99dfac91bb195e14fea577f0845b2f0a9fec45c"
+    },
+    {
+      "path": "src/services/camera-effects/face/worker.ts",
+      "size": 1882,
+      "sha256": "4fd3ef1bbce9cc2101b1ec1c5007f677b4787b6c9a0e5e2f2a0c7f467eec005b"
+    },
+    {
+      "path": "src/services/camera-effects/gpu-pass.ts",
+      "size": 2448,
+      "sha256": "6de5c574502d4397ee1cd887c6ec579a538aeb9ce5d4f393bb07833fa8793285"
+    },
+    {
+      "path": "src/services/camera-effects/gpu.ts",
+      "size": 8138,
+      "sha256": "d74a85354da1dec0dd43a5a4ac4604618c7cec7f49115be1a6b4b0cf74945cb7"
+    },
+    {
+      "path": "src/services/camera-effects/kernel.ts",
+      "size": 3437,
+      "sha256": "278b36e3acf94cc55d089da2a0a612bc367d38d8f47314aaeb43d4e987e9c1bd"
+    },
+    {
+      "path": "src/services/camera-effects/parameters.ts",
+      "size": 878,
+      "sha256": "95053d396a52540abd467bc7893c2d5889b74ac2319235eb65c475649d8a3f23"
+    },
+    {
+      "path": "src/services/camera-effects/preview-budget.ts",
+      "size": 1580,
+      "sha256": "4177f8a49c3fdfab4ffd835c119cc12db5835859c36db44a813291711fc03c32"
+    },
+    {
+      "path": "src/services/camera-effects/preview-renderer.ts",
+      "size": 2559,
+      "sha256": "e6f1fa0b980d3aac67a0fb297a4cf5c3479342f61e04c2461b266f37a98bb037"
+    },
+    {
+      "path": "src/services/camera-effects/renderer.ts",
+      "size": 8160,
+      "sha256": "cce7ef3427ced9c129aba313e4bae49796c488d44101218550f9637dd9a534ee"
+    },
+    {
+      "path": "src/services/camera-effects/sampling.ts",
+      "size": 1429,
+      "sha256": "1926be2c46d33916dfffec78580515dc8ace6dbf2a5a666f02dd826ad9ecde72"
+    },
+    {
+      "path": "src/services/camera-effects/shader.ts",
+      "size": 4252,
+      "sha256": "f0fa55f85e3fdb00ca947f38af6365cdc09f86cee17341c22da7c09da0d96243"
+    },
+    {
+      "path": "src/services/camera-effects/skin-smoothing.ts",
+      "size": 4668,
+      "sha256": "25722525c34aad158840c6dc8d0ccb3199fa32888231f0e9b1775604fc63048b"
+    },
+    {
+      "path": "src/services/camera-effects/skin.ts",
+      "size": 1088,
+      "sha256": "9a536f9ba052030a24385ab6f539f83d1d1091bbbec264004526064ad7123842"
+    },
+    {
+      "path": "src/services/camera-error-context.ts",
+      "size": 1283,
+      "sha256": "3154dea01877e1c7be133a6c19bafaf594d3d14695c6236b71c8deb2b2490b4e"
+    },
+    {
+      "path": "src/services/camera-errors.ts",
+      "size": 1289,
+      "sha256": "384ef987201b238e0eed5ffede7ae3b17adbf1e50530ff59a20be67db14dede2"
+    },
+    {
+      "path": "src/services/camera-format-preferences.ts",
+      "size": 1255,
+      "sha256": "17d725f768970d1ed38c95300cc8eb9f3ff7e9754a9facaf9a12c1e25941a574"
+    },
+    {
+      "path": "src/services/camera-format.ts",
+      "size": 3082,
+      "sha256": "f88691f7080e87431dfa67393c138496bf5f3f549a5a0b00d7612cf6053a296e"
+    },
+    {
+      "path": "src/services/camera-input.ts",
+      "size": 1350,
+      "sha256": "d221cbdc947895490267b79949c9c7002f125fb76b1c85a826ece2af9213e12c"
+    },
+    {
+      "path": "src/services/camera-preview-codecs.ts",
+      "size": 700,
+      "sha256": "02581965133bcedfe2495aca4bde55fa5186fca259b98932a23da85ef7b48b68"
+    },
+    {
+      "path": "src/services/camera-preview-quality.ts",
+      "size": 5709,
+      "sha256": "a8d96f7e6afc66a3f8c419f0207caa72b271b87b7fc1b7a64252535e22e3bb74"
+    },
+    {
+      "path": "src/services/camera-preview-sender.ts",
+      "size": 7496,
+      "sha256": "e3d144fbf1b3a715a9c7fd1c62a2da8c62fe05cb2eae29c1ffdc391f75bb7e31"
+    },
+    {
+      "path": "src/services/camera-quality.ts",
+      "size": 3607,
+      "sha256": "1f8fbc27fff04a9edabe22ac1a63328ca0ff1f6c9148c74f9a005896b727150e"
+    },
+    {
+      "path": "src/services/camera-recorder-options.ts",
+      "size": 1561,
+      "sha256": "5c1b3051720e10c4420ca026b6495b3fc29028d577378cdcfbd96e5c9ec37c7d"
+    },
+    {
+      "path": "src/services/camera-recorder-start.ts",
+      "size": 1246,
+      "sha256": "a3cb35b13657d539241b8d8c0d79cf9238427f4792b11eac0522605c9a6acced"
+    },
+    {
+      "path": "src/services/camera-resize-contour.ts",
+      "size": 2009,
+      "sha256": "a73eb6ff63f6bcd8b667b83d4b73c5d6269f9f17316f0786b37652e974a60896"
+    },
+    {
+      "path": "src/services/camera-resize.ts",
+      "size": 2158,
+      "sha256": "c3da5f6154be6c245d1d00995de953abace760332d139b879ecf31529e81d190"
+    },
+    {
+      "path": "src/services/camera-selection.ts",
+      "size": 2271,
+      "sha256": "d0fb43b50071eab858c4109a2e6f6ed0bc24ef7d81021bc70e29be7ab80119b0"
+    },
+    {
+      "path": "src/services/capture-permissions.ts",
+      "size": 1611,
+      "sha256": "50689704171fb1d4d8b27af274cfc2446ea9a0fbd34d25f3c999b09b314e9d83"
+    },
+    {
+      "path": "src/services/composition-background.ts",
+      "size": 1405,
+      "sha256": "3820b34843c5b279045ef38dd97cd9e986b591821488501b603b97543abfd3a3"
+    },
+    {
+      "path": "src/services/composition-backgrounds.ts",
+      "size": 2953,
+      "sha256": "6a00407285412e2c7fe0e2eb5a56af118d59fc8774b5ac5ca7f810e74a07a4f3"
+    },
+    {
+      "path": "src/services/composition-presets.ts",
+      "size": 2036,
+      "sha256": "943874fb83e2ca04d1be3b8455276a793f2cc17b51e35ea58f505e9c4b99f90f"
+    },
+    {
+      "path": "src/services/composition-transform.ts",
+      "size": 2840,
+      "sha256": "67f9ab2ebb4b2bc5c987621c05f5f8b3aaf3f3d337046a9284223bf28865c2cd"
+    },
+    {
+      "path": "src/services/compositor-decoration.ts",
+      "size": 3304,
+      "sha256": "2b8a9e218995f80dac34efbb3c64c61a1f13798e3e626d5cc194b5ee8fb8f9cd"
+    },
+    {
+      "path": "src/services/compositor.ts",
+      "size": 5873,
+      "sha256": "666768ad106550a3e782a167ed19ec5330401bc55674a9a46db64cc5e9a5b2c4"
+    },
+    {
+      "path": "src/services/cursor-renderer.ts",
+      "size": 1267,
+      "sha256": "c16bef061890b2c0f14cf992a5f205c74c8b58f96f3595b686b30e643f0d5144"
+    },
+    {
+      "path": "src/services/decode-video.ts",
+      "size": 5980,
+      "sha256": "45c7b065e503f10d0ad6c999f462ee120303f61d87f521eb5460d807f248cb63"
+    },
+    {
+      "path": "src/services/export-encoder-capacity.ts",
+      "size": 1231,
+      "sha256": "69e32a203c4b2bb041df6bd1705a2be53fa0ea095fb26215734ec2c6a7ff1a06"
+    },
+    {
+      "path": "src/services/export-encoding.ts",
+      "size": 2372,
+      "sha256": "4ba7f83eb039e1602d241a8d8a163827517ffd9736346285462ee1acc478efa2"
+    },
+    {
+      "path": "src/services/export-progress.ts",
+      "size": 624,
+      "sha256": "c6b743ccd2f12d4bd8b808bfd015368d059f1fdfa0210117fce2720247bab8b7"
+    },
+    {
+      "path": "src/services/export-render-entry.ts",
+      "size": 671,
+      "sha256": "0193c364429d6b21ce58b6db90187c5bf89a0ba0b1806f2ffeedb49db6744fdb"
+    },
+    {
+      "path": "src/services/export-video.ts",
+      "size": 8136,
+      "sha256": "f7d019f4589fa5500d083e6c18780d001517ad42bbd13990ef423fb22732afcd"
+    },
+    {
+      "path": "src/services/live/camera.ts",
+      "size": 3364,
+      "sha256": "5d7b803bfcf4829b74e42671bacec74e8a04da252daac980115e58e158d09679"
+    },
+    {
+      "path": "src/services/live/composition.ts",
+      "size": 4238,
+      "sha256": "73f29155dc73e628c958a79b5bbe8618baffee7c673d7567d8539044829ff4fe"
+    },
+    {
+      "path": "src/services/live/preview.ts",
+      "size": 1327,
+      "sha256": "d25703aba1fd30039e4faa7e1ccdf6ea38d32e80ba05962d00eb059e22ac73d8"
+    },
+    {
+      "path": "src/services/live/runtime.ts",
+      "size": 3209,
+      "sha256": "0c7caa4649bc5903ff4ebc0e54dd2a1d9abf8a8f717b639cd67608300fef2699"
+    },
+    {
+      "path": "src/services/live/whiteboard.ts",
+      "size": 868,
+      "sha256": "cadae65ebc9f437bb2dbe7ebddb08197306309049af591917e409dbeee840a98"
+    },
+    {
+      "path": "src/services/live-application-preferences.ts",
+      "size": 3905,
+      "sha256": "6a5d9efe65141de978fa952c27020e7cb2e0cacdb072541b32c6be6dfbf22aec"
+    },
+    {
+      "path": "src/services/media-frame-identity.ts",
+      "size": 1911,
+      "sha256": "f3322beeaaba42711221cb75fbefdec6b285fa46b3d85cd83702bd0997896d52"
+    },
+    {
+      "path": "src/services/media.ts",
+      "size": 1458,
+      "sha256": "c51fd83c770253056ef29a2ea1cfde00bef428c74d07696941468e76aa7fd375"
+    },
+    {
+      "path": "src/services/microphone-preferences.ts",
+      "size": 1007,
+      "sha256": "1fb7bd94aa33bd0403396effd5e425ae69c210ed7e7d7cddf901219c58e1f4d3"
+    },
+    {
+      "path": "src/services/playback-clock.ts",
+      "size": 1150,
+      "sha256": "aace30226b57965df2d127270a38c253c61ec9d17f1a4dfa47b9ebde21ae8d36"
+    },
+    {
+      "path": "src/services/preview-audio-session.ts",
+      "size": 4691,
+      "sha256": "dd02e30b6acaeaa6c0dc92227b3ddf8f2ad3bdff725b89d2454c5e4b31647244"
+    },
+    {
+      "path": "src/services/preview-audio-track.ts",
+      "size": 6318,
+      "sha256": "da2aebcfe86ae203e72b21f3bcf57cb9270c07359dd501770c6920e3875ddc5e"
+    },
+    {
+      "path": "src/services/preview-audio.ts",
+      "size": 1128,
+      "sha256": "95c28bdfcb39a68404ab00a4011e685d4fd11992d301fce4d1f604f00b7cc251"
+    },
+    {
+      "path": "src/services/preview-cadence.ts",
+      "size": 478,
+      "sha256": "bfabbb38842b13b28b95c5adc9d60c9bf8d0d61a20f24e679ed80411a662adcf"
+    },
+    {
+      "path": "src/services/preview-interaction.ts",
+      "size": 4172,
+      "sha256": "382d742507bedd010efc7ccb7bdf80877b2d9c10a5db03961bdfd905d0a5671b"
+    },
+    {
+      "path": "src/services/recording-device-preferences.ts",
+      "size": 1394,
+      "sha256": "6081549b157b71c589c6265d292c66e2989ee5a30b52131be52dc0ed05470293"
+    },
+    {
+      "path": "src/services/recording-error-message.ts",
+      "size": 458,
+      "sha256": "f7881c92c0b95322d833808d6476e3aa02a621a5a854bfa58c0ee45b8131580d"
+    },
+    {
+      "path": "src/services/recording-session-devices.ts",
+      "size": 2322,
+      "sha256": "265cfeb6f61e4d3767c5a0e4a3cb106749a6aac0ceaeb19acc9bc5c17aba7ad8"
+    },
+    {
+      "path": "src/services/switchable-camera-source.ts",
+      "size": 2253,
+      "sha256": "31fee5888057a37f844af38db92ef6951f701be4e61e7fbf917bb3768b55bb82"
+    },
+    {
+      "path": "src/services/switchable-webcam-recorder.ts",
+      "size": 2671,
+      "sha256": "5f970d49ee97c4efdacad4611dad6237ac56edefa2294bf45da4ce2bff6bf15f"
+    },
+    {
+      "path": "src/services/teleprompter-preferences.ts",
+      "size": 1685,
+      "sha256": "ee78a2adef9dca9401e43d57bda7809ecebe5b0e37a227c728042b5eb2f00613"
+    },
+    {
+      "path": "src/services/toolbar-auto-collapse.ts",
+      "size": 1867,
+      "sha256": "08bed703474333ee6938f2b6fbf3a0e70ae375b2453deb993db146537fa4b452"
+    },
+    {
+      "path": "src/services/webcam-compositor.ts",
+      "size": 4776,
+      "sha256": "95af66be372bb5595020c9209ab9dbc378f90a2a8ffdb9b441a97c21d9714576"
+    },
+    {
+      "path": "src/services/webcam-frame-monitor.ts",
+      "size": 4864,
+      "sha256": "356a171ad1514a21f206aebea3e538221f7ccbe7d85d73695c01325150060794"
+    },
+    {
+      "path": "src/services/webcam-recorder.ts",
+      "size": 9260,
+      "sha256": "3c48ba4c2b71d6295d03082ebd7c73d74629ee65dce5441fa44cceb5da444d6f"
+    },
+    {
+      "path": "src/services/whiteboard-camera-compositor.ts",
+      "size": 2891,
+      "sha256": "38572e34a5e10d79c6da8b71db7df4bdeb967da7f567d20521087caae229cf49"
+    },
+    {
+      "path": "src/services/whiteboard-diagram-style.ts",
+      "size": 1665,
+      "sha256": "a0e56ec630c810f5afd2a063596a21601775598897a94d38a1deb966777e2949"
+    },
+    {
+      "path": "src/services/whiteboard-elements.ts",
+      "size": 5432,
+      "sha256": "35bbf269cddbcddc0451edd4a0252087f1aa249cd75d73be7d50589d4d1ec51f"
+    },
+    {
+      "path": "src/services/whiteboard-images.ts",
+      "size": 2164,
+      "sha256": "08a271c45b087106e47abe92ebd283c8fcff5b39edf36936f46845eef1e93942"
+    },
+    {
+      "path": "src/services/whiteboard-import.ts",
+      "size": 1451,
+      "sha256": "a187f3f833f59242bc666ccddd4569d1ad1ffcd7c0b8289970e0558dd8137ccc"
+    },
+    {
+      "path": "src/services/whiteboard-motion-path.ts",
+      "size": 2161,
+      "sha256": "8e04596c1c7eddc4997bde5d50e64b28c2eba4a50781d7979aa79638de309bff"
+    },
+    {
+      "path": "src/services/whiteboard-paint-text.ts",
+      "size": 2115,
+      "sha256": "1fcbf24b69de561d388f5d68e81038f31e093d80e323470f9d7d7fbd9f2c5be0"
+    },
+    {
+      "path": "src/services/whiteboard-renderer.ts",
+      "size": 4763,
+      "sha256": "a450bb57c609f47ae941a7862f02b5e26a165311c145e5ae003970feb8902530"
+    },
+    {
+      "path": "src/services/whiteboard-selection.ts",
+      "size": 5911,
+      "sha256": "dfdd79927713c3dc8485687ebb6610b6ee7e1bc269766319c1cb85fa27a12427"
+    },
+    {
+      "path": "src/services/whiteboard-speech-state.ts",
+      "size": 128,
+      "sha256": "654b7f315b9bf16e2cb850982a1279870640f97bc69fdc6f13e9a5b1dc647114"
+    },
+    {
+      "path": "src/services/whiteboard-state-reader.ts",
+      "size": 1437,
+      "sha256": "708d43d50d041b099cde69ba74fad85e4c497fca5249971eca266f11bfcd2515"
+    },
+    {
+      "path": "src/services/whiteboard-text.ts",
+      "size": 1342,
+      "sha256": "c308367db22728a383cecb88a8663ad8979dfe09f3ffe02a9b38d7450834222e"
+    },
+    {
+      "path": "src/services/whiteboard-video-renderer.ts",
+      "size": 1024,
+      "sha256": "3eaa471058abc35c2fe0768f2145812ee2cf2097a96bfb3341306a0d2e2cb6cf"
+    },
+    {
+      "path": "src/styles/capture-theme.css",
+      "size": 3571,
+      "sha256": "b1c07e1ce455880e8a0730eb495486813bd0d8d54f94cb5f7e425517512cb463"
+    },
+    {
+      "path": "src/styles/composition.css",
+      "size": 5470,
+      "sha256": "a0a329d805786385c7fb2d8dbbecfb9a2f2c54bf241a34dec973b97c51e086e8"
+    },
+    {
+      "path": "src/styles/dialogs.css",
+      "size": 7169,
+      "sha256": "6808490253f3cbc87b3510fd3e585291d3e0b9dbf140667ab90f4b664d7fae22"
+    },
+    {
+      "path": "src/styles/editing-workflow.css",
+      "size": 1039,
+      "sha256": "1b0837a5e21280523cdc3aed3a03d0a4cf577f52e0dca98c3fd2355ab049e74f"
+    },
+    {
+      "path": "src/styles/editor-layout.css",
+      "size": 3226,
+      "sha256": "bd21731f1192740b181aadf2c27ac657ca89efe601919c251bfb91ee240ad5a8"
+    },
+    {
+      "path": "src/styles/floating-launcher-controls.css",
+      "size": 7101,
+      "sha256": "f3f18187e0d7aeb62a517f9d730351c6d4ca1baec3bac3f2fa85fb11c97187c8"
+    },
+    {
+      "path": "src/styles/floating-launcher-panels.css",
+      "size": 6954,
+      "sha256": "55bfa3722a32e2e002a397ebaf217b57f737fc218b19364a114b3fbb9a750627"
+    },
+    {
+      "path": "src/styles/index.css",
+      "size": 3824,
+      "sha256": "18238342e75a065dbd959631c9bbf32e48d846a41a658718a206fea9fbc67f6d"
+    },
+    {
+      "path": "src/styles/inspector.css",
+      "size": 8363,
+      "sha256": "af9d57560041743ceed793f80f1cc8fcbfb09087432d46e23e008477b0b081c8"
+    },
+    {
+      "path": "src/styles/library.css",
+      "size": 10754,
+      "sha256": "09d642149ca0238a6ac24f952ba57a85130058e57d806c37fc0eea0a8e1a2e2f"
+    },
+    {
+      "path": "src/styles/live.css",
+      "size": 2750,
+      "sha256": "2c2ea758c4f0ccf0269528e1d3aacda03ec7e6e0c27d5b8f414de2afe268ffcb"
+    },
+    {
+      "path": "src/styles/permission-companion.css",
+      "size": 3047,
+      "sha256": "da172c30ac57d7026c7c7fbc9865e4c23ec69589327490e57e7762d15d783246"
+    },
+    {
+      "path": "src/styles/permission-startup.css",
+      "size": 3219,
+      "sha256": "421d03dfa7778d4f46ff20b38996819fbe799b60ca23ac6e39dbbd95e42b09e3"
+    },
+    {
+      "path": "src/styles/recorder-launcher.css",
+      "size": 2632,
+      "sha256": "a725b1e0c8cc9b5fa98dbf293bfe9eb8028867e9f01710ad4967760696319109"
+    },
+    {
+      "path": "src/styles/recording-overlay.css",
+      "size": 9603,
+      "sha256": "341920e046a817739c1a42b10e8b3d4be4ead80542bc8e269cfb50f714cd7d39"
+    },
+    {
+      "path": "src/styles/recording-workflow.css",
+      "size": 9105,
+      "sha256": "995ed97f6022bb1f87e3fe07499377ebf04265cfa6d9176dffae681edf63b674"
+    },
+    {
+      "path": "src/styles/region-picker.css",
+      "size": 2488,
+      "sha256": "c5e4b1ef17606ffc8c311e2b656a6da4c5f95a5498bb8af1914d24af503b3b67"
+    },
+    {
+      "path": "src/styles/timeline.css",
+      "size": 6818,
+      "sha256": "3ff4119d4517ec63bf45eefa334dd3522029a69926bc55f64f9dfb3b509d41d1"
+    },
+    {
+      "path": "src/styles/tokens.css",
+      "size": 1705,
+      "sha256": "54a83829e781e3f0ba9d91b9b99201201c4c9551bce210c4f63f2f2bb3853903"
+    },
+    {
+      "path": "src/styles/whiteboard-camera.css",
+      "size": 3279,
+      "sha256": "8d53ad90592c501835835471c0f9fbca5bbec03277bf0d5f66c37157864320c6"
+    },
+    {
+      "path": "src/styles/whiteboard.css",
+      "size": 12420,
+      "sha256": "6dfa76ed7fdf02e7c797063354fb389342cc4f6b5c3deabb71c252da85b8f1c9"
+    },
+    {
+      "path": "src/styles/workspace.css",
+      "size": 6418,
+      "sha256": "a4339bebe095cca2d3f13c3a85d34e0dae04e29a250315b3745f7d613f3e6b33"
+    },
+    {
+      "path": "tests/app-branding.test.ts",
+      "size": 8238,
+      "sha256": "496dbbf3d09b0ee55bb8f31b5c91b057c774873a1efc8f17f1d4a35ede06831e"
+    },
+    {
+      "path": "tests/app-preferences.test.ts",
+      "size": 11282,
+      "sha256": "fdfa3baceb6c910b928e8bda80d2766b4881a330acbe61deacba5468fa6e6238"
+    },
+    {
+      "path": "tests/app-update-build.test.ts",
+      "size": 2055,
+      "sha256": "212610ac5da9412cc49280db3b220229a9124ce5e105e6e28016ef0bf8718fdf"
+    },
+    {
+      "path": "tests/app-update-package.test.ts",
+      "size": 3469,
+      "sha256": "dd2fa8c16e0f3d6f95cad665f78c0816bd1f5a0e472411550c42854fbac15e22"
+    },
+    {
+      "path": "tests/application-lifecycle.test.ts",
+      "size": 2488,
+      "sha256": "974c475a48492fc423544514b7f6deef9a670913a22fc585914b5d9e68543e83"
+    },
+    {
+      "path": "tests/audio-cache-manager.test.ts",
+      "size": 19759,
+      "sha256": "fa04fb1b66cb48db1d14dbbf7179bf025e48960698d2c2699789f947ea554aab"
+    },
+    {
+      "path": "tests/audio-cache-ui-harness.tsx",
+      "size": 1127,
+      "sha256": "fbaee7184ebf8b890145b659904c6e75d2885bc157536af7b580e092add09fd0"
+    },
+    {
+      "path": "tests/audio-cache-ui-main.ts",
+      "size": 3340,
+      "sha256": "80e8d23d0676de3ca5a0373e8a0a55617f27273cbf79eb57cfb90debb52c46fc"
+    },
+    {
+      "path": "tests/audio-cache-ui-preload.ts",
+      "size": 278,
+      "sha256": "4aa0016931213db8b14475c7b14f2600a6fcc0d25ae19ac5a538d72d45aba6d4"
+    },
+    {
+      "path": "tests/audio-mix.test.ts",
+      "size": 2755,
+      "sha256": "016fa1022322eaafeda485210763675cd3615ad29f40e8febb251d2ed3215aa8"
+    },
+    {
+      "path": "tests/audio-preview-isolation-ui-harness.css",
+      "size": 1020,
+      "sha256": "f07875a340e69083bb25f649c385efb3a22170749840fbc921ee9a97311f63a5"
+    },
+    {
+      "path": "tests/audio-preview-isolation-ui-harness.tsx",
+      "size": 4754,
+      "sha256": "d4f70fde0c520892cf5b84498df857e44fac129afe6edc06ccbaed22736304a1"
+    },
+    {
+      "path": "tests/audio-preview-isolation.test.ts",
+      "size": 554,
+      "sha256": "21fb981fc8c59d8402003a6c1be72a0ff6f74a6dad4ca3067bd8143bf509ef8b"
+    },
+    {
+      "path": "tests/audio-storage-browser-main.ts",
+      "size": 1785,
+      "sha256": "7cc9c7cbe42258d5312ef0683afab29de3efa83fb3199b3b36b4d860525c67b5"
+    },
+    {
+      "path": "tests/audio-storage.test.ts",
+      "size": 12191,
+      "sha256": "271967869d6b12a94f042b9e02c6f04b5a6d8545c022434fb63e565cfc202b97"
+    },
+    {
+      "path": "tests/audio-url-leases.test.ts",
+      "size": 1047,
+      "sha256": "398ecdc834ddc7e79e59e726762e505de0acc66047f8089d290c9d49f59d348c"
+    },
+    {
+      "path": "tests/auto-zoom-continuity.test.ts",
+      "size": 1856,
+      "sha256": "9ae50cfcf6a9db8239a28564b0c1bdf1bdda5c9f662b3788314635a0d2c29e38"
+    },
+    {
+      "path": "tests/auto-zoom-focus.test.ts",
+      "size": 3337,
+      "sha256": "ec94898d020abdbf199af7492a096837888057557bc0ccc0516f28403b6ed8ce"
+    },
+    {
+      "path": "tests/auto-zoom-selection.test.ts",
+      "size": 7549,
+      "sha256": "7bbcb85d5d43b23638740d258d2ab29439baba99ae461b4d8c4a12fcd066c30d"
+    },
+    {
+      "path": "tests/auto-zoom-typing.test.ts",
+      "size": 11247,
+      "sha256": "e5aaac11d201c35ed4f7112f8c19a6c6226a99652c8fe78b9cc0812626d59f0c"
+    },
+    {
+      "path": "tests/auto-zoom-whiteboard.test.ts",
+      "size": 6964,
+      "sha256": "e728de4004063ab5dd815c34be9594b0bf613bc7455a68f5c176ea248f507f3b"
+    },
+    {
+      "path": "tests/background-assets.test.ts",
+      "size": 4604,
+      "sha256": "358a8bfe43c69b9b9bf7b91e2cb80344d08361b5a60893d95a52902a61938c50"
+    },
+    {
+      "path": "tests/camera-acquisition.test.ts",
+      "size": 18043,
+      "sha256": "53f36df61cb57acabcb69d5c34108a370e15713fb0e3cbb2b8f92e3a5c1b04f5"
+    },
+    {
+      "path": "tests/camera-beauty-harness.tsx",
+      "size": 9280,
+      "sha256": "746f3935c08bf20e4582733be08589ffb88935688f361b1d103a37f1ff1fe1ee"
+    },
+    {
+      "path": "tests/camera-beauty-quality.test.ts",
+      "size": 3681,
+      "sha256": "8a2395492990e199b4331277ea346eb897a6e240207ebc28d7983e320ae5614a"
+    },
+    {
+      "path": "tests/camera-container.test.ts",
+      "size": 3349,
+      "sha256": "cd5f41c7cc63f77f1071dc653b8dcbab829bbf7e4fafb7f5a9121d0ee45b6e65"
+    },
+    {
+      "path": "tests/camera-demo-editing.test.ts",
+      "size": 7009,
+      "sha256": "1276a38f39a9764347c99ce6d9c47e8922e716eb6bfb6e1b8f822cbb0f874cc6"
+    },
+    {
+      "path": "tests/camera-effects-metadata.test.ts",
+      "size": 17104,
+      "sha256": "560eef931540e48636caf07595615cfa82fc0a747c064336e9ea42196a73d178"
+    },
+    {
+      "path": "tests/camera-effects-quality.test.ts",
+      "size": 6991,
+      "sha256": "a4759d002a411ce470ebdbc5b2b3bbd29e0024b434e94d48f222345b0860ab3a"
+    },
+    {
+      "path": "tests/camera-effects-strength-harness.ts",
+      "size": 9418,
+      "sha256": "2841d32992c925bef2093884266965981ed24bdb43cdbcd4432f42eabd1f0d05"
+    },
+    {
+      "path": "tests/camera-effects-strength.test.ts",
+      "size": 7390,
+      "sha256": "402d658b085a0d9ca0119fdcd01098e5c8802629355ff9461add371715aa98fa"
+    },
+    {
+      "path": "tests/camera-error-context.test.ts",
+      "size": 1645,
+      "sha256": "a970bd6705d6ab96b475eba16a170a6537acd4c54605ab9fe6fef6da1c362b66"
+    },
+    {
+      "path": "tests/camera-error-recovery.test.ts",
+      "size": 743,
+      "sha256": "0ca31b447585bfc8a96b6e4cfd3784f39fa5ead9dbf3bcdea412dcd84a5c1f9e"
+    },
+    {
+      "path": "tests/camera-format.test.ts",
+      "size": 6781,
+      "sha256": "1ceb756cb13b4267a6edbc6ea9a3433fc6f46e183a24c3063fa712757c3cc4c8"
+    },
+    {
+      "path": "tests/camera-gpu-pipeline-harness.ts",
+      "size": 4731,
+      "sha256": "d222a68d380e78805fc82da0c270de58403c7ba39286acaee0ddac63db433eab"
+    },
+    {
+      "path": "tests/camera-health.test.ts",
+      "size": 3172,
+      "sha256": "28586a099eb95390ce3588cad06da2d91afc0417e76c210be59ee6a00b812ec5"
+    },
+    {
+      "path": "tests/camera-input-switch-harness.ts",
+      "size": 5057,
+      "sha256": "4427c32de67cf3bacb8413a7bcfae251fc07c51a00762167664202d96f57482b"
+    },
+    {
+      "path": "tests/camera-layout.test.ts",
+      "size": 4168,
+      "sha256": "981252622912affcd7e4c9dab2fbd11b23c1adaa27ab97f22203a98eb5038912"
+    },
+    {
+      "path": "tests/camera-mode-controls.test.ts",
+      "size": 11023,
+      "sha256": "1dc7a181eaf01e357e3ef677ed41fbb0317d6b8a2e5f35b398e28037508efb88"
+    },
+    {
+      "path": "tests/camera-mode-failure.test.ts",
+      "size": 14631,
+      "sha256": "0fece21f3d872f29e42121ec72acbb7d0a0d0d5e7664056f0cb7fa5ebc979bb1"
+    },
+    {
+      "path": "tests/camera-mode-hud.test.ts",
+      "size": 16493,
+      "sha256": "0c41b55bdeb7d78b0b2fcab876b017ac8db1e94eef85ac87fb54f9ff9b809d3d"
+    },
+    {
+      "path": "tests/camera-mode-recording.test.ts",
+      "size": 5011,
+      "sha256": "97ccf95c2a721173525843939911497e428a86c4f6f81ffbf2b70d2944e573b7"
+    },
+    {
+      "path": "tests/camera-modes.test.ts",
+      "size": 13414,
+      "sha256": "fd90c6bc67a7c1755e286c4df5002e55fc4a5fd200365a35a7a1e7d1c740c54f"
+    },
+    {
+      "path": "tests/camera-permissions.test.ts",
+      "size": 2774,
+      "sha256": "b8e9dd685a9f7ff126f194588eb654dc1ad4ff1266df94ab231fd19137d34bab"
+    },
+    {
+      "path": "tests/camera-playback-harness.ts",
+      "size": 3504,
+      "sha256": "1e9206781bdaf2e6fc866778ccef58b006633e18ff7b32f4a83765240e14e1f7"
+    },
+    {
+      "path": "tests/camera-presenter.test.ts",
+      "size": 12440,
+      "sha256": "f672e9087aefbaa1c2ae1fd97e544c1cd7617622765f2b6ac5baad33c27438e7"
+    },
+    {
+      "path": "tests/camera-preview-adaptation.test.ts",
+      "size": 6632,
+      "sha256": "feb8a8a58dff92bccb50ea44a4e5eab996e48c040ea0b5c3f7e62f59771e67e5"
+    },
+    {
+      "path": "tests/camera-preview-budget.test.ts",
+      "size": 3056,
+      "sha256": "75aca357f628229ae2547deda5f8aa0024c8f81358ed675220ee627c6d3ae0ed"
+    },
+    {
+      "path": "tests/camera-preview-codecs.test.ts",
+      "size": 1383,
+      "sha256": "15b892021be79365dd1c875b25e8514c33d514f67c5f0ad45d51d7c0658ab79b"
+    },
+    {
+      "path": "tests/camera-preview-controls.test.ts",
+      "size": 10666,
+      "sha256": "ef81c72c76417a044e5372dd9a114c28c25cbfcd005efb9289776d3cded6e49e"
+    },
+    {
+      "path": "tests/camera-preview-countdown.test.ts",
+      "size": 4620,
+      "sha256": "03dca3037ef9220715fbe99dbb0b0677cf9298f18add90265ffe5cc4c8f9d45f"
+    },
+    {
+      "path": "tests/camera-preview-performance-harness.tsx",
+      "size": 9091,
+      "sha256": "5995da4a7e5723bc95a4042118ddf19c65d2ac6ef33c864d205728f7951fa4c9"
+    },
+    {
+      "path": "tests/camera-preview-transport-harness.ts",
+      "size": 7885,
+      "sha256": "4b560ae5cedd72e1c39122aa21ae701ccddf4f9136c030f669e8190e4cf0ff24"
+    },
+    {
+      "path": "tests/camera-preview-transport.test.ts",
+      "size": 5980,
+      "sha256": "7019cd7209ecc72b7db6cc1471c420912e7fd5c46e9b90848b408147a791a42a"
+    },
+    {
+      "path": "tests/camera-quality-harness.ts",
+      "size": 12019,
+      "sha256": "884afcc04ecb73ab451a1490910f0f10e57a46df699848e30d191d7ca850a147"
+    },
+    {
+      "path": "tests/camera-realtime-harness.ts",
+      "size": 6432,
+      "sha256": "28f5bdb62de8c213a147ed94f94b4cace1ffc20b4c57ad31d9d741cfbf738738"
+    },
+    {
+      "path": "tests/camera-resize.test.ts",
+      "size": 3083,
+      "sha256": "64f14a93f52a9f46e5b1ae8ce7c481d1dd0aaed9b42e48ab7299e8fc4f4413ae"
+    },
+    {
+      "path": "tests/camera-selection.test.ts",
+      "size": 8990,
+      "sha256": "795549cc7c5f5ce61968cc7911b934469d9f422980f629fe20f113b25d7428b7"
+    },
+    {
+      "path": "tests/camera-session-container.test.ts",
+      "size": 4124,
+      "sha256": "7249b5d82625afcfb3e655e232a3b7985908b68a7e845853fc6ac8dab5418923"
+    },
+    {
+      "path": "tests/camera-settings-geometry.test.ts",
+      "size": 2856,
+      "sha256": "7a3282bd78f02115aa96fe42d89d20b3005b879a462cb88a6050425f54156971"
+    },
+    {
+      "path": "tests/camera-settings-resize.test.ts",
+      "size": 3547,
+      "sha256": "eeb40c019164660b3f5d57044be5cf1b19329af05588ccc51bcc50c558bb3680"
+    },
+    {
+      "path": "tests/camera-settings-ui-harness.tsx",
+      "size": 4116,
+      "sha256": "4d8827d300fdebc80782c0931aa3c9534cd96a100c25cddafaa4a0486817ee1b"
+    },
+    {
+      "path": "tests/camera-shapes.test.ts",
+      "size": 8442,
+      "sha256": "28e0e62e9b24f8a23886d74032a2f1fd879ee2787c4c02f19595a637ad6759fb"
+    },
+    {
+      "path": "tests/camera-zoom-render-harness.ts",
+      "size": 2935,
+      "sha256": "b46b4988bd98555f934fbbcb2afc8f889080459bd81391fb468ea3d3528c4d73"
+    },
+    {
+      "path": "tests/camera-zoom.test.ts",
+      "size": 5426,
+      "sha256": "f4fabf7090b847d2b4f823d9cf244d4a7e8a5dd799bd3e821a3caf2b7c8830f7"
+    },
+    {
+      "path": "tests/canvas-background-ui-harness.tsx",
+      "size": 4126,
+      "sha256": "0f68a8bcc1031463a19142193ee2bb7df17ff0fd9bb3e53750b59e9d96151427"
+    },
+    {
+      "path": "tests/canvas-resolution.test.ts",
+      "size": 4031,
+      "sha256": "d4f9f1448cd872c6ef6c5c511997184eb2e749f5ebab297459a7758fb359a07a"
+    },
+    {
+      "path": "tests/capture-permissions.test.ts",
+      "size": 2453,
+      "sha256": "c11d8f51097445052031262180175b2e97898d9e407514f1d46822890dfaa374"
+    },
+    {
+      "path": "tests/capture-platform.test.ts",
+      "size": 2271,
+      "sha256": "f40106729f18557ea09b3ca4626612ac94ff97c8b66c286db78ceede911489a9"
+    },
+    {
+      "path": "tests/composition-background-cache.test.ts",
+      "size": 2814,
+      "sha256": "fc188d776682b50725d08a178fb8dcfae112ffe28784b945d977b1d06fb54fd8"
+    },
+    {
+      "path": "tests/composition-camera-export.test.ts",
+      "size": 999,
+      "sha256": "29e633b12d6a1fce925d0470449c6a3a9ae2cd0525ab49d72a83b7af929b32b1"
+    },
+    {
+      "path": "tests/composition-editor-ui-harness.tsx",
+      "size": 9252,
+      "sha256": "16768258387373772c0907d9f510421dea4b03ad79c119ac5f70322ac95c4933"
+    },
+    {
+      "path": "tests/composition-presets.test.ts",
+      "size": 7172,
+      "sha256": "808ecfcf06cb7b1cb2c82dc6a4f9f9a56e2d493312b7fe22f97760f6becb84f6"
+    },
+    {
+      "path": "tests/composition-selection.test.ts",
+      "size": 8987,
+      "sha256": "c9fb1e21caede10245dceb815033a17d13f7efd545ee4bb0138a1cd01e658b45"
+    },
+    {
+      "path": "tests/composition-transform.test.ts",
+      "size": 2034,
+      "sha256": "086acbcd581b67784e35351ea1116025babc23e8425cfabbf5eb7c8f0e41391f"
+    },
+    {
+      "path": "tests/composition-validation.test.ts",
+      "size": 2643,
+      "sha256": "555c123901b95b9c00c231a4baef33e686135099fd19a7d8271c7550eec4b506"
+    },
+    {
+      "path": "tests/composition.test.ts",
+      "size": 18270,
+      "sha256": "4e68f59517e6cfc0b93cf4765b276abfd76106b8082e80a8283524abe11acb2d"
+    },
+    {
+      "path": "tests/compositor-decoration-harness.ts",
+      "size": 3358,
+      "sha256": "74960614a4ae10a70fc82a83e6f48519314166972e3ac72a3c9837338271220c"
+    },
+    {
+      "path": "tests/demo-camera-zoom.test.ts",
+      "size": 10567,
+      "sha256": "d7141cc848ea378ad92580cca66330b7bacd7a34707c0a540e3491f2c8a9360d"
+    },
+    {
+      "path": "tests/demo-mode.test.ts",
+      "size": 5567,
+      "sha256": "5e8b0364ccef51d715f820f495ab281c784dda0ff25c8a11f1ee3938d7e66c68"
+    },
+    {
+      "path": "tests/desktop-preferences.test.ts",
+      "size": 13019,
+      "sha256": "79befff266ed9fe5b1ba5fdb4287d4879f98af67fc6f63762e471fbdda5851df"
+    },
+    {
+      "path": "tests/distribution-endpoints.test.ts",
+      "size": 6413,
+      "sha256": "254a92dbc2a35538211f8decd321cde06cbe9d1af26c8f574e6dde38d5f44b09"
+    },
+    {
+      "path": "tests/distribution-harness.ts",
+      "size": 10692,
+      "sha256": "b35dc7f897e4e7b2019859ff3e77ed65cebc32fd4f763e1f723ab7d9ddee8b7a"
+    },
+    {
+      "path": "tests/distribution-settings-ui-harness.tsx",
+      "size": 4687,
+      "sha256": "9bacc53fa1d99c4b141ba1dc8ec0a530e7c9e4b1e935a3c8ca1aa289e5b4c119"
+    },
+    {
+      "path": "tests/editor-selection.test.ts",
+      "size": 1334,
+      "sha256": "cdbcd7f63eceedddb569454896710a7c610c22947a641efcbbbefec608265cbf"
+    },
+    {
+      "path": "tests/electron-update-fetch.test.ts",
+      "size": 2175,
+      "sha256": "c086dae7f8464255538cbe4f0ddbb679e309311e4f1619ec700fe6702e62b3ef"
+    },
+    {
+      "path": "tests/export-active-cancel.test.ts",
+      "size": 11861,
+      "sha256": "975fb5b39bd707c2e1d5a9deeee36b449479d968e06d520b79d3d52a8a621e1c"
+    },
+    {
+      "path": "tests/export-background-harness.tsx",
+      "size": 778,
+      "sha256": "35e4c6ee5fd26a9bc1db9e76cb8ee39f829d7e6a7d2d02ef63e775acf611602e"
+    },
+    {
+      "path": "tests/export-codec.test.ts",
+      "size": 1901,
+      "sha256": "bc746f68eb5015cab93be4c74abd14f82c82d6c13878a3d4effc6f00de6f2f9c"
+    },
+    {
+      "path": "tests/export-decode-pipeline.test.ts",
+      "size": 11337,
+      "sha256": "1ab8fff901eba03b1e3c8df900fb55ffc186c08999f46c20e4ae2e30f62b79cb"
+    },
+    {
+      "path": "tests/export-encoder-capacity.test.ts",
+      "size": 1397,
+      "sha256": "9cdab753bee1243f4bb993e843aecdb1f46957c337ed089d182ee389a0f82269"
+    },
+    {
+      "path": "tests/export-encoding.test.ts",
+      "size": 3369,
+      "sha256": "8cfe4366b7790b390bf36bc2d089fd729248d835fdc615b6deeabbc4d7ff6fa8"
+    },
+    {
+      "path": "tests/export-face-lookahead.test.ts",
+      "size": 3179,
+      "sha256": "b5c4b44b75d55640176aa8c15090d5c6c41b92cb097eee4a0e9801c8fe53b5c3"
+    },
+    {
+      "path": "tests/export-preparation-cancel.test.ts",
+      "size": 2493,
+      "sha256": "19b82e6270b9d37cb7e8a43d8aff8fd050b088c202cb1c623c5bb8348f733b82"
+    },
+    {
+      "path": "tests/face-beauty-harness.ts",
+      "size": 6145,
+      "sha256": "c1639bf6b93f24f140d4afecad65ec981be09ff82a4200569522ad0af7d8d499"
+    },
+    {
+      "path": "tests/face-beauty.test.ts",
+      "size": 4079,
+      "sha256": "bc6822d90a0c75e520c17215ba7cdafe83a01c240e347eefaf29809007465da4"
+    },
+    {
+      "path": "tests/face-continuity.test.ts",
+      "size": 2854,
+      "sha256": "67c46e3fcdf99d3fe502029d29fea500819acbf299e952443d22fb9aff620372"
+    },
+    {
+      "path": "tests/face-effect-bounds.test.ts",
+      "size": 2780,
+      "sha256": "6f5e5d8c4f9d25094299c4068910fce178c817178472853d0295901e9b69852a"
+    },
+    {
+      "path": "tests/face-preparation.test.ts",
+      "size": 3626,
+      "sha256": "d6759cc4eb0c312cb00524bfb178fe231a01669f506449ff337efeb6d17f102d"
+    },
+    {
+      "path": "tests/face-tracker.test.ts",
+      "size": 3832,
+      "sha256": "a17dd8f2178c72e13564079aedb8a0daf989a50ac45554f68a435143dc5c675a"
+    },
+    {
+      "path": "tests/fixtures/audio-preview-isolation.ts",
+      "size": 3873,
+      "sha256": "d7e8a281f62389e603f86622fae155feb79bf5e95dc58165104675c77d307bc5"
+    },
+    {
+      "path": "tests/fixtures/export-decoding.ts",
+      "size": 3945,
+      "sha256": "38509133b1970c78bbe36ed8dd8f973a977b38e94e573e417f99097eae06f5eb"
+    },
+    {
+      "path": "tests/fixtures/microphone-audio.ts",
+      "size": 2690,
+      "sha256": "59395d34f7ea9736db90cc19d5da0aee39ba1214cad3e45eede0bbedd857790d"
+    },
+    {
+      "path": "tests/fixtures/microphone-export-cache-spy.ts",
+      "size": 329,
+      "sha256": "c31720280041daabdda39dc4280e9f2b0535c87172428525db07c2fc0822ef50"
+    },
+    {
+      "path": "tests/fixtures/microphone-native-session.ts",
+      "size": 1644,
+      "sha256": "23e93e5ee28f8faa91c2c4e7b5483bc5df53d69c6fee8ec76786176f556f3dec"
+    },
+    {
+      "path": "tests/fixtures/microphone-preparation-race.ts",
+      "size": 2169,
+      "sha256": "f9ce1faed39b903f10cac86debaf6ccb02a4de6d296655bfba0d04a24f03234e"
+    },
+    {
+      "path": "tests/fixtures/microphone-stop-failure.ts",
+      "size": 1934,
+      "sha256": "48d82a31fa53d890c4dc7719122c41ea269cb85fdc77636a3ddf0052435e6a26"
+    },
+    {
+      "path": "tests/fixtures/typing-focus-click-race.json",
+      "size": 617,
+      "sha256": "abadc4cd8badb10a2689046ecba199852767391d84e3d63b41639f8a6bbfcc23"
+    },
+    {
+      "path": "tests/fixtures/whiteboard-window.ts",
+      "size": 7201,
+      "sha256": "efdb3019d65c374e13e4eb2b697cad358aff5154366438a41d8d001a4ca5b0e4"
+    },
+    {
+      "path": "tests/floating-launcher-ui-harness.tsx",
+      "size": 2779,
+      "sha256": "15bb2e7a6761769cefcd3f096d5685d52e99949a2a367aa51361bb43999f817b"
+    },
+    {
+      "path": "tests/floating-window-anchor.test.ts",
+      "size": 5089,
+      "sha256": "2d0468ba95caf11afd4dac5f126675b2b19941e92cf367c9222c6ac219b0a327"
+    },
+    {
+      "path": "tests/frame-content.test.ts",
+      "size": 4446,
+      "sha256": "57ab7e07ad24f3fc0fbbdb1d6bd01125dd3e4e4a4b2523c99cd4b9d615099e1f"
+    },
+    {
+      "path": "tests/input-activity.test.ts",
+      "size": 7635,
+      "sha256": "d8040781a41d4332b4e4941fb8ee4813ea5fdd7809f4fbce9d905443b0f9ca36"
+    },
+    {
+      "path": "tests/installer-branding.test.ts",
+      "size": 3906,
+      "sha256": "f0a081fcb01fa79221cfd8e512a3da13f7389a32b29dc3fc858176d38d9d489b"
+    },
+    {
+      "path": "tests/installer-process-runner.test.ts",
+      "size": 6485,
+      "sha256": "2fa8a9184a6f97a8f619ed9e8f4d983c0d0f1744d4b1f0c91ff2076641d626e4"
+    },
+    {
+      "path": "tests/installer-targets.test.ts",
+      "size": 5019,
+      "sha256": "c1e5580bc93941b97a0d9ef30122a10df84e69cdcf2d6958b2740e46e24fc7bb"
+    },
+    {
+      "path": "tests/launcher-microphone-ui-harness.tsx",
+      "size": 2044,
+      "sha256": "483520ef93b826ae3ffb37b4d46a8281282be357a92a3eca62c920bcdb3e30ca"
+    },
+    {
+      "path": "tests/launcher-panel-drag.test.ts",
+      "size": 2188,
+      "sha256": "0ccdb997cd3eef2d87df196d7479957b62e669b42cf0b27a1bd7831e5f4b80e4"
+    },
+    {
+      "path": "tests/launcher-quit-ui-harness.tsx",
+      "size": 1453,
+      "sha256": "86b02429c7733aa3af8585074767d4f0e6c1893d9a2211b6cf94701c355b1c1c"
+    },
+    {
+      "path": "tests/launcher-session-ui-harness.tsx",
+      "size": 4309,
+      "sha256": "ee89fc22531655d0e37593487340bdc133138dd3fd479f59634d58763b113578"
+    },
+    {
+      "path": "tests/live-application-preferences.test.ts",
+      "size": 5537,
+      "sha256": "258fe3dcc8181ca2beb2a2b8bc652e41064fd60dba1a2aea6c836c30dc7e2851"
+    },
+    {
+      "path": "tests/live-camera-controls.test.ts",
+      "size": 4966,
+      "sha256": "c0788de5edd231700e3312375caafbfcc9894a2825b64eba64605592a63e2a35"
+    },
+    {
+      "path": "tests/live-camera-health.test.ts",
+      "size": 4048,
+      "sha256": "e487c0d321d4b15ca8fab432fdc63a1c6c45b04af2291036f51a54436cb0ccf0"
+    },
+    {
+      "path": "tests/live-direct-session.test.ts",
+      "size": 3189,
+      "sha256": "b3ed814b81f5b9a756d4160ed84f0d1ce6f22559f987053fed57e226eafb888a"
+    },
+    {
+      "path": "tests/live-display-preview.test.ts",
+      "size": 3460,
+      "sha256": "461699ac46d44c3705d9951d53d7228fa0e06cfc519a6f1fac7981b30454717f"
+    },
+    {
+      "path": "tests/live-display-runtime-harness.ts",
+      "size": 7044,
+      "sha256": "7c80e70d7c36a3420a2719594bba97095f088d94d93d3b9e837bc4a24e32fc85"
+    },
+    {
+      "path": "tests/live-display-ui-harness.tsx",
+      "size": 4969,
+      "sha256": "7a94ff6b5f4a615044fa4cef077476415b996f23a09b6ced52871caf57047495"
+    },
+    {
+      "path": "tests/live-frame-client.test.ts",
+      "size": 3562,
+      "sha256": "d1ad6a7fb37dc0d34307359dd6f1a880f3b0469948480103237f7f078994e1dd"
+    },
+    {
+      "path": "tests/live-preview.test.ts",
+      "size": 2919,
+      "sha256": "3cb948ebe5ece43659ed20e23ab8ddfaf821c57de99b60b55f23b41a96463c95"
+    },
+    {
+      "path": "tests/live-recording-controls.test.ts",
+      "size": 7663,
+      "sha256": "8c37e703170c4b82bf0d51df2a7b76cdd20299011f3e915a281d9fe29e8b89a1"
+    },
+    {
+      "path": "tests/live-runtime-report.test.ts",
+      "size": 4132,
+      "sha256": "81fdc174a57476a4d7320cf1b2ce5422441068962bf7278ca6c6c31361b50e6c"
+    },
+    {
+      "path": "tests/live-session-harness.ts",
+      "size": 7538,
+      "sha256": "75b6df749f143b1941debddc9e19d7ba55746718581bfe1f4fade50fb1d013ae"
+    },
+    {
+      "path": "tests/live-session.test.ts",
+      "size": 8873,
+      "sha256": "95a7c0bc6b18b59b8186a74c73a4d34e9ef30cc5944f02a0ba459143e2feb2e8"
+    },
+    {
+      "path": "tests/live-synthetic-harness.ts",
+      "size": 2100,
+      "sha256": "b94c9c33342c839956a7f2d4d836f119c64b326644308662d3d590eb9c5ff596"
+    },
+    {
+      "path": "tests/live-whiteboard.test.ts",
+      "size": 2733,
+      "sha256": "02414401b31f4c89e1704b00565ada6f5fb96c4d20fb08551d36d8ffcb69ded9"
+    },
+    {
+      "path": "tests/live-zoom.test.ts",
+      "size": 5280,
+      "sha256": "28009612cf5e48b8e69a15cefe43f97a87059753bdc42926e19442ca513916fd"
+    },
+    {
+      "path": "tests/mac-capture-process.test.ts",
+      "size": 5109,
+      "sha256": "bc4bd3e2141edc429cc8ccae2c623e3ebd1e14faf07729f024c3154209d4aa77"
+    },
+    {
+      "path": "tests/mac-launch-receipt.test.ts",
+      "size": 1779,
+      "sha256": "222cd6a60bc00d6e577ee65003fb649672375335adf3c279485b792d9a4a6938"
+    },
+    {
+      "path": "tests/mac-native-permissions.test.ts",
+      "size": 7023,
+      "sha256": "49838b67237014a326365e846506f6afeb7242c7bcbc38b030845523aff0a3a2"
+    },
+    {
+      "path": "tests/mac-release-inputs.test.ts",
+      "size": 7479,
+      "sha256": "e494f841f8bc4fb26237c150aa7f0c9bfdc656f4e04c5f8d0791b3701a9f50b9"
+    },
+    {
+      "path": "tests/mac-signed-release.test.ts",
+      "size": 3588,
+      "sha256": "26401c0a3fe670e800fd4cf9ffa73d6f4ce0a8a3a1f9d76ac8538ac3792b90a8"
+    },
+    {
+      "path": "tests/mac-update-helper-errors.test.ts",
+      "size": 1338,
+      "sha256": "ef2caad5a727be0e5d22d35f82ba91adeff988f63feee9869360f18043bb8597"
+    },
+    {
+      "path": "tests/mac-update-manifest.test.ts",
+      "size": 2380,
+      "sha256": "4c44a5f36d06e385b74a064431867498ae3142021e6723767059fc1d230ab6b0"
+    },
+    {
+      "path": "tests/mac-update.test.ts",
+      "size": 12767,
+      "sha256": "03e563b78732cbf0c5379c2e0605fdc1dec4fe339e1bc2b874faa6ffaf6a9df4"
+    },
+    {
+      "path": "tests/media-frame-reuse.test.ts",
+      "size": 5274,
+      "sha256": "4c534e0729bf4e062459baef676c95053cd05e1a600656c889a6bf55c6fdbde0"
+    },
+    {
+      "path": "tests/microphone-effects-audio.test.ts",
+      "size": 17220,
+      "sha256": "fb7b729a76e16361871374a6dd0b5221e92fea1f4e9753594f871b5369d4cd73"
+    },
+    {
+      "path": "tests/microphone-effects-ui-harness.tsx",
+      "size": 1678,
+      "sha256": "519212e698eb9ab74e8edc425d75a83c4f9e5c602f2512d8c83f3a04697afada"
+    },
+    {
+      "path": "tests/microphone-effects.test.ts",
+      "size": 1904,
+      "sha256": "70c1e44c4528da766647c080b46afb40dfd49e6bde3ba85824947f0adc9d8df9"
+    },
+    {
+      "path": "tests/microphone-integration-harness.tsx",
+      "size": 8513,
+      "sha256": "aa517f0e5cbe09e4d822ace4eb667c5b7a3b8065488d04d2ecfd4ea4f42da5f9"
+    },
+    {
+      "path": "tests/microphone-integration-main.ts",
+      "size": 11243,
+      "sha256": "0e874f35daa82f6a069db1d5c03d31e4ae6879d7be2c6a8f1e2091bcda88d961"
+    },
+    {
+      "path": "tests/microphone-integration-preload.ts",
+      "size": 226,
+      "sha256": "6d9a62ae25388556dc3dab5252ae0c75dd1fa59a8a8bebfd0b9770dc0d563da9"
+    },
+    {
+      "path": "tests/microphone-preferences.test.ts",
+      "size": 1996,
+      "sha256": "572637a5c65b3404572451e1f93dbafe4fa7d92122d7a85e337482c6cdca778d"
+    },
+    {
+      "path": "tests/new-project-canvas.test.ts",
+      "size": 8692,
+      "sha256": "e9220b45d7bcf54aab2f03b838adcc2d02409deec9bac97ee0e131bfd10fc3fe"
+    },
+    {
+      "path": "tests/overlay-host-harness.ts",
+      "size": 1952,
+      "sha256": "d68072e09b2100b217c8cf87159f04a42f36e10fad30160a452beead553461d6"
+    },
+    {
+      "path": "tests/permission-components.test.ts",
+      "size": 6174,
+      "sha256": "037d6d3ee68fdf2fec0dc1e9c10c10097f7a6f7dd4257e133417ceac6dfcf206"
+    },
+    {
+      "path": "tests/permission-guide-ui-harness.tsx",
+      "size": 5752,
+      "sha256": "d3d86f3a027aea8e5fe97029b2e11ea71cbb4132386a844ea143e4475afd5d2a"
+    },
+    {
+      "path": "tests/permission-guide-window.test.ts",
+      "size": 8972,
+      "sha256": "b55d547ca1a63e1767c071e1e05316a041a59d2e3c5b136283dec1e35c66e091"
+    },
+    {
+      "path": "tests/permission-startup-ui-harness.tsx",
+      "size": 3503,
+      "sha256": "eb3bbb5d93a8b6e89293a294b99c78b16a77b0a532fb5e65f82bc05f745dca58"
+    },
+    {
+      "path": "tests/permission-startup-window.test.ts",
+      "size": 5519,
+      "sha256": "68a75e1a6b83a5d2eba84590b77603696583b1a2429fdd6eee8dc913e8e7d53b"
+    },
+    {
+      "path": "tests/platform-permission-guidance.test.ts",
+      "size": 5456,
+      "sha256": "8dd61b154eac1b1428e150daa384e325e462b9b188d5f776891806bb46128e73"
+    },
+    {
+      "path": "tests/playback-clock.test.ts",
+      "size": 1349,
+      "sha256": "6d5714085b54204282fd6d52222cd0b090300309cc88e7b27be702b8a2b45960"
+    },
+    {
+      "path": "tests/presenter-framing.test.ts",
+      "size": 1950,
+      "sha256": "09f3579e1f4a897cb555b06e626818496ca54b4b1f9c5bb14fdf320227b4e14a"
+    },
+    {
+      "path": "tests/presenter-ui-harness.tsx",
+      "size": 5510,
+      "sha256": "cc8579fce3792bbf9818516630a3aa8b9dcfc729e41fcb2bc0765e1cb9163ebd"
+    },
+    {
+      "path": "tests/preview-audio-session.test.ts",
+      "size": 11580,
+      "sha256": "ab7e36c4cdb28528acedaef5d3db383e3336da9ddc48e54f24e8d5740bfcb053"
+    },
+    {
+      "path": "tests/preview-cadence.test.ts",
+      "size": 1029,
+      "sha256": "500ccbe7998b565956b5e1653cb094796b8daba1c6d201032d2f70b127e4a9b8"
+    },
+    {
+      "path": "tests/preview-frame-cache.test.ts",
+      "size": 2593,
+      "sha256": "f6d7d873582f27def0fe7e8680d619550aad92250e0eb2c91f043f195da4a583"
+    },
+    {
+      "path": "tests/preview-interaction.test.ts",
+      "size": 8104,
+      "sha256": "b73d1c54dc666fd39e9438f4fb245c06e6eaca276b2e93101c57f938d1ed94ef"
+    },
+    {
+      "path": "tests/preview-resolution.test.ts",
+      "size": 4469,
+      "sha256": "fd39e94e209e3693be306c5168cc392eddaa4518cf29b2e3a71570272a128ee3"
+    },
+    {
+      "path": "tests/preview-tail-harness.tsx",
+      "size": 2891,
+      "sha256": "a039d00e71a592710873a0e4e4e4e5b4fd0a3e1e878e77daa1d7bb3916abfdb9"
+    },
+    {
+      "path": "tests/preview-tail-main.ts",
+      "size": 1545,
+      "sha256": "1e2f1d33ff66461e4494b84801e2d063a1c743c7d05a6a9069d361274c828b89"
+    },
+    {
+      "path": "tests/preview-tail-synthetic-harness.tsx",
+      "size": 3063,
+      "sha256": "0472bb580078842ab2f86b7b8364a5d10d0cae1e0c01699369472765ada07b93"
+    },
+    {
+      "path": "tests/project-audio.test.ts",
+      "size": 10377,
+      "sha256": "f0fd5f17853d446617acb095e74670dcac7ec00856af97814ccb130955dff5db"
+    },
+    {
+      "path": "tests/project-backgrounds.test.ts",
+      "size": 13200,
+      "sha256": "47f934b2799a3d325dceaef9604b6c222a53971a0353b0be844e084a9e4f462b"
+    },
+    {
+      "path": "tests/project-directory.test.ts",
+      "size": 4850,
+      "sha256": "ca5b1d77ab646bc77afb41f94013564ba553d62291d9387dd833f7f9a86b3bb8"
+    },
+    {
+      "path": "tests/project-input-activity.test.ts",
+      "size": 7763,
+      "sha256": "9f565006da5eea81466b2a9a0654054f6523afe825a896b2853a78c7b662df89"
+    },
+    {
+      "path": "tests/project-management.test.ts",
+      "size": 18720,
+      "sha256": "effb7673565ea7fcee85f2a7cc4af26a68404e3b473506853bb11972d51fbc1d"
+    },
+    {
+      "path": "tests/project-paths.test.ts",
+      "size": 8085,
+      "sha256": "5f8d1a8dcfb1934b4fa632aeb78e9f2037528346313235ca77547dd9642b1aa0"
+    },
+    {
+      "path": "tests/project-preferences.test.ts",
+      "size": 8846,
+      "sha256": "539736f09c38b063d5d54dcb83e364c84ca6f271d1d7d5c3219375423a3c1711"
+    },
+    {
+      "path": "tests/recorder-launcher.test.ts",
+      "size": 2710,
+      "sha256": "ad5208597da7c7d63dd516d6c183aa5252e0a3861dd16d533bbac6e7ee2816c7"
+    },
+    {
+      "path": "tests/recording-device-preferences.test.ts",
+      "size": 2915,
+      "sha256": "317b6c65fd13735a592d8e7b1b1dc63413b585fb88213229081eba056954cc42"
+    },
+    {
+      "path": "tests/recording-devices-harness.ts",
+      "size": 5236,
+      "sha256": "bdccbc03fc3f73bced0eb530cde2f2535f4063b8ba709d25309cf2b0409b9725"
+    },
+    {
+      "path": "tests/recording-error-message.test.ts",
+      "size": 847,
+      "sha256": "2a798a67c7aea086f6007af415b9bfccc4c64239df558f74603dbd1704c1a813"
+    },
+    {
+      "path": "tests/recording-exclusions-ui-harness.tsx",
+      "size": 925,
+      "sha256": "71280e4f2c76b35bbab36a13527e6d9fb403ffcb0113fcaedec4b690df25f36a"
+    },
+    {
+      "path": "tests/recording-exclusions.test.ts",
+      "size": 5685,
+      "sha256": "37c51834d19310a82fc9fcef0a7a162bc638ccd92d1b31084f675a50e532bb92"
+    },
+    {
+      "path": "tests/recording-overlay.test.ts",
+      "size": 4813,
+      "sha256": "de09713cc870d396e50efe686c205bab5d73d0183a0770d1ae100760849d77c6"
+    },
+    {
+      "path": "tests/recording-resolution.test.ts",
+      "size": 3976,
+      "sha256": "e779858f5090f62af41c3babb5b407887eb054a0d61fe070edf09a8574b8c5c3"
+    },
+    {
+      "path": "tests/recording-start-failure.test.ts",
+      "size": 12841,
+      "sha256": "a3fb8eb54e7ba49f468697092d8efaea7a8121db44853b7d1f8e449eb7e4aaf2"
+    },
+    {
+      "path": "tests/recording-start.test.ts",
+      "size": 2278,
+      "sha256": "35db50a5abe83fb6b609843c6aa6fa5847c674975b531ce7b07590604e4bfcbf"
+    },
+    {
+      "path": "tests/recovery-duration.test.ts",
+      "size": 2124,
+      "sha256": "28b602d01e2bf7f515792e14657255da64a5d9966971c387630c8e808138029c"
+    },
+    {
+      "path": "tests/region-selection.test.ts",
+      "size": 1301,
+      "sha256": "d817fde04aad8dc2f79fd5484b1c7f7f45f2c941e22b6153a7bd1a848f41f490"
+    },
+    {
+      "path": "tests/release-artifacts.test.ts",
+      "size": 1678,
+      "sha256": "4947db19167373e8df0ecb325637004ff2cd396216f31410505241a4651024dc"
+    },
+    {
+      "path": "tests/session-controls-ui-harness.css",
+      "size": 582,
+      "sha256": "ed7d1b5d2450fc96a3bda73ed85906792998da94796b102d229a9756f5e5893e"
+    },
+    {
+      "path": "tests/session-controls-ui-harness.tsx",
+      "size": 8344,
+      "sha256": "492308c6830d194138a7eed99e72ff5e59d6a0c78aeb1b6cee818c1707f0fa39"
+    },
+    {
+      "path": "tests/session-controls.test.ts",
+      "size": 6271,
+      "sha256": "97211b18b30acffcbac6e675e220361f7df392d233d4ca81165e50422039e132"
+    },
+    {
+      "path": "tests/staged-update-lifecycle-harness.ts",
+      "size": 4759,
+      "sha256": "f656909159caccb3fe562503998e26021c9cccbdbd0a231f93d8639e80437f29"
+    },
+    {
+      "path": "tests/stream-media.test.ts",
+      "size": 3458,
+      "sha256": "840e8609076af9f04a212ae4db12aef7a6607e828d39a21853ff4ffa7e6bb85c"
+    },
+    {
+      "path": "tests/stream-profile-model-fixture.ts",
+      "size": 468,
+      "sha256": "692ef158ce96301a55c9c492762354f37211625a6a7056f9b2d3ca31ec6642ec"
+    },
+    {
+      "path": "tests/stream-profiles.test.ts",
+      "size": 7281,
+      "sha256": "3c545eb76d002948031a4b87b4641178d7930d58dd2076b7d74acdd207a248b7"
+    },
+    {
+      "path": "tests/stream-proxy-fixture.ts",
+      "size": 4383,
+      "sha256": "e8cd2bc11179d2ecd87324bc7684af366ce08defacd3e7eb05d1987338099050"
+    },
+    {
+      "path": "tests/stream-proxy.test.ts",
+      "size": 5682,
+      "sha256": "c42155ec257c87ae9fb675ce46b4f2b7cef8d1cb9d58f78b1319c3543cf8045f"
+    },
+    {
+      "path": "tests/stream-system-proxy-harness.ts",
+      "size": 3687,
+      "sha256": "bdff42742fd7d736d628fcd569c2cde70921df24e260873774264a3af640bd52"
+    },
+    {
+      "path": "tests/stream-writer.test.ts",
+      "size": 10598,
+      "sha256": "b49fe473f2393c65e41c74c1c39aab84dbe1ee5db566e0a320babeb646ffebef"
+    },
+    {
+      "path": "tests/system-permission-focus.test.ts",
+      "size": 4260,
+      "sha256": "81e23dac4ffe252750bfa1c036744473c8880beb6d467905bf68a8328773b5d2"
+    },
+    {
+      "path": "tests/telemetry-receipt.test.ts",
+      "size": 3094,
+      "sha256": "c78d5182452be9b1de50e368c716d8b1c9069a76602ccd66e71b9c5c6d0584cb"
+    },
+    {
+      "path": "tests/telemetry-storage.test.ts",
+      "size": 4140,
+      "sha256": "acd3cae67d6b488f267532384f80b2ece768556854ed636b7d53cf17ed380bdd"
+    },
+    {
+      "path": "tests/telemetry-validation.test.ts",
+      "size": 4056,
+      "sha256": "0dd1caa1606d4fa946f1ceebeb5a61ae5933b2d63ab26e3d3957010b5332cfe2"
+    },
+    {
+      "path": "tests/telemetry.test.ts",
+      "size": 9168,
+      "sha256": "263977ddb5e132c581747911ca9dc7fbed7b8f1bda6b70584f28ce0fb766593a"
+    },
+    {
+      "path": "tests/teleprompter-preferences.test.ts",
+      "size": 2173,
+      "sha256": "0973c032c7bf31b3ae1cfb1c6c686128ecebee4af851723b3dd8fe12ef3e24a7"
+    },
+    {
+      "path": "tests/toolbar-auto-collapse.test.ts",
+      "size": 5579,
+      "sha256": "ff9f88a3f76d932c7e3e9a56c2bfd1f0f5cb901358cb57cf42fd5a7ad887d490"
+    },
+    {
+      "path": "tests/toolbar-collapse-ui-harness.tsx",
+      "size": 7979,
+      "sha256": "7daa72bf1a1cc143842250b7e36300dc6a8e37113f010459161ea5f4d28602ed"
+    },
+    {
+      "path": "tests/toolbar-layout-ui-harness.tsx",
+      "size": 4102,
+      "sha256": "f17b939eb180debc9a728e026857e960148153c81e9f0fccb071b4f32afd5b4d"
+    },
+    {
+      "path": "tests/toolbar-quit.test.ts",
+      "size": 3343,
+      "sha256": "e833dd673c95cc0233498b5d4e7dad55c12f6fa3521223cd6a1f1442f83aa84a"
+    },
+    {
+      "path": "tests/toolbar-session-quit-ui-harness.tsx",
+      "size": 1440,
+      "sha256": "6ba1c85ffa091e44802a0cca4a3f37106eac94a0e662bda02f6fa7de21d2ae3b"
+    },
+    {
+      "path": "tests/ui-timeline.test.ts",
+      "size": 3800,
+      "sha256": "bbbf167ba2d531f3d0a326207a737f0e12828fb5d2e8584595ae6bf610ac830a"
+    },
+    {
+      "path": "tests/update-lifecycle-harness.ts",
+      "size": 3991,
+      "sha256": "9768284fc02c8ad22f135e937c2c18b002602573e26000af3c4462599036eada"
+    },
+    {
+      "path": "tests/update-manager.test.ts",
+      "size": 10361,
+      "sha256": "22abfea37b7095c63adb5592e4f7aff52dc3db57e5908a116204bad6d78f2fa8"
+    },
+    {
+      "path": "tests/update-manifest.test.ts",
+      "size": 3801,
+      "sha256": "b7bc8b7c98af305201086c61cb730cb1340dbcafd327e79346845a7b17199159"
+    },
+    {
+      "path": "tests/virtual-camera-status.test.ts",
+      "size": 3031,
+      "sha256": "aed7f8f0633212cec4d14a338a86918ef22f781acc786826ccce5320470dd7b4"
+    },
+    {
+      "path": "tests/virtual-camera-writer.test.ts",
+      "size": 4331,
+      "sha256": "c8a5667ee03477217b873cc029859e3131f5bc50235fec8eeeea17f9283606a6"
+    },
+    {
+      "path": "tests/webcam-frame-monitor.test.ts",
+      "size": 3530,
+      "sha256": "d31a5e422f2cff3c553f5fdf75a5d5d1463f901c60c1a0dc64788e8a1b36156c"
+    },
+    {
+      "path": "tests/webcam-hook-harness.tsx",
+      "size": 5358,
+      "sha256": "9b19f551e60ccdd8bc9a880225f15cfa5734c18aed30275ba8a0071ec553e7c3"
+    },
+    {
+      "path": "tests/webcam-media-sync.test.ts",
+      "size": 2487,
+      "sha256": "780fb4799ffa9e1305639ed6bfa42932b2d1652caef0e5a59124b21a0fb03749"
+    },
+    {
+      "path": "tests/webcam-preview-budget.test.ts",
+      "size": 4971,
+      "sha256": "ccb27183f42542339cb70605bfcaa47c207796f7b1f0a73a78d260f7a8a185a9"
+    },
+    {
+      "path": "tests/webcam-recorder.test.ts",
+      "size": 9096,
+      "sha256": "f084a2e246541c209b9b0609f039550f2b936bcb09e6c235152f16de6b8a9ef2"
+    },
+    {
+      "path": "tests/whiteboard-appearance.test.ts",
+      "size": 4863,
+      "sha256": "d5a42a90a9ef9053d12cba877900b9c2b702fe3bf595afba5f565269263dafef"
+    },
+    {
+      "path": "tests/whiteboard-aspect-harness.tsx",
+      "size": 11555,
+      "sha256": "407b7010ef661b812b8b12a5cf2eb595b2c2e7d23974b58bb7a0513f2dc3e586"
+    },
+    {
+      "path": "tests/whiteboard-aspect.test.ts",
+      "size": 6966,
+      "sha256": "8754388e3eae284478b390c254efd0dbed5e2954c114607c834b24868caaa593"
+    },
+    {
+      "path": "tests/whiteboard-camera-fixture.ts",
+      "size": 2190,
+      "sha256": "56d7f597b1df9163930cbf11e3782df46d4de105200d7d23f9afae5dca3b36e0"
+    },
+    {
+      "path": "tests/whiteboard-camera-harness.tsx",
+      "size": 13182,
+      "sha256": "0b93e910ae4474e844f3154eb49b4a44ce73a572e8ba4773b9b0d218ad1f2f05"
+    },
+    {
+      "path": "tests/whiteboard-camera-scene.test.ts",
+      "size": 3114,
+      "sha256": "70773d471747378391bb682a15c6988d202494a3d7ef6a2f9c32ff8ffeebfe53"
+    },
+    {
+      "path": "tests/whiteboard-control-insets.test.ts",
+      "size": 1147,
+      "sha256": "9162b761660837c0a7bb0deef7840a8c5c5b4585057e0d02dfe51d3802f8bdb8"
+    },
+    {
+      "path": "tests/whiteboard-diagram.test.ts",
+      "size": 17045,
+      "sha256": "8eafc7a4fefc756b8fa82267e1b10f75a91864be6a0427359bda43b2cf04f44c"
+    },
+    {
+      "path": "tests/whiteboard-draft.test.ts",
+      "size": 8067,
+      "sha256": "097c897f28c63aa57e24b9c7764f66fd02d27ed361da0063d9232e1bd1020968"
+    },
+    {
+      "path": "tests/whiteboard-entry.test.ts",
+      "size": 5039,
+      "sha256": "8030af5bf3f3968002b2af8e4a3818db3289932b229b3e64f10f47fc0035b2c0"
+    },
+    {
+      "path": "tests/whiteboard-model-progress.test.tsx",
+      "size": 1105,
+      "sha256": "ef39640bb9dbf9ff67c07c1c0ca8b4b25943213488c11ea81ef7e7c6c3b11ff7"
+    },
+    {
+      "path": "tests/whiteboard-motion-harness.tsx",
+      "size": 7059,
+      "sha256": "9ebbd5cd1cd209bf7b1ea37e2bf79dd969ad30fa1041f95682786c4fed734cd6"
+    },
+    {
+      "path": "tests/whiteboard-motion.test.ts",
+      "size": 14020,
+      "sha256": "8147bb115071cdbf9ba254b8337c41a16e6fa3f9597cb649f6d6772342e38be5"
+    },
+    {
+      "path": "tests/whiteboard-output.test.ts",
+      "size": 5602,
+      "sha256": "d659d7f5621cc08a26712d7e5ef75bacd0e8718f6b18e03ff986a680678a618e"
+    },
+    {
+      "path": "tests/whiteboard-speech-fixture.ts",
+      "size": 1391,
+      "sha256": "8099bfc5e933407ee996513203e95664506720e2442a8749741a33177ddd29b0"
+    },
+    {
+      "path": "tests/whiteboard-speech-model.test.ts",
+      "size": 6332,
+      "sha256": "1e2a9fff4f7894053404af14202ef664ea9837d37ef5235ccf286c0fec3f9a84"
+    },
+    {
+      "path": "tests/whiteboard-speech.test.ts",
+      "size": 7816,
+      "sha256": "df710845c53d1abcd9a88ac5e0a093d6dcaa7633a26a152958b9cf91f38ca5c7"
+    },
+    {
+      "path": "tests/whiteboard-state-reader.test.ts",
+      "size": 3403,
+      "sha256": "cad14d19c9fdbe1a14ecc0834b5209d84a81d809c96f4b5a605bdac44c41517c"
+    },
+    {
+      "path": "tests/whiteboard-text-node.test.ts",
+      "size": 1556,
+      "sha256": "2a9ea8e8e1867d4d861b1300fa9ce540b0e363b34b5a445c95081286f21de01c"
+    },
+    {
+      "path": "tests/whiteboard-viewport.test.ts",
+      "size": 3866,
+      "sha256": "e13c353209dad5e1fa0ac96f270ce5c999855b79423e1bbd538cccda69267266"
+    },
+    {
+      "path": "tests/whiteboard-window-options.test.ts",
+      "size": 732,
+      "sha256": "ea2f6e2c820537aa1dd2df7e3a95262b91bc0161f7f0750c4799b590abc305aa"
+    },
+    {
+      "path": "tests/whiteboard-window.test.ts",
+      "size": 22521,
+      "sha256": "76c73c5f5d861aed02a0ce4dc0a64d3026a6e04c95bbe8b740d7dd69484a9688"
+    },
+    {
+      "path": "tests/whiteboard.test.ts",
+      "size": 14417,
+      "sha256": "c2a7e527ec1f1675f3adc0a3db5ba2a1e6a19bbd5c577ac59b19f4d0441d384c"
+    },
+    {
+      "path": "tests/window-input-regions.test.ts",
+      "size": 3756,
+      "sha256": "0a6a13fe2e3ab9104dcb07a730fd860f25c36769009e416cc65211a3fcc7b61d"
+    },
+    {
+      "path": "tests/window-visibility.test.ts",
+      "size": 2562,
+      "sha256": "95e73f581fcf168cf8d3237a3edf594d211484f8b8f6c573a43fc534afe4a646"
+    },
+    {
+      "path": "tests/windows-updater-installer.test.ts",
+      "size": 18967,
+      "sha256": "d3e22ca040fd6afe9551719ce90b296c7589ed639e39042e9785637321fa8fb7"
+    },
+    {
+      "path": "tsconfig.json",
+      "size": 447,
+      "sha256": "7f7a58b390400f374df031d4df2686532929d9c475943ed3ad1a92072a714235"
+    },
+    {
+      "path": "vite.config.ts",
+      "size": 259,
+      "sha256": "18805e0500181a6d0a5dca8c198587bbf540bd781e3c7c7b43a47158b92b41e0"
+    }
+  ],
+  "license": "GPL-3.0-or-later",
+  "repository": "https://github.com/haoqiguai-dizao/smorec-client"
+}

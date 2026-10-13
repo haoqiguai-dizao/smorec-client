@@ -1,0 +1,10 @@
+.camera-shape-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; width: 100%; }
+.camera-shape-grid > button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-width: 0; height: 61px; padding: 5px; border: 1px solid var(--border-subtle); border-radius: 7px; background: var(--surface-sunken); color: var(--text-secondary); font-size: 11px; -webkit-app-region: no-drag; }
+.camera-shape-grid > button:hover:not(:disabled) { background: var(--surface-hover); color: var(--text-primary); }
+.camera-shape-grid > button[aria-pressed=true] { background: var(--accent-soft); border-color: var(--accent-border); color: var(--accent); }
+.camera-shape-grid > button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.camera-shape-grid > button:disabled { opacity: .35; cursor: default; }
+.camera-shape-icon { flex-shrink: 0; }
+.overlay-camera-settings > .overlay-camera-controls { margin-top: 10px; }
+.overlay-camera-controls.compact.camera-shape-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 80px; }
+.camera-shape-compact .camera-shape-icon { width: 22px; height: 20px; }

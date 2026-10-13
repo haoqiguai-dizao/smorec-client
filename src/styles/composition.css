@@ -1,0 +1,46 @@
+.composition-track { background: var(--surface-sunken); }
+.timeline-panel:has(.composition-track) { height: 272px; }
+.timeline-composition { position: absolute; top: 0; bottom: 0; display: flex; align-items: center; gap: 7px; min-width: 3px; padding: 0 13px; overflow: visible; border: 1px solid var(--track-audio-border); border-radius: 5px; background: var(--track-audio); color: var(--track-audio-text); cursor: grab; touch-action: none; }
+.timeline-composition > span:not(.timeline-drag-tooltip) { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 11px; }
+.timeline-composition > small { margin-left: auto; white-space: nowrap; font-size: 10px; }
+.timeline-composition.selected { border-color: var(--accent-border); box-shadow: var(--shadow-control); }
+.timeline-composition.is-dragging { z-index: 5; cursor: grabbing; }
+.composition-timeline-tools { display: flex; flex-shrink: 0; align-items: center; gap: 3px; padding-left: 4px; border-left: 1px solid var(--border-subtle); }
+.composition-timeline-tools button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 27px; padding: 0 8px; }
+.composition-timeline-tools .icon-button { width: 28px; padding: 0; }
+.canvas-viewport { position: relative; }
+.composition-transform-layer { position: absolute; pointer-events: none; z-index: 4; }
+.composition-selection-layer { overflow: hidden; }
+.composition-camera-select { position: absolute; display: grid; place-items: center; padding: 0; border: 1px solid transparent; background: transparent; pointer-events: auto; cursor: pointer; }
+.composition-camera-select > svg { opacity: 0; padding: 5px; box-sizing: content-box; border-radius: 4px; color: #ecfff5; background: #163527b3; }
+.composition-camera-select:hover, .composition-camera-select:focus-visible { border-color: #bcebd4; background: #d7ffed08; }
+.composition-camera-select:hover > svg, .composition-camera-select:focus-visible > svg { opacity: 1; }
+.composition-transform-box { position: absolute; border: 1px solid #bcebd4; box-shadow: 0 0 0 1px #16352799; }
+.composition-transform-drag { position: absolute; inset: 0; width: 100%; height: 100%; display: grid; place-items: center; padding: 0; border: 0; border-radius: 0; color: #ecfff5; background: transparent; pointer-events: auto; cursor: move; touch-action: none; }
+.composition-transform-drag:hover { background: #d7ffed08; }
+.composition-transform-drag > svg { padding: 3px; box-sizing: content-box; border-radius: 4px; background: #163527b3; }
+.composition-transform-handle { position: absolute; width: 12px; height: 12px; padding: 0; border: 1px solid #244d3d; border-radius: 2px; background: #d4f3e4; pointer-events: auto; touch-action: none; }
+.composition-transform-handle.nw { left: -6px; top: -6px; cursor: nwse-resize; }
+.composition-transform-handle.ne { right: -6px; top: -6px; cursor: nesw-resize; }
+.composition-transform-handle.se { right: -6px; bottom: -6px; cursor: nwse-resize; }
+.composition-transform-handle.sw { left: -6px; bottom: -6px; cursor: nesw-resize; }
+.composition-panel > header { display: flex; align-items: center; gap: 8px; padding: 12px 0 4px; color: var(--text-secondary); }
+.composition-panel > header strong { flex: 1; font-size: 12px; font-weight: 600; }
+.composition-panel > header button { width: 26px; height: 26px; padding: 0; }
+.composition-number-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 9px 0 12px; }
+.composition-number { display: flex; flex-direction: column; gap: 6px; min-width: 0; font-size: 10px; color: var(--text-secondary); }
+.composition-number > span:last-child { display: flex; align-items: center; gap: 4px; min-width: 0; padding: 0 6px; border: 1px solid var(--border-subtle); border-radius: 4px; background: var(--surface-sunken); }
+.composition-number input { min-width: 0; width: 100%; height: 29px; padding: 0; border: 0; background: transparent; color: var(--text-secondary); font-size: 11px; }
+.composition-number small { flex-shrink: 0; color: var(--text-secondary); }
+.composition-segment-actions { display: flex; gap: 5px; justify-content: flex-end; }
+.composition-segment-actions button { width: 28px; height: 27px; padding: 0; }
+.composition-disabled { opacity: .45; pointer-events: none; }
+.composition-screen-modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+.composition-screen-modes button { display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 36px; padding: 0 4px; border: 1px solid var(--border-subtle); border-radius: 5px; font-size: 11px; }
+.composition-screen-modes button[aria-pressed=true] { border-color: var(--accent-border); background: var(--accent-soft); color: var(--accent); }
+.composition-backgrounds { margin-top: 12px; }
+.composition-background-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.composition-background-grid button { height: 40px; min-width: 0; padding: 0; overflow: hidden; border: 2px solid transparent; border-radius: 5px; }
+.composition-background-grid button[aria-pressed=true] { border-color: var(--accent-border); box-shadow: var(--shadow-control); }
+.composition-background-grid img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.composition-import-background { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; min-height: 32px; margin-top: 8px; font-size: 11px; }

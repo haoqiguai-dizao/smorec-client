@@ -1,0 +1,63 @@
+# Dependencies and generated application files
+node_modules/
+/public/beauty/runtime/
+/public/beauty/worker.js
+/dist/
+/dist-electron/
+/mac-update-helper.cjs
+/release/
+/release-v*/
+/*.app
+*.tsbuildinfo
+
+# Local verification, recordings, archives and build tool cache
+/output/
+/.local/
+/.playwright-cli/
+/.native-build-tools/
+*.log
+*.dmp
+
+# Native build products; the pinned runtime DLL is intentional
+native/**/bin/
+native/**/obj/
+native/macos/.build/
+/native/publish/
+/native/fork-publish/
+/native/test-publish-*/
+/native/test-output/
+/native/vendor/ScreenRecorderLib/
+/native/vendor/artifacts/*
+!/native/vendor/artifacts/ScreenRecorderLib.dll
+__pycache__/
+
+# Machine settings and private configuration
+/.workbuddy/
+/.secrets/
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pfx
+*.p12
+*.pem
+*.key
+.vs/
+.idea/
+*.user
+*.suo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Generated installers are deployed as artifacts, never stored in Git.
+sites/website/downloads/
+
+native/speech-publish/
+
+# Public development packages
+/release-local/
+
+# Generated official ASR-only runtime
+native/macos/Vendor/SherpaOnnx/*.dylib
+native/macos/Vendor/SherpaOnnx/PUBLIC-RUNTIME.json

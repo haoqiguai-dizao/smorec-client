@@ -1,0 +1,4 @@
+.composition-preset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 14px; }
+.composition-preset-grid > button { flex-direction: row; gap: 6px; height: 35px; }
+.composition-preset-grid > button > svg { flex-shrink: 0; }
+.composition-preset-grid > button > span { min-width: 0; }

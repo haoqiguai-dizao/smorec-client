@@ -1,0 +1,13 @@
+.presenter-aspect { width: 108px; min-width: 0; height: 32px; flex-shrink: 0; padding: 0 5px; color: var(--text-secondary); background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: 7px; font: inherit; font-size: 11px; pointer-events: auto; -webkit-app-region: no-drag; }
+.presenter-aspect:disabled { opacity: .55; }
+.presenter-aspect-picker { position: relative; flex-shrink: 0; pointer-events: auto; -webkit-app-region: no-drag; }
+.presenter-aspect-picker .presenter-aspect { display: flex; justify-content: space-between; gap: 8px; padding: 0 8px; }
+.presenter-aspect-options { position: absolute; z-index: 12; left: 0; bottom: calc(100% + 6px); width: 132px; padding: 5px; border: 1px solid var(--border-subtle); border-radius: 9px; background: var(--surface); box-shadow: var(--shadow-panel); -webkit-app-region: no-drag; }
+.presenter-aspect-options [role=option] { display: flex; justify-content: space-between; width: 100%; min-height: 34px; padding: 0 8px; font-size: 11px; white-space: nowrap; }
+.presenter-aspect-options [aria-selected=true] { color: var(--accent); }
+.presenter-crop-controls { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; -webkit-app-region: no-drag; }
+.presenter-crop-controls label { display: flex; align-items: center; gap: 10px; font-size: 11px; color: var(--text-secondary); }
+.presenter-crop-controls input { flex: 1; min-width: 0; accent-color: var(--accent); }
+.presenter-crop-controls button { align-self: flex-end; padding: 4px 8px; font-size: 11px; }
+.overlay-camera-dock.presenter { flex-wrap: wrap; width: max-content; max-width: calc(100% - 20px); }
+.camera-overlay-window .overlay-camera-controls.compact.presenter { opacity: 1; pointer-events: auto; }

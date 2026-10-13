@@ -1,0 +1,130 @@
+.session-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  order: 2;
+  flex-shrink: 0;
+  width: min(100%, 1104px);
+  min-height: 68px;
+  padding: 8px 12px;
+  border: 1px solid #90979ca6;
+  border-radius: 17px;
+  background: linear-gradient(180deg, #ffffff05, transparent 48%), linear-gradient(110deg, #30373afa, #292e31fa 55%, #262b2efa);
+  color: #f0f1ef;
+  box-shadow: inset 0 1px 1px #ffffff20, inset 0 -1px 1px #00000036, 0 2px 3px #00000014, 0 10px 24px #11171d30;
+  -webkit-app-region: drag;
+}
+.session-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 6px 7px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #f0f1ef;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+  -webkit-app-region: no-drag;
+}
+.session-toolbar button svg { flex-shrink: 0; stroke-width: 1.65; }
+.session-toolbar > * { flex-shrink: 0; }
+.session-actions { display: flex; align-items: center; gap: 5px; margin-left: auto; }
+.session-actions > * { flex-shrink: 0; }
+.session-toolbar button:hover:not(:disabled) { background: #ffffff0b; border-color: #ffffff12; }
+.session-toolbar button:focus-visible { outline: 2px solid #a5c3af; outline-offset: 2px; }
+.session-grip { display: grid; place-items: center; width: 12px; color: #7f888e; }
+.session-brand { display: flex; align-items: center; gap: 7px; height: 34px; padding-right: 7px; border-right: 1px solid #ffffff23; white-space: nowrap; }
+.session-brand strong { font-size: 14px; font-weight: 500; letter-spacing: .2px; }
+.session-brand > svg { color: #f0a69a; fill: #f0a69a; padding: 5px; border: 2px solid #f0a69a; border-radius: 50%; }
+.session-status { display: flex; align-items: flex-start; gap: 9px; width: 96px; min-width: 96px; padding-right: 12px; margin-right: 5px; border-right: 1px solid #ffffff23; }
+.session-status > i { width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #8ac79f; box-shadow: 0 0 5px #8ac79f14; }
+.session-toolbar.record .session-status > i { background: #f0a69a; }
+.session-status > span { display: flex; flex-direction: column; gap: 2px; }
+.session-status strong { font-size: 13px; line-height: 20px; font-weight: 500; white-space: nowrap; }
+.session-status time { color: #aab2b8; font-size: 12px; line-height: 15px; font-variant-numeric: tabular-nums; }
+.session-devices { display: flex; align-items: center; gap: 5px; }
+.session-toolbar:not(.is-compact) .session-device-slot { width: 100px; }
+.session-toolbar:not(.is-compact) .session-device-slot.system { width: 86px; }
+.session-device { position: relative; }
+.session-device-symbol { position: relative; display: grid; place-items: center; flex-shrink: 0; width: 24px; height: 32px; padding-bottom: 5px; }
+.session-device-symbol i { position: absolute; bottom: 0; left: 10px; width: 5px; height: 5px; border-radius: 50%; background: #858b91; }
+.session-device-symbol i[data-active=true] { background: #8ac79f; }
+.session-device[aria-pressed=false] { color: #c8ced1; }
+.session-device-group { display: flex; align-items: center; }
+.session-toolbar .session-device { min-height: 46px; padding: 5px 5px; gap: 7px; }
+.session-toolbar .session-device-settings { min-height: 34px; width: 14px; padding: 4px 0; color: #aeb7bc; }
+.session-toolbar .session-whiteboard { padding-inline: 8px; }
+.session-toolbar .session-whiteboard[aria-pressed=true] { border-color: #ffffff25; background: linear-gradient(#ffffff13, #ffffff09); box-shadow: inset 0 1px 0 #ffffff09, 0 1px 2px #00000018; }
+.session-toolbar .session-more { border-left: 1px solid #ffffff23; border-radius: 0 9px 9px 0; padding-left: 13px; margin-left: 4px; }
+.session-toolbar .session-stop { margin-left: auto; min-width: 112px; min-height: 38px; padding-inline: 13px; color: #f0ac9e; border-color: #b47e7275; background: linear-gradient(#cd8c7d19, #cd8c7d0b); box-shadow: inset 0 1px 0 #ffffff05; }
+.session-toolbar .session-stop:hover:not(:disabled) { border-color: #cf9989; background: #b47e7229; }
+.session-toolbar .session-collapse { color: #d0d5d8; border-left: 1px solid #ffffff23; border-radius: 0 9px 9px 0; padding-left: 13px; margin-left: 8px; }
+.session-toolbar.is-compact { width: auto; min-height: 48px; align-self: flex-end; padding: 4px 10px; gap: 5px; border-radius: 13px; }
+.session-toolbar.is-compact .session-status { width: auto; min-width: 0; padding-right: 12px; margin-right: 3px; align-items: center; }
+.session-toolbar.is-compact .session-status > i { margin: 0; }
+.session-toolbar.is-compact .session-status > span { flex-direction: row; align-items: center; gap: 8px; }
+.session-toolbar.is-compact button { min-height: 36px; padding: 3px 6px; gap: 5px; }
+.session-toolbar.is-compact .session-device-symbol { height: 30px; }
+.session-toolbar.is-compact .session-collapse { padding-left: 11px; margin-left: 5px; }
+.session-toolbar.is-compact .session-stop { min-width: 64px; margin-left: 0; }
+.session-toolbar .session-more { min-width: 43px; }
+@media (max-width: 1100px) { .session-brand { display: none; } }
+@media (max-width: 880px) {
+  .session-toolbar { gap: 4px; padding-inline: 9px; }
+  .session-toolbar .session-brand { padding-right: 10px; margin-right: 0; }
+  .session-toolbar .session-status { padding-right: 10px; margin-right: 0; }
+  .session-toolbar .session-devices { gap: 2px; }
+  .session-toolbar .session-collapse { margin-left: 3px; }
+}
+@media (max-width: 1020px) {
+  .session-toolbar:not(.is-compact) .session-device-label { display: none; }
+  .session-toolbar:not(.is-compact) .session-device-slot { width: 47px; }
+  .session-toolbar:not(.is-compact) .session-device-slot.system { width: 34px; }
+  .session-toolbar .session-more { padding-left: 9px; margin-left: 0; }
+}
+/* Keep both rows inside the native launcher's 96px window on narrow displays. */
+@media (max-width: 860px) {
+  .session-toolbar:not(.is-compact) { flex-wrap: wrap; padding-block: 4px; row-gap: 2px; }
+  .session-toolbar:not(.is-compact) button { min-height: 30px; padding-block: 3px; }
+  .session-toolbar:not(.is-compact) .session-device-symbol { height: 22px; padding-bottom: 3px; }
+  .session-toolbar:not(.is-compact) .session-device-settings { min-height: 28px; }
+  .session-toolbar:not(.is-compact) .session-stop { height: 30px; min-height: 30px; }
+  .session-toolbar:not(.is-compact) .toolbar-picture,
+  .session-toolbar:not(.is-compact) .toolbar-mode-context { height: 30px; }
+}
+@media (max-width: 680px) {
+  .session-toolbar:not(.is-compact) .session-device-label,
+  .session-toolbar:not(.is-compact) .session-more span,
+  .session-toolbar:not(.is-compact) .session-collapse span { display: none; }
+  .session-toolbar .session-stop { min-width: 104px; padding-inline: 10px; }
+  .session-toolbar:not(.is-compact) .session-whiteboard .session-device-label { display: none; }
+  .session-toolbar .session-grip { display: none; }
+  .session-toolbar .session-status { width: 66px; min-width: 66px; padding-right: 6px; gap: 6px; }
+  .session-toolbar.is-compact .session-status { width: auto; min-width: 0; }
+  .session-toolbar .session-more { min-width: 34px; padding-inline: 5px; }
+  .session-toolbar:not(.is-compact) .session-device-slot { width: 44px; }
+  .session-toolbar:not(.is-compact) .session-device-slot.system { width: 32px; }
+  .session-toolbar .session-device { padding-inline: 3px; }
+}
+@media (max-width: 540px) {
+  .session-toolbar { gap: 2px; }
+  .session-toolbar .session-grip { display: none; }
+  .session-toolbar .session-status { min-width: 64px; padding-right: 6px; gap: 6px; }
+  .session-toolbar .session-device,
+  .session-toolbar .session-more,
+  .session-toolbar .session-collapse { padding-inline: 3px; margin-left: 0; }
+}
+@media (max-width: 420px) {
+  .session-toolbar:not(.is-compact) { flex-wrap: wrap; justify-content: center; }
+  .session-toolbar .session-stop { margin-left: 0; }
+  .session-toolbar.is-compact .session-status { padding-right: 6px; }
+  .session-toolbar.is-compact .session-status time { display: none; }
+}
+.session-toolbar .session-quit { color: #bfc7cc; margin-left: 3px; }
+.session-toolbar .session-quit.has-error { color: #f0ac9e; }
+.session-toolbar.is-compact .session-quit span { display: none; }
+@media (max-width: 1020px) { .session-toolbar .session-quit span { display: none; } }

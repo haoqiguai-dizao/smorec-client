@@ -1,0 +1,964 @@
+diff --git a/ScreenRecorderLib/Recorder.h b/ScreenRecorderLib/Recorder.h
+index 6c4b43c..6a1482a 100644
+--- a/ScreenRecorderLib/Recorder.h
++++ b/ScreenRecorderLib/Recorder.h
+@@ -129,6 +129,13 @@ namespace ScreenRecorderLib {
+ 
+ 		static bool SetExcludeFromCapture(System::IntPtr hwnd, bool isExcluded);
+ 		static bool IsSessionWindowExclusionSupported();
++		System::Int64 GetMediaClockOriginQpc100ns() {
++			return m_Rec ? m_Rec->GetMediaClockOriginQpc100ns() : -1;
++		}
++		// Valid inside OnFrameRecorded; this is media time, not callback delivery time.
++		System::Int64 GetCurrentVideoFrameEnd100ns() {
++			return m_Rec ? m_Rec->GetCurrentVideoFrameEnd100ns() : -1;
++		}
+ 		static Recorder^ CreateRecorder();
+ 		static Recorder^ CreateRecorder(RecorderOptions^ options);
+ 		static List<RecordableWindow^>^ GetWindows();
+diff --git a/ScreenRecorderLibNative/CMFSinkWriterCallback.h b/ScreenRecorderLibNative/CMFSinkWriterCallback.h
+index 165d9fd..c0f8531 100644
+--- a/ScreenRecorderLibNative/CMFSinkWriterCallback.h
++++ b/ScreenRecorderLibNative/CMFSinkWriterCallback.h
+@@ -8,6 +8,7 @@ class CMFSinkWriterCallback : public IMFSinkWriterCallback {
+ public:
+ 	CMFSinkWriterCallback(_In_ HANDLE hFinalizeEvent, _In_opt_ HANDLE hMarkerEvent) :
+ 		m_nRefCount(1),
++		m_FinalizeResult(E_PENDING),
+ 		m_hFinalizeEvent(hFinalizeEvent),
+ 		m_hMarkerEvent(hMarkerEvent) {}
+ 	virtual ~CMFSinkWriterCallback()
+@@ -16,11 +17,15 @@ public:
+ 	// IMFSinkWriterCallback methods
+ 	STDMETHODIMP OnFinalize(HRESULT hrStatus) {
+ 		LOG_DEBUG(L"CMFSinkWriterCallback::OnFinalize");
++		InterlockedExchange(&m_FinalizeResult, hrStatus);
+ 		if (m_hFinalizeEvent != NULL) {
+ 			SetEvent(m_hFinalizeEvent);
+ 		}
+ 		return hrStatus;
+ 	}
++	HRESULT GetFinalizeResult() {
++		return InterlockedCompareExchange(&m_FinalizeResult, 0, 0);
++	}
+ 
+ 	STDMETHODIMP OnMarker(DWORD dwStreamIndex, LPVOID pvContext) {
+ 		LOG_DEBUG(L"CMFSinkWriterCallback::OnMarker");
+@@ -53,6 +58,7 @@ public:
+ 
+ private:
+ 	volatile long m_nRefCount;
++	volatile long m_FinalizeResult;
+ 	HANDLE m_hFinalizeEvent;
+ 	HANDLE m_hMarkerEvent;
+-};
+\ No newline at end of file
++};
+diff --git a/ScreenRecorderLibNative/EncodedSampleTiming.cpp b/ScreenRecorderLibNative/EncodedSampleTiming.cpp
+new file mode 100644
+index 0000000..319bce7
+--- /dev/null
++++ b/ScreenRecorderLibNative/EncodedSampleTiming.cpp
+@@ -0,0 +1,208 @@
++#include "EncodedSampleTiming.h"
++#include "Log.h"
++#include <atlbase.h>
++#include <mferror.h>
++#include <mfapi.h>
++#include <mftransform.h>
++#include <algorithm>
++#include <cstdarg>
++
++namespace {
++void LogTiming(const wchar_t* format, ...) noexcept {
++    if (!isLoggingEnabled) return;
++    wchar_t text[1536]{};
++    va_list args;
++    va_start(args, format);
++    _vsnwprintf_s(text, _countof(text), _TRUNCATE, format, args);
++    va_end(args);
++    try { _log(L"%s [INFO] [EncodedTiming] %s\n", GetTimestamp().c_str(), text); }
++    catch (...) { /* Diagnostic output must not interrupt sink cleanup. */ }
++}
++}
++
++HRESULT EncodedSampleTiming::Fail(HRESULT result, const wchar_t* reason, LONGLONG pts) {
++    bool first = false;
++    std::size_t pending = 0;
++    {
++        std::lock_guard<std::mutex> guard(m_Mutex);
++        if (SUCCEEDED(m_Failure)) { m_Failure = FAILED(result) ? result : E_FAIL; first = true; }
++        result = m_Failure;
++        pending = m_Ledger.Count();
++    }
++    if (first) LogTiming(L"failure reason=%s pts100ns=%lld pending=%llu result=0x%08lx",
++        reason, pts, static_cast<unsigned long long>(pending), result);
++    return result;
++}
++
++HRESULT EncodedSampleTiming::VerifyHardware(IMFSinkWriter* writer, DWORD stream) {
++    CComQIPtr<IMFSinkWriterEx> extended(writer);
++    if (!extended) return Fail(E_NOINTERFACE, L"cannot-inspect-selected-transform");
++    for (DWORD index = 0; index < 16; ++index) {
++        CComPtr<IMFTransform> transform;
++        GUID category{};
++        HRESULT hr = extended->GetTransformForStream(stream, index, &category, &transform);
++        if (FAILED(hr)) break;
++        if (category != MFT_CATEGORY_VIDEO_ENCODER) continue;
++        CComPtr<IMFAttributes> attributes;
++        hr = transform->GetAttributes(&attributes);
++        if (FAILED(hr)) return Fail(hr, L"encoder-attributes-unavailable");
++        UINT32 hardwareUrlLength = 0;
++        hr = attributes->GetStringLength(MFT_ENUM_HARDWARE_URL_Attribute, &hardwareUrlLength);
++        if (FAILED(hr) || !hardwareUrlLength) return Fail(MF_E_TOPO_CODEC_NOT_FOUND, L"selected-encoder-not-confirmed-hardware");
++        wchar_t name[256]{};
++        attributes->GetString(MFT_FRIENDLY_NAME_Attribute, name, _countof(name), nullptr);
++        {
++            std::lock_guard<std::mutex> guard(m_Mutex);
++            m_Active = true;
++        }
++        LogTiming(L"enabled hardwareConfirmed=true encoder=%s transformIndex=%lu capacity=%llu",
++            name[0] ? name : L"unavailable", index, static_cast<unsigned long long>(EncodedTimingLedger::Capacity));
++        return S_OK;
++    }
++    return Fail(MF_E_TOPO_CODEC_NOT_FOUND, L"selected-video-encoder-unavailable");
++}
++
++HRESULT EncodedSampleTiming::RegisterInput(IMFSample* sample, std::uint64_t& token) {
++    LONGLONG pts = -1, duration = 0;
++    HRESULT hr = sample->GetSampleTime(&pts);
++    if (SUCCEEDED(hr)) hr = sample->GetSampleDuration(&duration);
++    if (FAILED(hr)) return Fail(hr, L"input-timing-unavailable", pts);
++    EncodedTimingLedger::Result inserted;
++    {
++        std::lock_guard<std::mutex> guard(m_Mutex);
++        if (FAILED(m_Failure)) return m_Failure;
++        if (!m_Active) return MF_E_NOT_INITIALIZED;
++        inserted = m_Ledger.Insert(pts, duration, token);
++        if (inserted == EncodedTimingLedger::Result::Ok) {
++            ++m_Registered;
++            m_HighWater = (std::max)(m_HighWater, static_cast<std::uint64_t>(m_Ledger.Count()));
++            return S_OK;
++        }
++    }
++    const wchar_t* reason = inserted == EncodedTimingLedger::Result::Full ? L"metadata-capacity-exhausted"
++        : inserted == EncodedTimingLedger::Result::Duplicate ? L"duplicate-input-pts" : L"invalid-input-duration";
++    return Fail(MF_E_INVALID_TIMESTAMP, reason, pts);
++}
++
++void EncodedSampleTiming::CompleteInput(std::uint64_t token, HRESULT result) {
++    {
++        std::lock_guard<std::mutex> guard(m_Mutex);
++        if (SUCCEEDED(result)) ++m_Accepted;
++        else if (m_Ledger.Cancel(token)) ++m_Cancelled;
++    }
++    if (FAILED(result)) Fail(result, L"input-write-failed");
++}
++
++HRESULT EncodedSampleTiming::RestoreDuration(IMFSample* sample) {
++    if (!sample) return Fail(E_POINTER, L"missing-encoded-sample");
++    LONGLONG pts = -1;
++    HRESULT hr = sample->GetSampleTime(&pts);
++    if (FAILED(hr)) return Fail(hr, L"encoded-pts-unavailable");
++    std::int64_t duration = 0;
++    EncodedTimingLedger::Result matched;
++    {
++        std::lock_guard<std::mutex> guard(m_Mutex);
++        if (FAILED(m_Failure)) return m_Failure;
++        matched = m_Ledger.Take(pts, duration);
++    }
++    if (matched != EncodedTimingLedger::Result::Ok) return Fail(MF_E_INVALID_TIMESTAMP, L"unknown-encoded-pts", pts);
++    hr = sample->SetSampleDuration(duration);
++    if (FAILED(hr)) return Fail(hr, L"encoded-duration-set-failed", pts);
++    {
++        std::lock_guard<std::mutex> guard(m_Mutex);
++        ++m_Matched;
++    }
++    return S_OK;
++}
++
++void EncodedSampleTiming::OnOutputFailure(HRESULT result) {
++    if (FAILED(result)) Fail(result, L"fragment-sink-rejected-sample");
++}
++
++void EncodedSampleTiming::OnFinalizeFailure(HRESULT result, bool begin) {
++    if (FAILED(result)) Fail(result, begin ? L"fragment-begin-finalize-failed" : L"fragment-end-finalize-failed");
++}
++
++void EncodedSampleTiming::OnFlush(HRESULT result) {
++    if (FAILED(result)) { Fail(result, L"original-stream-flush-failed"); return; }
++    std::lock_guard<std::mutex> guard(m_Mutex);
++    m_FlushDiscarded += m_Ledger.Clear();
++}
++
++std::uint64_t EncodedSampleTiming::BeforeWriterFlush() {
++    std::lock_guard<std::mutex> guard(m_Mutex);
++    return m_Ledger.Watermark();
++}
++
++void EncodedSampleTiming::AfterWriterFlush(std::uint64_t watermark, HRESULT result) {
++    if (FAILED(result)) { Fail(result, L"original-writer-flush-failed"); return; }
++    std::lock_guard<std::mutex> guard(m_Mutex);
++    ++m_WriterFlushes;
++    m_FlushDiscarded += m_Ledger.DiscardThrough(watermark);
++}
++
++HRESULT EncodedSampleTiming::ObserveStaleMaintenance(bool& active) {
++    std::size_t pending = 0;
++    HRESULT status = S_OK;
++    std::uint64_t highWater = 0;
++    {
++        std::lock_guard<std::mutex> guard(m_Mutex);
++        active = m_Active;
++        if (!active) return m_Failure;
++        ++m_ObservedStaleChecks;
++        pending = m_Ledger.Count();
++        highWater = m_HighWater;
++        status = m_Failure;
++    }
++    // Propagate a latched asynchronous failure at this maintenance point too.
++    LogTiming(L"staleMaintenance=observe pending=%llu capacity=%llu highWater=%llu timing=0x%08lx",
++        static_cast<unsigned long long>(pending), static_cast<unsigned long long>(EncodedTimingLedger::Capacity), highWater, status);
++    return status;
++}
++
++HRESULT EncodedSampleTiming::Status() {
++    std::lock_guard<std::mutex> guard(m_Mutex);
++    return m_Failure;
++}
++
++HRESULT EncodedSampleTiming::Finalized(HRESULT result) {
++    std::size_t pending = 0;
++    {
++        std::lock_guard<std::mutex> guard(m_Mutex);
++        pending = m_Ledger.Count();
++    }
++    if (SUCCEEDED(result) && pending) Fail(MF_E_INVALID_TIMESTAMP, L"unconsumed-input-after-finalize");
++    std::lock_guard<std::mutex> guard(m_Mutex);
++    if (!m_Reported) {
++        m_Reported = true;
++        LogTiming(L"summary registered=%llu accepted=%llu matched=%llu discardedByOriginalFlush=%llu cancelled=%llu pending=%llu highWater=%llu writerFlushes=%llu observedStaleChecks=%llu finalize=0x%08lx timing=0x%08lx",
++            m_Registered, m_Accepted, m_Matched, m_FlushDiscarded, m_Cancelled,
++            static_cast<unsigned long long>(pending), m_HighWater, m_WriterFlushes, m_ObservedStaleChecks, result, m_Failure);
++    }
++    return FAILED(result) ? result : m_Failure;
++}
++
++HRESULT WriteTimingTrackedSample(const std::shared_ptr<EncodedSampleTiming>& timing,
++    IMFSinkWriter* writer, DWORD stream, IMFSample* sample) {
++    if (!timing) return writer->WriteSample(stream, sample);
++    std::uint64_t token = 0;
++    HRESULT hr = timing->RegisterInput(sample, token);
++    if (FAILED(hr)) return hr;
++    hr = writer->WriteSample(stream, sample);
++    timing->CompleteInput(token, hr);
++    return FAILED(hr) ? hr : timing->Status();
++}
++
++HRESULT FinalizeEncodedTiming(const std::shared_ptr<EncodedSampleTiming>& timing, HRESULT result) {
++    return timing ? timing->Finalized(result) : result;
++}
++
++HRESULT FlushTimingTrackedWriter(const std::shared_ptr<EncodedSampleTiming>& timing,
++    IMFSinkWriter* writer, DWORD stream) {
++    if (!timing) return writer->Flush(stream);
++    // No lock spans COM. Preserve inputs registered after this flush began.
++    const auto watermark = timing->BeforeWriterFlush();
++    const HRESULT hr = writer->Flush(stream);
++    timing->AfterWriterFlush(watermark, hr);
++    return hr;
++}
+diff --git a/ScreenRecorderLibNative/EncodedSampleTiming.h b/ScreenRecorderLibNative/EncodedSampleTiming.h
+new file mode 100644
+index 0000000..72eae38
+--- /dev/null
++++ b/ScreenRecorderLibNative/EncodedSampleTiming.h
+@@ -0,0 +1,39 @@
++#pragma once
++#include <Windows.h>
++#include <mfidl.h>
++#include <mfreadwrite.h>
++#include <memory>
++#include <mutex>
++#include "EncodedTimingLedger.h"
++
++class EncodedSampleTiming {
++public:
++    HRESULT VerifyHardware(IMFSinkWriter* writer, DWORD stream);
++    HRESULT RegisterInput(IMFSample* sample, std::uint64_t& token);
++    void CompleteInput(std::uint64_t token, HRESULT result);
++    HRESULT RestoreDuration(IMFSample* sample);
++    void OnOutputFailure(HRESULT result);
++    void OnFinalizeFailure(HRESULT result, bool begin);
++    void OnFlush(HRESULT result);
++    std::uint64_t BeforeWriterFlush();
++    void AfterWriterFlush(std::uint64_t watermark, HRESULT result);
++    HRESULT ObserveStaleMaintenance(bool& active);
++    HRESULT Finalized(HRESULT result);
++    HRESULT Status();
++private:
++    HRESULT Fail(HRESULT result, const wchar_t* reason, LONGLONG pts = -1);
++    std::mutex m_Mutex;
++    EncodedTimingLedger m_Ledger;
++    HRESULT m_Failure = S_OK;
++    bool m_Active = false, m_Reported = false;
++    std::uint64_t m_Registered = 0, m_Accepted = 0, m_Matched = 0;
++    std::uint64_t m_FlushDiscarded = 0, m_Cancelled = 0, m_HighWater = 0;
++    std::uint64_t m_WriterFlushes = 0;
++    std::uint64_t m_ObservedStaleChecks = 0;
++};
++
++HRESULT WriteTimingTrackedSample(const std::shared_ptr<EncodedSampleTiming>& timing,
++    IMFSinkWriter* writer, DWORD stream, IMFSample* sample);
++HRESULT FinalizeEncodedTiming(const std::shared_ptr<EncodedSampleTiming>& timing, HRESULT result);
++HRESULT FlushTimingTrackedWriter(const std::shared_ptr<EncodedSampleTiming>& timing,
++    IMFSinkWriter* writer, DWORD stream);
+diff --git a/ScreenRecorderLibNative/EncodedTimingLedger.h b/ScreenRecorderLibNative/EncodedTimingLedger.h
+new file mode 100644
+index 0000000..7425b85
+--- /dev/null
++++ b/ScreenRecorderLibNative/EncodedTimingLedger.h
+@@ -0,0 +1,68 @@
++#pragma once
++#include <array>
++#include <cstdint>
++#include <limits>
++
++// Pure bounded metadata. Callers provide synchronization; no sample/buffer is retained.
++class EncodedTimingLedger {
++public:
++    enum class Result { Ok, Invalid, Duplicate, Full, Unknown };
++    static constexpr std::size_t Capacity = 512;
++    Result Insert(std::int64_t pts, std::int64_t duration, std::uint64_t& token) noexcept {
++        if (pts < 0 || duration <= 0 || pts > (std::numeric_limits<std::int64_t>::max)() - duration)
++            return Result::Invalid;
++        if (pts == m_LastInputPts) return Result::Duplicate;
++        if (pts < m_LastInputPts) return Result::Invalid;
++        for (const auto& entry : m_Entries) if (entry.Used && entry.Pts == pts) return Result::Duplicate;
++        if (m_Count == Capacity) return Result::Full;
++        for (std::size_t offset = 0; offset < Capacity; ++offset) {
++            auto index = (m_Next + offset) % Capacity;
++            if (m_Entries[index].Used) continue;
++            token = ++m_Token;
++            m_Entries[index] = Entry{ pts, duration, token, true };
++            m_Next = (index + 1) % Capacity;
++            m_LastInputPts = pts;
++            ++m_Count;
++            return Result::Ok;
++        }
++        return Result::Full;
++    }
++    Result Take(std::int64_t pts, std::int64_t& duration) noexcept {
++        for (auto& entry : m_Entries) {
++            if (!entry.Used || entry.Pts != pts) continue;
++            duration = entry.Duration;
++            entry.Used = false;
++            --m_Count;
++            return Result::Ok;
++        }
++        return Result::Unknown;
++    }
++    bool Cancel(std::uint64_t token) noexcept {
++        for (auto& entry : m_Entries) {
++            if (!entry.Used || entry.Token != token) continue;
++            entry.Used = false;
++            --m_Count;
++            return true;
++        }
++        return false;
++    }
++    std::uint64_t Watermark() const noexcept { return m_Token; }
++    std::size_t DiscardThrough(std::uint64_t watermark) noexcept {
++        std::size_t removed = 0;
++        for (auto& entry : m_Entries) {
++            if (!entry.Used || entry.Token > watermark) continue;
++            entry.Used = false;
++            ++removed;
++        }
++        m_Count -= removed;
++        return removed;
++    }
++    std::size_t Clear() noexcept { return DiscardThrough(m_Token); }
++    std::size_t Count() const noexcept { return m_Count; }
++private:
++    struct Entry { std::int64_t Pts = 0, Duration = 0; std::uint64_t Token = 0; bool Used = false; };
++    std::array<Entry, Capacity> m_Entries{};
++    std::size_t m_Next = 0, m_Count = 0;
++    std::uint64_t m_Token = 0;
++    std::int64_t m_LastInputPts = -1;
++};
+diff --git a/ScreenRecorderLibNative/EncodedTimingSink.cpp b/ScreenRecorderLibNative/EncodedTimingSink.cpp
+new file mode 100644
+index 0000000..88371f6
+--- /dev/null
++++ b/ScreenRecorderLibNative/EncodedTimingSink.cpp
+@@ -0,0 +1,143 @@
++#include "EncodedTimingSink.h"
++#include "EncodedTimingStream.h"
++#include <mferror.h>
++#include <mfapi.h>
++#include <vector>
++
++namespace {
++class EncodedTimingSink final : public IMFFinalizableMediaSink, public IMFClockStateSink,
++    public IMFMediaEventGenerator, public IMFGetService {
++public:
++    EncodedTimingSink(IMFMediaSink* inner, std::shared_ptr<EncodedSampleTiming> timing)
++        : m_Inner(inner), m_Finalizable(inner), m_Clock(inner), m_Events(inner), m_Service(inner), m_Timing(std::move(timing)) {}
++    HRESULT Initialize() {
++        if (!m_Finalizable) return E_NOINTERFACE;
++        DWORD count = 0;
++        HRESULT hr = m_Inner->GetStreamSinkCount(&count);
++        if (FAILED(hr)) return hr;
++        if (!count || count > 8) return MF_E_INVALIDSTREAMNUMBER;
++        unsigned videos = 0;
++        for (DWORD index = 0; index < count; ++index) {
++            CComPtr<IMFStreamSink> stream;
++            CComPtr<IMFMediaTypeHandler> handler;
++            DWORD id = 0;
++            GUID major{};
++            hr = m_Inner->GetStreamSinkByIndex(index, &stream);
++            if (SUCCEEDED(hr)) hr = stream->GetIdentifier(&id);
++            if (SUCCEEDED(hr)) hr = stream->GetMediaTypeHandler(&handler);
++            if (SUCCEEDED(hr)) hr = handler->GetMajorType(&major);
++            if (FAILED(hr)) return hr;
++            const bool video = major == MFMediaType_Video;
++            if (video) ++videos;
++            m_Ids.push_back(id);
++            m_Streams.push_back(std::make_unique<EncodedTimingStream>(static_cast<IMFMediaSink*>(this), stream, m_Timing, video));
++        }
++        return videos == 1 ? S_OK : MF_E_INVALIDMEDIATYPE;
++    }
++    STDMETHODIMP QueryInterface(REFIID iid, void** result) override {
++        if (!result) return E_POINTER;
++        *result = nullptr;
++        if (iid == __uuidof(IUnknown) || iid == __uuidof(IMFMediaSink) || iid == __uuidof(IMFFinalizableMediaSink))
++            *result = static_cast<IMFFinalizableMediaSink*>(this);
++        else if (iid == __uuidof(IMFClockStateSink) && m_Clock) *result = static_cast<IMFClockStateSink*>(this);
++        else if (iid == __uuidof(IMFMediaEventGenerator) && m_Events) *result = static_cast<IMFMediaEventGenerator*>(this);
++        else if (iid == __uuidof(IMFGetService) && m_Service) *result = static_cast<IMFGetService*>(this);
++        else return E_NOINTERFACE;
++        AddRef();
++        return S_OK;
++    }
++    STDMETHODIMP_(ULONG) AddRef() override { return InterlockedIncrement(&m_References); }
++    STDMETHODIMP_(ULONG) Release() override {
++        const ULONG count = InterlockedDecrement(&m_References);
++        if (!count) delete this;
++        return count;
++    }
++    STDMETHODIMP GetCharacteristics(DWORD* flags) override {
++        if (!flags) return E_POINTER;
++        HRESULT hr = m_Inner->GetCharacteristics(flags);
++        if (SUCCEEDED(hr)) *flags |= MEDIASINK_FIXED_STREAMS;
++        return hr;
++    }
++    STDMETHODIMP AddStreamSink(DWORD, IMFMediaType*, IMFStreamSink** stream) override {
++        if (stream) *stream = nullptr;
++        return MF_E_STREAMSINKS_FIXED;
++    }
++    STDMETHODIMP RemoveStreamSink(DWORD) override { return MF_E_STREAMSINKS_FIXED; }
++    STDMETHODIMP GetStreamSinkCount(DWORD* count) override {
++        if (!count) return E_POINTER;
++        *count = static_cast<DWORD>(m_Streams.size());
++        return S_OK;
++    }
++    STDMETHODIMP GetStreamSinkByIndex(DWORD index, IMFStreamSink** stream) override {
++        if (!stream) return E_POINTER;
++        *stream = nullptr;
++        if (index >= m_Streams.size()) return MF_E_INVALIDINDEX;
++        *stream = m_Streams[index].get();
++        (*stream)->AddRef();
++        return S_OK;
++    }
++    STDMETHODIMP GetStreamSinkById(DWORD id, IMFStreamSink** stream) override {
++        if (!stream) return E_POINTER;
++        for (std::size_t index = 0; index < m_Ids.size(); ++index)
++            if (m_Ids[index] == id) return GetStreamSinkByIndex(static_cast<DWORD>(index), stream);
++        *stream = nullptr;
++        return MF_E_INVALIDSTREAMNUMBER;
++    }
++    STDMETHODIMP SetPresentationClock(IMFPresentationClock* clock) override { return m_Inner->SetPresentationClock(clock); }
++    STDMETHODIMP GetPresentationClock(IMFPresentationClock** clock) override { return m_Inner->GetPresentationClock(clock); }
++    STDMETHODIMP Shutdown() override { return m_Inner->Shutdown(); }
++    STDMETHODIMP BeginFinalize(IMFAsyncCallback* callback, IUnknown* state) override {
++        HRESULT hr = m_Finalizable->BeginFinalize(callback, state);
++        m_Timing->OnFinalizeFailure(hr, true);
++        return hr;
++    }
++    STDMETHODIMP EndFinalize(IMFAsyncResult* result) override {
++        HRESULT hr = m_Finalizable->EndFinalize(result);
++        m_Timing->OnFinalizeFailure(hr, false);
++        return hr;
++    }
++    STDMETHODIMP OnClockStart(MFTIME system, LONGLONG offset) override { return m_Clock->OnClockStart(system, offset); }
++    STDMETHODIMP OnClockStop(MFTIME system) override { return m_Clock->OnClockStop(system); }
++    STDMETHODIMP OnClockPause(MFTIME system) override { return m_Clock->OnClockPause(system); }
++    STDMETHODIMP OnClockRestart(MFTIME system) override { return m_Clock->OnClockRestart(system); }
++    STDMETHODIMP OnClockSetRate(MFTIME system, float rate) override { return m_Clock->OnClockSetRate(system, rate); }
++    STDMETHODIMP GetEvent(DWORD flags, IMFMediaEvent** event) override { return m_Events->GetEvent(flags, event); }
++    STDMETHODIMP BeginGetEvent(IMFAsyncCallback* callback, IUnknown* state) override { return m_Events->BeginGetEvent(callback, state); }
++    STDMETHODIMP EndGetEvent(IMFAsyncResult* result, IMFMediaEvent** event) override { return m_Events->EndGetEvent(result, event); }
++    STDMETHODIMP QueueEvent(MediaEventType type, REFGUID extended, HRESULT status, const PROPVARIANT* value) override {
++        return m_Events->QueueEvent(type, extended, status, value);
++    }
++    STDMETHODIMP GetService(REFGUID service, REFIID iid, LPVOID* result) override { return m_Service->GetService(service, iid, result); }
++private:
++    volatile LONG m_References = 1;
++    CComPtr<IMFMediaSink> m_Inner;
++    CComQIPtr<IMFFinalizableMediaSink> m_Finalizable;
++    CComQIPtr<IMFClockStateSink> m_Clock;
++    CComQIPtr<IMFMediaEventGenerator> m_Events;
++    CComQIPtr<IMFGetService> m_Service;
++    std::shared_ptr<EncodedSampleTiming> m_Timing;
++    std::vector<DWORD> m_Ids;
++    std::vector<std::unique_ptr<EncodedTimingStream>> m_Streams;
++};
++}
++
++HRESULT WrapEncodedTimingSink(CComPtr<IMFMediaSink>& sink, bool hardwareRequested, bool fragmented,
++    std::shared_ptr<EncodedSampleTiming>& timing) {
++    timing.reset();
++    wchar_t flag[8]{};
++    const DWORD size = GetEnvironmentVariableW(L"FRAMEFLOW_CAPTURE_ENCODED_TIMING", flag, _countof(flag));
++    if (!hardwareRequested || !fragmented || (size == 1 && flag[0] == L'0')) return S_OK;
++    if (!sink) return E_POINTER;
++    try {
++        auto context = std::make_shared<EncodedSampleTiming>();
++        CComPtr<IMFMediaSink> wrapped;
++        auto* implementation = new EncodedTimingSink(sink, context);
++        wrapped.Attach(implementation);
++        HRESULT hr = implementation->Initialize();
++        if (FAILED(hr)) return hr;
++        sink = wrapped;
++        timing = std::move(context);
++        return S_OK;
++    } catch (const std::bad_alloc&) { return E_OUTOFMEMORY; }
++    catch (...) { return E_UNEXPECTED; }
++}
+diff --git a/ScreenRecorderLibNative/EncodedTimingSink.h b/ScreenRecorderLibNative/EncodedTimingSink.h
+new file mode 100644
+index 0000000..0a821a4
+--- /dev/null
++++ b/ScreenRecorderLibNative/EncodedTimingSink.h
+@@ -0,0 +1,7 @@
++#pragma once
++#include <atlbase.h>
++#include <mfidl.h>
++#include "EncodedSampleTiming.h"
++
++HRESULT WrapEncodedTimingSink(CComPtr<IMFMediaSink>& sink, bool hardwareRequested, bool fragmented,
++    std::shared_ptr<EncodedSampleTiming>& timing);
+diff --git a/ScreenRecorderLibNative/EncodedTimingStream.h b/ScreenRecorderLibNative/EncodedTimingStream.h
+new file mode 100644
+index 0000000..78a5a43
+--- /dev/null
++++ b/ScreenRecorderLibNative/EncodedTimingStream.h
+@@ -0,0 +1,59 @@
++#pragma once
++#include <atlbase.h>
++#include <mfidl.h>
++#include "EncodedSampleTiming.h"
++
++// Parent owns this object without a COM reference; external stream references keep the parent alive.
++class EncodedTimingStream final : public IMFStreamSink {
++public:
++    EncodedTimingStream(IMFMediaSink* owner, IMFStreamSink* inner,
++        std::shared_ptr<EncodedSampleTiming> timing, bool video)
++        : m_Owner(owner), m_Inner(inner), m_Timing(std::move(timing)), m_Video(video) {}
++    STDMETHODIMP QueryInterface(REFIID iid, void** result) override {
++        if (!result) return E_POINTER;
++        *result = nullptr;
++        if (iid == __uuidof(IUnknown) || iid == __uuidof(IMFStreamSink) || iid == __uuidof(IMFMediaEventGenerator))
++            *result = static_cast<IMFStreamSink*>(this);
++        else return E_NOINTERFACE;
++        AddRef();
++        return S_OK;
++    }
++    STDMETHODIMP_(ULONG) AddRef() override { return m_Owner->AddRef(); }
++    STDMETHODIMP_(ULONG) Release() override { return m_Owner->Release(); }
++    STDMETHODIMP GetMediaSink(IMFMediaSink** sink) override {
++        if (!sink) return E_POINTER;
++        *sink = m_Owner;
++        m_Owner->AddRef();
++        return S_OK;
++    }
++    STDMETHODIMP GetIdentifier(DWORD* id) override { return m_Inner->GetIdentifier(id); }
++    STDMETHODIMP GetMediaTypeHandler(IMFMediaTypeHandler** handler) override { return m_Inner->GetMediaTypeHandler(handler); }
++    STDMETHODIMP ProcessSample(IMFSample* sample) override {
++        if (m_Video) {
++            HRESULT hr = m_Timing->RestoreDuration(sample);
++            if (FAILED(hr)) return hr;
++        }
++        HRESULT hr = m_Inner->ProcessSample(sample);
++        if (m_Video) m_Timing->OnOutputFailure(hr);
++        return hr;
++    }
++    STDMETHODIMP PlaceMarker(MFSTREAMSINK_MARKER_TYPE type, const PROPVARIANT* value, const PROPVARIANT* context) override {
++        return m_Inner->PlaceMarker(type, value, context);
++    }
++    STDMETHODIMP Flush() override {
++        HRESULT hr = m_Inner->Flush();
++        if (m_Video) m_Timing->OnFlush(hr);
++        return hr;
++    }
++    STDMETHODIMP GetEvent(DWORD flags, IMFMediaEvent** event) override { return m_Inner->GetEvent(flags, event); }
++    STDMETHODIMP BeginGetEvent(IMFAsyncCallback* callback, IUnknown* state) override { return m_Inner->BeginGetEvent(callback, state); }
++    STDMETHODIMP EndGetEvent(IMFAsyncResult* result, IMFMediaEvent** event) override { return m_Inner->EndGetEvent(result, event); }
++    STDMETHODIMP QueueEvent(MediaEventType type, REFGUID extended, HRESULT status, const PROPVARIANT* value) override {
++        return m_Inner->QueueEvent(type, extended, status, value);
++    }
++private:
++    IMFMediaSink* m_Owner;
++    CComPtr<IMFStreamSink> m_Inner;
++    std::shared_ptr<EncodedSampleTiming> m_Timing;
++    bool m_Video;
++};
+diff --git a/ScreenRecorderLibNative/MediaClockOrigin.h b/ScreenRecorderLibNative/MediaClockOrigin.h
+new file mode 100644
+index 0000000..f6c537f
+--- /dev/null
++++ b/ScreenRecorderLibNative/MediaClockOrigin.h
+@@ -0,0 +1,25 @@
++#pragma once
++#include <mfidl.h>
++#include <atlbase.h>
++
++inline LONGLONG MediaClockOriginFromCorrelation(LONGLONG presentation100ns, LONGLONG systemQpc100ns) noexcept {
++    if (presentation100ns < 0 || systemQpc100ns <= 0 || systemQpc100ns < presentation100ns) return -1;
++    return systemQpc100ns - presentation100ns;
++}
++
++// IMFPresentationClock and its correlated QPC system time both use 100ns units.
++// This is a read-only mapping valid while running at 1x; retain the first value.
++inline LONGLONG ReadMediaClockOriginQpc100ns(IMFPresentationClock* clock) {
++    if (!clock) return -1;
++    MFCLOCK_STATE state = MFCLOCK_STATE_INVALID;
++    if (FAILED(clock->GetState(0, &state)) || state != MFCLOCK_STATE_RUNNING) return -1;
++    CComQIPtr<IMFRateControl> rateControl(clock);
++    BOOL thin = FALSE;
++    float rate = 0;
++    if (!rateControl || FAILED(rateControl->GetRate(&thin, &rate)) || rate != 1.0f) return -1;
++    LONGLONG presentation = 0;
++    MFTIME system = 0;
++    if (FAILED(clock->GetCorrelatedTime(0, &presentation, &system))) return -1;
++    if (FAILED(clock->GetState(0, &state)) || state != MFCLOCK_STATE_RUNNING) return -1;
++    return MediaClockOriginFromCorrelation(presentation, system);
++}
+diff --git a/ScreenRecorderLibNative/OutputManager.cpp b/ScreenRecorderLibNative/OutputManager.cpp
+index 5ef972d..1b219e3 100644
+--- a/ScreenRecorderLibNative/OutputManager.cpp
++++ b/ScreenRecorderLibNative/OutputManager.cpp
+@@ -5,6 +5,7 @@
+ #include <filesystem>
+ #include "LogMediaType.h"
+ #include "EncoderTuning.h"
++#include "SinkWriterInitialization.h"
+ using namespace std;
+ using namespace concurrency;
+ 
+@@ -64,7 +65,7 @@ HRESULT OutputManager::Initialize(
+ 		RETURN_ON_BAD_HR(MFCreateDXGIDeviceManager(&m_ResetToken, &m_DeviceManager));
+ 	}
+ 	if (m_SinkWriter) {
+-		m_SinkWriter->Flush(m_VideoStreamIndex);
++		FlushTimingTrackedWriter(m_EncodedTiming, m_SinkWriter, m_VideoStreamIndex);
+ 	}
+ 	if (m_MediaTransform) {
+ 		m_MediaTransform->ProcessMessage(MFT_MESSAGE_COMMAND_FLUSH, 0);
+@@ -143,8 +144,10 @@ HRESULT OutputManager::FinalizeRecording()
+ 		finalizeResult = m_SinkWriter->Finalize();
+ 		if (SUCCEEDED(finalizeResult) && m_FinalizeEvent) {
+ 			WaitForSingleObject(m_FinalizeEvent, INFINITE);
++			if (m_CallBack) finalizeResult = m_CallBack->GetFinalizeResult();
+ 		}
+ 		m_SampleDiagnostics.Report(finalizeResult);
++		finalizeResult = FinalizeEncodedTiming(m_EncodedTiming, finalizeResult);
+ 		if (FAILED(finalizeResult)) {
+ 			LOG_ERROR("Failed to finalize sink writer");
+ 		}
+@@ -154,9 +157,10 @@ HRESULT OutputManager::FinalizeRecording()
+ 			//Release the sink writer before calling Shutdown on the media sink. 
+ 			//https://learn.microsoft.com/en-us/windows/win32/api/mfreadwrite/nf-mfreadwrite-mfcreatesinkwriterfrommediasink
+ 			m_SinkWriter.Release();
+-			finalizeResult = pSink->Shutdown();
++			const HRESULT shutdownResult = pSink->Shutdown();
++			if (SUCCEEDED(finalizeResult)) finalizeResult = shutdownResult;
+ 			SafeRelease(&pSink);
+-			if (FAILED(finalizeResult)) {
++			if (FAILED(shutdownResult)) {
+ 				LOG_ERROR("Failed to shut down IMFMediaSink");
+ 			}
+ 			else {
+@@ -416,6 +420,7 @@ HRESULT OutputManager::InitializeVideoSinkWriter(
+ 
+ 	//Creates a streaming writer
+ 	CComPtr<IMFMediaSink> pMp4StreamSink = nullptr;
++	SinkWriterInitialization initialization(pSinkWriter, pMp4StreamSink);
+ 	if (GetEncoderOptions()->IsFragmentedMp4Enabled()) {
+ 		RETURN_ON_BAD_HR(MFCreateFMPEG4MediaSink(pOutStream, pVideoMediaTypeOut, pAudioMediaTypeOut, &pMp4StreamSink));
+ 	}
+@@ -423,6 +428,8 @@ HRESULT OutputManager::InitializeVideoSinkWriter(
+ 		RETURN_ON_BAD_HR(MFCreateMPEG4MediaSink(pOutStream, pVideoMediaTypeOut, pAudioMediaTypeOut, &pMp4StreamSink));
+ 	}
+ 	pAudioMediaTypeOut.Release();
++	RETURN_ON_BAD_HR(WrapEncodedTimingSink(pMp4StreamSink, GetEncoderOptions()->IsHardwareEncodingEnabled(),
++		GetEncoderOptions()->IsFragmentedMp4Enabled(), m_EncodedTiming));
+ 
+ 	RETURN_ON_BAD_HR(MFCreateAttributes(&pAttributes, 7));
+ 	RETURN_ON_BAD_HR(pAttributes->SetGUID(MF_TRANSCODE_CONTAINERTYPE, GetEncoderOptions()->IsFragmentedMp4Enabled() ? MFTranscodeContainerType_FMPEG4 : MFTranscodeContainerType_MPEG4));
+@@ -443,7 +450,6 @@ HRESULT OutputManager::InitializeVideoSinkWriter(
+ 	RETURN_ON_BAD_HR(pAttributes->SetUnknown(MF_SINK_WRITER_ASYNC_CALLBACK, pCallback));
+ 
+ 	RETURN_ON_BAD_HR(MFCreateSinkWriterFromMediaSink(pMp4StreamSink, pAttributes, &pSinkWriter));
+-	pMp4StreamSink.Release();
+ 
+ 	LOG_TRACE("Input video format:")
+ 		LogMediaType(pVideoMediaTypeIn);
+@@ -456,7 +462,7 @@ HRESULT OutputManager::InitializeVideoSinkWriter(
+ 	if ((FAILED(hr) && !m_UseManualNV12Converter)) {
+ 		m_UseManualNV12Converter = true;
+ 		m_MediaTransform.Release();
+-
++		initialization.Abort();
+ 		return InitializeVideoSinkWriter(pOutStream, sourceRect, outputFrameSize, rotation, pCallback, ppWriter, pVideoStreamIndex, pAudioStreamIndex);
+ 	}
+ 	RETURN_ON_BAD_HR(hr);
+@@ -467,6 +473,7 @@ HRESULT OutputManager::InitializeVideoSinkWriter(
+ 	ConfigureSoftwareEncoder(pSinkWriter, videoStreamIndex, GetEncoderOptions()->IsHardwareEncodingEnabled());
+ 
+ 	// Tell the sink writer to start accepting data.
++	if (m_EncodedTiming) RETURN_ON_BAD_HR(m_EncodedTiming->VerifyHardware(pSinkWriter, videoStreamIndex));
+ 	RETURN_ON_BAD_HR(pSinkWriter->BeginWriting());
+ 
+ 	// Return the pointer to the caller.
+@@ -474,6 +481,7 @@ HRESULT OutputManager::InitializeVideoSinkWriter(
+ 	(*ppWriter)->AddRef();
+ 	*pVideoStreamIndex = videoStreamIndex;
+ 	*pAudioStreamIndex = audioStreamIndex;
++	initialization.Commit();
+ 	return S_OK;
+ }
+ 
+@@ -574,14 +582,14 @@ HRESULT OutputManager::WriteFrameToVideo(_In_ INT64 frameStartPos, _In_ INT64 fr
+ 			if (SUCCEEDED(hr))
+ 			{
+ 				const auto observed = m_SampleDiagnostics.BeforeWriteSample(transformSample);
+-				hr = m_SinkWriter->WriteSample(streamIndex, transformSample);
++				hr = WriteTimingTrackedSample(m_EncodedTiming, m_SinkWriter, streamIndex, transformSample);
+ 				m_SampleDiagnostics.AfterWriteSample(observed, hr);
+ 			}
+ 			SafeRelease(&transformSample);
+ 		}
+ 		else {
+ 			const auto observed = m_SampleDiagnostics.BeforeWriteSample(pSample);
+-			hr = m_SinkWriter->WriteSample(streamIndex, pSample);
++			hr = WriteTimingTrackedSample(m_EncodedTiming, m_SinkWriter, streamIndex, pSample);
+ 			m_SampleDiagnostics.AfterWriteSample(observed, hr);
+ 		}
+ 	}
+diff --git a/ScreenRecorderLibNative/OutputManager.h b/ScreenRecorderLibNative/OutputManager.h
+index d0160b3..e007cb7 100644
+--- a/ScreenRecorderLibNative/OutputManager.h
++++ b/ScreenRecorderLibNative/OutputManager.h
+@@ -11,6 +11,8 @@
+ #include "TimelineManager.h"
+ #include "AudioDriftCorrector.h"
+ #include "VideoSampleDiagnostics.h"
++#include "EncodedTimingSink.h"
++#include "StaleWriterMaintenance.h"
+ 
+ struct FrameWriteModel
+ {
+@@ -53,13 +55,15 @@ public:
+ 	HRESULT WriteFrameToImage(_In_ ID3D11Texture2D *pAcquiredDesktopImage, _In_ std::wstring filePath);
+ 	HRESULT WriteFrameToImage(_In_ ID3D11Texture2D *pAcquiredDesktopImage, _In_ IStream *pStream);
+ 	inline nlohmann::fifo_map<std::wstring, int> GetFrameDelays() { return m_FrameDelays; }
+-	inline void FlushSinkWriter() {
++	inline HRESULT FlushSinkWriter() {
+ 		if (m_SinkWriter) {
+-			m_SinkWriter->Flush(m_VideoStreamIndex);
++			return MaintainStaleWriter(m_EncodedTiming, m_SinkWriter, m_VideoStreamIndex, GetEncoderOptions()->IsThrottlingDisabled());
+ 		}
++		return S_OK;
+ 	}
+ private:
+ 	VideoSampleDiagnostics m_SampleDiagnostics;
++	std::shared_ptr<EncodedSampleTiming> m_EncodedTiming;
+ 	ID3D11DeviceContext *m_DeviceContext = nullptr;
+ 	ID3D11Device *m_Device = nullptr;
+ 
+@@ -73,7 +77,7 @@ private:
+ 	nlohmann::fifo_map<std::wstring, int> m_FrameDelays;
+ 
+ 	CComPtr<IMFSinkWriter> m_SinkWriter;
+-	CComPtr<IMFSinkWriterCallback> m_CallBack;
++	CComPtr<CMFSinkWriterCallback> m_CallBack;
+ 	CComPtr<IMFTransform> m_MediaTransform;
+ 	CComPtr<IMFDXGIDeviceManager> m_DeviceManager;
+ 
+diff --git a/ScreenRecorderLibNative/RecordingManager.cpp b/ScreenRecorderLibNative/RecordingManager.cpp
+index 0f72681..8d1544f 100644
+--- a/ScreenRecorderLibNative/RecordingManager.cpp
++++ b/ScreenRecorderLibNative/RecordingManager.cpp
+@@ -599,11 +599,11 @@ REC_RESULT RecordingManager::StartRecorderLoop(_In_ const std::vector<RECORDING_
+ 					m_RestartCaptureCount = 0;
+ 				}
+ 				else {
+-					//On stale frames, periodically flush sink writer to avoid encoder hoarding memory.
++					// Check bounded hardware timing; other paths retain their existing writer maintenance.
+ 					if (m_TimelineManager->GetRenderedVideoFrameCount() % 100 == 0) {
+-						LOG_TRACE("Flushed ID3D11DeviceContext");
++						LOG_TRACE("Maintaining stale video writer");
+ 						isFrameTimeout = true;
+-						m_OutputManager->FlushSinkWriter();
++						RETURN_RESULT_ON_BAD_HR(hr = m_OutputManager->FlushSinkWriter(), L"Video writer maintenance failed");
+ 					}
+ 				}
+ 				if (capturedFrame.PtrInfo) {
+diff --git a/ScreenRecorderLibNative/RecordingManager.h b/ScreenRecorderLibNative/RecordingManager.h
+index 4069947..4b514e3 100644
+--- a/ScreenRecorderLibNative/RecordingManager.h
++++ b/ScreenRecorderLibNative/RecordingManager.h
+@@ -43,6 +43,13 @@ public:
+ 	void ResumeRecording();
+ 
+ 	bool IsRecording() { return m_IsRecording; }
++	INT64 GetMediaClockOriginQpc100ns() const {
++		return m_TimelineManager ? m_TimelineManager->GetMediaClockOriginQpc100ns() : -1;
++	}
++	// Read only during the synchronous frame-recorded callback, before the next iteration.
++	INT64 GetCurrentVideoFrameEnd100ns() const {
++		return m_TimelineManager ? m_TimelineManager->GetNextVideoFrameStartPosition() : -1;
++	}
+ 
+ 	static bool SetExcludeFromCapture(HWND hwnd, bool isExcluded);
+ 
+@@ -237,4 +244,4 @@ private:
+ 	/// <param name="result">The recording result.</param>
+ 	/// <param name="frameDelays">A map of paths to saved frames with corresponding delay between them. Only used for Slideshow mode.</param>
+ 	void SetRecordingCompleteStatus(_In_ REC_RESULT result, _In_ std::optional<nlohmann::fifo_map<std::wstring, int>> frameDelays = std::nullopt);
+-};
+\ No newline at end of file
++};
+diff --git a/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj b/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
+index 82e58df..3cf4416 100644
+--- a/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
++++ b/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
+@@ -48,6 +48,13 @@
+     <ClInclude Include="LogMediaType.h" />
+     <ClInclude Include="MF.util.h" />
+     <ClInclude Include="HighresTimer.h" />
++    <ClInclude Include="EncodedTimingLedger.h" />
++    <ClInclude Include="EncodedSampleTiming.h" />
++    <ClInclude Include="EncodedTimingStream.h" />
++    <ClInclude Include="EncodedTimingSink.h" />
++    <ClInclude Include="SinkWriterInitialization.h" />
++    <ClInclude Include="MediaClockOrigin.h" />
++    <ClInclude Include="StaleWriterMaintenance.h" />
+     <ClInclude Include="SourceReaderBase.h" />
+     <ClInclude Include="CommonTypes.h" />
+     <ClInclude Include="DesktopDuplicationCapture.h" />
+@@ -89,6 +96,9 @@
+     <ClCompile Include="LogMediaType.cpp" />
+     <ClCompile Include="MF.util.cpp" />
+     <ClCompile Include="HighresTimer.cpp" />
++    <ClCompile Include="EncodedSampleTiming.cpp" />
++    <ClCompile Include="EncodedTimingSink.cpp" />
++    <ClCompile Include="StaleWriterMaintenance.cpp" />
+     <ClCompile Include="SourceReaderBase.cpp" />
+     <ClCompile Include="DesktopDuplicationCapture.cpp" />
+     <ClCompile Include="DX.util.cpp" />
+diff --git a/ScreenRecorderLibNative/SinkWriterInitialization.h b/ScreenRecorderLibNative/SinkWriterInitialization.h
+new file mode 100644
+index 0000000..3f8b57c
+--- /dev/null
++++ b/ScreenRecorderLibNative/SinkWriterInitialization.h
+@@ -0,0 +1,24 @@
++#pragma once
++#include <mfidl.h>
++#include <mfreadwrite.h>
++#include <atlbase.h>
++
++// Release a failed writer before shutting down its sink, including recursive retries.
++class SinkWriterInitialization {
++public:
++    SinkWriterInitialization(CComPtr<IMFSinkWriter>& writer, CComPtr<IMFMediaSink>& sink)
++        : m_Writer(writer), m_Sink(sink) {}
++    SinkWriterInitialization(const SinkWriterInitialization&) = delete;
++    SinkWriterInitialization& operator=(const SinkWriterInitialization&) = delete;
++    ~SinkWriterInitialization() { if (!m_Committed) Abort(); }
++    void Abort() {
++        m_Writer.Release();
++        if (m_Sink) m_Sink->Shutdown();
++        m_Sink.Release();
++    }
++    void Commit() noexcept { m_Committed = true; }
++private:
++    CComPtr<IMFSinkWriter>& m_Writer;
++    CComPtr<IMFMediaSink>& m_Sink;
++    bool m_Committed = false;
++};
+diff --git a/ScreenRecorderLibNative/StaleWriterMaintenance.cpp b/ScreenRecorderLibNative/StaleWriterMaintenance.cpp
+new file mode 100644
+index 0000000..e52c3bf
+--- /dev/null
++++ b/ScreenRecorderLibNative/StaleWriterMaintenance.cpp
+@@ -0,0 +1,16 @@
++#include "StaleWriterMaintenance.h"
++#include <cwchar>
++
++HRESULT MaintainStaleWriter(const std::shared_ptr<EncodedSampleTiming>& timing,
++    IMFSinkWriter* writer, DWORD stream, bool throttlingDisabled) {
++    wchar_t value[16]{};
++    const DWORD length = GetEnvironmentVariableW(L"FRAMEFLOW_CAPTURE_STALE_MAINTENANCE", value, _countof(value));
++    const bool requested = IsStaleObservationRequested(length < _countof(value) ? value : nullptr);
++    if (ShouldObserveStaleWriter(requested, timing != nullptr, throttlingDisabled)) {
++        bool active = false;
++        const HRESULT status = timing->ObserveStaleMaintenance(active);
++        if (FAILED(status) || active) return status;
++    }
++    const HRESULT status = FlushTimingTrackedWriter(timing, writer, stream);
++    return FAILED(status) || !timing ? status : timing->Status();
++}
+diff --git a/ScreenRecorderLibNative/StaleWriterMaintenance.h b/ScreenRecorderLibNative/StaleWriterMaintenance.h
+new file mode 100644
+index 0000000..033323a
+--- /dev/null
++++ b/ScreenRecorderLibNative/StaleWriterMaintenance.h
+@@ -0,0 +1,15 @@
++#pragma once
++#include "EncodedSampleTiming.h"
++#include <cwchar>
++
++inline bool IsStaleObservationRequested(const wchar_t* mode) noexcept {
++    return mode == nullptr || std::wcscmp(mode, L"flush") != 0;
++}
++
++inline bool ShouldObserveStaleWriter(bool requested, bool confirmedHardwareTiming, bool throttlingDisabled) noexcept {
++    return requested && confirmedHardwareTiming && !throttlingDisabled;
++}
++
++// Confirmed hardware retains pending samples under the writer's normal backpressure.
++HRESULT MaintainStaleWriter(const std::shared_ptr<EncodedSampleTiming>& timing,
++    IMFSinkWriter* writer, DWORD stream, bool throttlingDisabled);
+diff --git a/ScreenRecorderLibNative/TimelineManager.h b/ScreenRecorderLibNative/TimelineManager.h
+index 1d0a960..092599b 100644
+--- a/ScreenRecorderLibNative/TimelineManager.h
++++ b/ScreenRecorderLibNative/TimelineManager.h
+@@ -7,6 +7,7 @@
+ #include <atlbase.h>
+ #include "DynamicWait.h"
+ #include "AudioDriftCorrector.h"
++#include "MediaClockOrigin.h"
+ 
+ class TimelineManager
+ {
+@@ -25,6 +26,7 @@ public:
+ 	HRESULT PauseMediaClock();
+ 	HRESULT StopMediaClock();
+ 	HRESULT GetMediaTimeStamp(_Out_ INT64 *pTime);
++	INT64 GetMediaClockOriginQpc100ns() const { return ReadMediaClockOriginQpc100ns(m_PresentationClock); }
+ 	bool isMediaClockRunning();
+ 	bool isMediaClockPaused();
+ 	void UpdateLastSnapshotTime();

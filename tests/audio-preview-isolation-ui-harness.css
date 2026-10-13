@@ -1,0 +1,14 @@
+@import '../src/styles/tokens.css';
+:root { font: 13px -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; color: #343936; background: #eceeec; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { width: min(620px, calc(100% - 32px)); margin: 24px auto; }
+h1 { font-size: 18px; font-weight: 550; margin: 0 0 8px; }
+p { color: #7c827d; }
+.fixture-actions { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0; }
+.fixture-actions button { padding: 7px 12px; border: 1px solid #cbd0ca; border-radius: 7px; background: #fff; color: #40483f; font: inherit; cursor: pointer; }
+output { display: flex; justify-content: space-between; gap: 10px; padding: 12px; background: #e0e5df; border-radius: 8px; font-size: 12px; }
+output span { color: #687166; }
+.fixture-panel { padding: 20px; margin-top: 16px; border: 1px solid #d9ded6; border-radius: 14px; background: white; }
+h2 { margin: 0; font-size: 17px; }
+aside { padding: 12px; margin-top: 12px; color: #a34f3b; background: #f8eee9; border-radius: 8px; }

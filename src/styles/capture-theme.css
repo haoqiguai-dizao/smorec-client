@@ -1,0 +1,68 @@
+/* Capture utilities share the approved graphite material. Content canvases keep their own palette. */
+:root.capture-theme {
+  color-scheme: dark;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC', 'Microsoft YaHei UI', sans-serif;
+  --surface: #272b31;
+  --surface-sunken: #202329;
+  --surface-raised: #34383f;
+  --surface-hover: #3b4048;
+  --text-primary: #eceeea;
+  --text-secondary: #b6bbc2;
+  --text-tertiary: #939ba5;
+  --text-on-accent: #26302b;
+  --border-subtle: #ffffff14;
+  --border-strong: #6d758166;
+  --accent: #d7ded9;
+  --accent-strong: #f0f2ee;
+  --accent-soft: #ffffff0c;
+  --accent-border: #a1acb438;
+  --action-record: #42494a;
+  --danger: #e1a294;
+  --danger-hover: #eeb1a4;
+  --danger-soft: #e3a39410;
+  --danger-border: #e3a39438;
+  --success: #8ab39a;
+  --warning: #d2bc91;
+  --warning-soft: #d2bc910c;
+  --warning-border: #d2bc9140;
+  --disabled-fill: #34383e;
+  --disabled-text: #b6bdc7;
+  --slider-track: #59616b;
+  --switch-off: #525a64;
+  --switch-thumb: #e7ece7;
+  --scrollbar: #646d79;
+  --shadow-control: inset 0 1px 0 #ffffff0c, 0 1px 3px #00000025;
+  --shadow-panel: inset 0 1px 0 #ffffff10, 0 8px 24px #00000035;
+  --shadow-dialog: inset 0 1px 0 #ffffff10, 0 18px 50px #00000040;
+}
+.capture-theme .recorder-launcher { color-scheme: dark; }
+.capture-theme .launcher-bar,
+.capture-theme .launcher-panel,
+.capture-theme .camera-settings-panel,
+.capture-theme .recording-toolbar {
+  background: linear-gradient(180deg, #30343bfa, #24282efa);
+  border: 1px solid #737d8845;
+  box-shadow: var(--shadow-panel);
+}
+.capture-theme .launcher-panel { border-radius: 15px; }
+.capture-theme .launcher-panel-header h1 { font-weight: 500; letter-spacing: .2px; }
+.capture-theme .launcher-session-tabs { border-color: var(--border-subtle); background: var(--surface-sunken); }
+.capture-theme .launcher-session-tabs button[aria-selected=true] { background: #50565e; color: #f0f1ed; box-shadow: var(--shadow-control); }
+.capture-theme .launcher-start { background: linear-gradient(#596160, #444c4b); color: #f0f2ed; box-shadow: var(--shadow-control); }
+.capture-theme .launcher-start:hover:not(:disabled) { background: #606969; }
+.capture-theme .live-preview-settings .session-devices { display: flex; gap: 10px; padding: 8px 0; }
+.capture-theme .live-preview-settings .session-device { display: flex; align-items: center; gap: 6px; padding: 8px; border: 1px solid var(--border-subtle); border-radius: 8px; }
+.capture-theme .live-preview-settings .session-device[aria-pressed=true] { background: var(--accent-soft); }
+.capture-theme .live-preview-settings .session-device i { width: 4px; height: 4px; border-radius: 50%; background: var(--success); }
+.capture-theme .live-preview-settings .session-device[aria-pressed=false] i { background: var(--text-tertiary); }
+.capture-theme .live-preview-canvas { border-color: #737d8845; }
+.capture-theme .live-destination-summary { background: #ffffff05; }
+.capture-theme .launcher-live-panel .launcher-stream-settings input,
+.capture-theme .launcher-live-panel .launcher-stream-settings select { color: var(--text-primary); }
+.capture-theme .launcher-live-panel .launcher-stream-audio { color: var(--text-secondary); }
+.capture-theme .launcher-live-panel .launcher-stream-audio select { color: var(--text-primary); }
+.capture-theme .whiteboard-tools,
+.capture-theme .whiteboard-selection-menu,
+.capture-theme .whiteboard-options { background: linear-gradient(#30343b, #24282e); box-shadow: var(--shadow-control); }
+.capture-theme input,
+.capture-theme select { accent-color: #94b4a0; }

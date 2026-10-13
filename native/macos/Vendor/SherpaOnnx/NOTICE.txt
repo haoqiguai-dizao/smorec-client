@@ -1,0 +1,50 @@
+Public macOS speech runtime preparation
+
+The public source excludes the previous local dylibs. native:mac:build first
+downloads the pinned official sherpa-onnx v1.12.29 universal2 shared NO-TTS
+release, verifies the published archive SHA256, and keeps its arm64 slices.
+Source commit: 3595893df30c2e3cd1b407d51de29dd532c47b86
+Source: https://github.com/k2-fsa/sherpa-onnx/tree/v1.12.29
+Recipe: scripts/open-source/prepare-speech.py
+Archive SHA256: a6149e3bcfce6d9c45dc7bb67f807af553f5dc48ba0268bcb364bb369933dfb6
+Per-library hashes and the actual download source are written to PUBLIC-RUNTIME.json.
+
+sherpa-onnx code: Apache License 2.0
+Copyright (c) 2023 Xiaomi Corporation and contributors
+Full text: LICENSE-APACHE-2.0.txt in this directory.
+The NO-TTS build excludes the unused piper/espeak-ng speech-synthesis engine.
+Upstream ASR dependencies retain their original notices and licensing; pinned
+source/build recipes are in the above upstream source and its cmake directory.
+
+ONNX Runtime 1.23.2: MIT License
+Copyright (c) Microsoft Corporation
+Full original third-party notices: ONNXRUNTIME-THIRD-PARTY-NOTICES.txt in this directory.
+Upstream: https://github.com/microsoft/onnxruntime/tree/v1.23.2
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+The optional SenseVoice INT8 model is not included in the source snapshot.
+Download source: https://www.modelscope.cn/models/pengzhendong/sherpa-onnx-sense-voice-zh-en-ja-ko-yue
+Its upstream page declares Apache License 2.0. The application pins model and
+token hashes; recognition audio is processed locally.
+
+Windows NuGet org.k2fsa.sherpa.onnx 1.13.5 is a separate runtime build. Its top
+level Apache metadata does not prove the terms of all compiled components.
+Inspect the restored platform libraries, any TTS/GPL components, full notices
+and matching source during the still-pending Windows packaging acceptance.

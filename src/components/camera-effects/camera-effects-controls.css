@@ -1,0 +1,58 @@
+@import '../../styles/tokens.css';
+
+.beauty-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px; padding: 3px; border-radius: 7px; background: var(--surface-sunken); }
+.camera-effects-controls .beauty-tabs > button { min-height: 28px; border: 0; border-radius: 5px; background: transparent; color: var(--text-secondary); font: inherit; cursor: pointer; }
+.camera-effects-controls .beauty-tabs > button[aria-selected=true] { background: var(--accent-soft); color: var(--accent); }
+.beauty-parameters { min-height: 117px; }
+.beauty-sliders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; }
+.beauty-control { min-width: 0; }
+.beauty-control-heading { display: flex; gap: 3px; align-items: center; min-height: 22px; }
+.beauty-control-heading > label { color: var(--text-primary); white-space: nowrap; }
+.camera-effects-controls .beauty-help, .camera-effects-controls .beauty-reset { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 22px; padding: 0; border: 0; background: transparent; color: var(--text-secondary); flex-shrink: 0; cursor: pointer; }
+.camera-effects-controls .beauty-number { width: 30px; min-width: 0; margin-left: auto; padding: 2px 0; border: 0; border-bottom: 1px solid var(--border-subtle); border-radius: 0; background: transparent; color: var(--text-primary); text-align: right; font: inherit; font-variant-numeric: tabular-nums; }
+.beauty-number::-webkit-inner-spin-button { appearance: none; }
+.beauty-control > input[type=range] { appearance: none; width: 100%; height: 20px; margin: 0; background: transparent; cursor: pointer; }
+.beauty-control > input[type=range]::-webkit-slider-runnable-track { height: 3px; border-radius: 4px; background: var(--slider-track); }
+.beauty-control > input[type=range]::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; margin-top: -5.5px; border: 1px solid var(--switch-thumb); border-radius: 50%; background: var(--slider-thumb); box-shadow: var(--shadow-control); }
+.beauty-control > input[min="-100"]::-webkit-slider-runnable-track { background: linear-gradient(to right, var(--slider-track) 49.4%, var(--text-tertiary) 49.4%, var(--text-tertiary) 50.6%, var(--slider-track) 50.6%); }
+.beauty-status { display: flex; align-items: center; gap: 5px; min-height: 20px; color: var(--text-secondary); font-size: 10px; }
+.beauty-status > span { flex: 1; }
+.beauty-status-error { color: var(--danger); }
+.beauty-status > button { background: transparent; border: 0; color: inherit; font: inherit; cursor: pointer; }
+
+.camera-effects-controls { display: flex; flex-direction: column; gap: 12px; min-width: 0; margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--border-subtle); color: var(--text-primary); font-size: 11px; line-height: 1.4; }
+.camera-effects-controls input, .camera-effects-controls button { -webkit-app-region: no-drag; }
+.camera-effects-controls input:focus-visible, .camera-effects-controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.camera-effects-toggle { display: flex; align-items: center; gap: 7px; min-height: 20px; color: var(--text-secondary); font-size: 12px; }
+.camera-effects-toggle > svg { color: var(--text-secondary); flex-shrink: 0; }
+.camera-effects-toggle > span { flex: 1; }
+.camera-effects-toggle > input { position: relative; appearance: none; width: 29px; height: 17px; margin: 0; border: 1px solid var(--border-subtle); border-radius: 99px; background: var(--switch-off); cursor: pointer; transition: background-color 140ms ease; }
+.camera-effects-toggle > input::before { content: ""; position: absolute; top: 2px; left: 2px; width: 11px; height: 11px; border-radius: 50%; background: var(--switch-thumb); transition: transform 140ms ease; }
+.camera-effects-toggle > input:checked { border-color: var(--accent); background: var(--accent); }
+.camera-effects-toggle > input:checked::before { transform: translateX(12px); background: var(--switch-thumb); }
+.camera-effects-sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.camera-effects-presets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
+.camera-effects-controls .camera-effects-presets > button { min-width: 0; min-height: 28px; padding: 4px 2px; border: 1px solid var(--border-subtle); border-radius: 6px; background: var(--surface-sunken); color: var(--text-secondary); font: inherit; cursor: pointer; }
+.camera-effects-controls .camera-effects-presets > button[aria-pressed=true] { border-color: var(--accent-border); background: var(--accent-soft); color: var(--accent); }
+.camera-effects-controls .camera-effects-presets > button:hover:not(:disabled) { background: var(--surface-hover); }
+.camera-effects-slider { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.camera-effects-slider > span { display: flex; justify-content: space-between; gap: 6px; color: var(--text-secondary); font-size: 12px; }
+.camera-effects-slider output { color: var(--text-primary); font-size: 11px; font-variant-numeric: tabular-nums; }
+.camera-effects-slider > input { appearance: none; width: 100%; min-width: 0; height: 18px; margin: 0; background: transparent; cursor: pointer; }
+.camera-effects-slider > input::-webkit-slider-runnable-track { height: 3px; border-radius: 4px; background: var(--slider-track); }
+.camera-effects-slider > input::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; margin-top: -6.5px; border: 1px solid var(--switch-thumb); border-radius: 50%; background: var(--slider-thumb); box-shadow: var(--shadow-control); }
+.camera-effects-slider > input::-moz-range-track { height: 3px; border-radius: 4px; background: var(--slider-track); }
+.camera-effects-slider > input::-moz-range-progress { height: 3px; border-radius: 4px; background: var(--slider-track); }
+.camera-effects-slider > input::-moz-range-thumb { width: 14px; height: 14px; border: 1px solid var(--switch-thumb); border-radius: 50%; background: var(--slider-thumb); }
+.camera-effects-slider > input:hover:not(:disabled)::-webkit-slider-thumb { background: var(--slider-thumb); }
+.camera-effects-filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
+.camera-effects-controls .camera-effects-filters > button { display: inline-flex; justify-content: center; align-items: center; width: auto; min-width: 0; height: 30px; padding: 0 3px; border: 1px solid var(--border-subtle); border-radius: 6px; background: var(--surface-sunken); color: var(--text-secondary); font: inherit; font-size: 12px; cursor: pointer; transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease; }
+.camera-effects-controls .camera-effects-filters > button[aria-pressed=true] { border-color: var(--accent-border); background: var(--accent-soft); color: var(--accent); }
+.camera-effects-controls .camera-effects-filters > button:hover:not(:disabled) { border-color: var(--border-strong); background: var(--surface-hover); color: var(--text-primary); }
+.camera-effects-actions { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.camera-effects-controls .camera-effects-actions > button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; width: auto; min-height: 26px; padding: 0 5px; border: 1px solid transparent; border-radius: 5px; background: transparent; color: var(--text-secondary); font: inherit; font-size: 11px; cursor: pointer; }
+.camera-effects-controls .camera-effects-actions > button:hover:not(:disabled) { color: var(--text-primary); background: var(--surface-hover); }
+.camera-effects-controls .camera-effects-actions > .camera-effects-compare[aria-pressed=true] { border-color: var(--accent-border); color: var(--accent); background: var(--accent-soft); }
+.camera-effects-controls .camera-effects-actions > .camera-effects-reset { margin-left: auto; }
+.camera-effects-controls button:disabled, .camera-effects-controls input:disabled { opacity: .4; cursor: default; }
+@media (prefers-reduced-motion: reduce) { .camera-effects-controls *, .camera-effects-controls *::before { transition: none !important; } }

@@ -1,0 +1,173 @@
+{
+  "name": "frameflow-studio",
+  "version": "0.9.118",
+  "private": true,
+  "description": "小录 · 屏幕、摄像头与声音录制，轻松编辑清晰的视频",
+  "author": "小录",
+  "type": "module",
+  "main": "dist-electron/main.cjs",
+  "scripts": {
+    "predev": "node scripts/prepare-beauty.mjs",
+    "predev:web": "node scripts/prepare-beauty.mjs",
+    "prebuild": "node scripts/prepare-beauty.mjs",
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "vite --host 127.0.0.1",
+    "build": "node scripts/clean-build.mjs && vite build && node scripts/build-electron.mjs",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts tests/*.test.tsx",
+    "native:build": "npm run native:capture:build && npm run speech:build && npm run virtual-camera:build && npm run updater:build",
+    "start": "node scripts/start.mjs",
+    "package:win": "npm run build && npm run native:build && electron-builder --win nsis --x64 --publish never && python scripts/build-app-update.py",
+    "updater:build": "dotnet publish native/XiaoLu.Updater/XiaoLu.Updater.csproj -c Release -o native/XiaoLu.Updater/bin/publish",
+    "package:dir": "npm run build && npm run native:build && electron-builder --win --dir --x64",
+    "package:zip": "npm run build && npm run native:build && electron-builder --win zip --x64",
+    "verify:installer": "node scripts/verify-installer-directory.mjs",
+    "native:capture:build": "dotnet publish native/FrameFlow.Capture/FrameFlow.Capture.csproj -c Release -r win-x64 --self-contained true -o native/publish",
+    "virtual-camera:build": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/build-virtual-camera.ps1",
+    "native:mac:build": "node scripts/build-mac-native.mjs",
+    "package:mac:dir": "npm run build && npm run native:mac:build && electron-builder --config build/mac-local.cjs --dir --arm64 --publish never",
+    "package:mac": "npm run build && npm run native:mac:build && electron-builder --config build/mac.cjs --arm64 --publish never",
+    "speech:build": "dotnet publish native/XiaoLu.Speech/XiaoLu.Speech.csproj -c Release -r win-x64 --self-contained true -o native/speech-publish",
+    "prepackage:mac": "node scripts/open-source/verify-ffmpeg.mjs",
+    "prepackage:mac:dir": "node scripts/open-source/verify-ffmpeg.mjs",
+    "prepackage:win": "node scripts/open-source/verify-ffmpeg.mjs",
+    "prepackage:dir": "node scripts/open-source/verify-ffmpeg.mjs",
+    "prepackage:zip": "node scripts/open-source/verify-ffmpeg.mjs",
+    "ffmpeg:mac:build": "python3 scripts/open-source/build-gpl-ffmpeg.py",
+    "legal:mac:prepare": "node scripts/open-source/prepare-mac-release-legal.mjs",
+    "prenative:mac:build": "python3 scripts/open-source/prepare-speech.py"
+  },
+  "build": {
+    "appId": "studio.frameflow.desktop",
+    "productName": "小录",
+    "beforePack": "./scripts/before-pack.cjs",
+    "artifactBuildStarted": "./scripts/after-pack.cjs",
+    "toolsets": {
+      "nsis": "1.2.1"
+    },
+    "directories": {
+      "output": "release-v0.9.118"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/ffmpeg-static/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "native/XiaoLu.Updater/bin/publish",
+        "to": "updater",
+        "filter": [
+          "XiaoLu.Updater.exe"
+        ]
+      },
+      {
+        "from": "native/publish",
+        "to": "native"
+      },
+      {
+        "from": "native/THIRD-PARTY-NOTICES.txt",
+        "to": "native/THIRD-PARTY-NOTICES.txt"
+      },
+      {
+        "from": "build/icon.ico",
+        "to": "assets/icon.ico"
+      },
+      {
+        "to": "virtual-camera",
+        "from": "native/virtual-camera/bin/x64",
+        "filter": [
+          "*.exe",
+          "*.dll"
+        ]
+      },
+      {
+        "from": "native/speech-publish",
+        "to": "native/speech"
+      },
+      {
+        "from": "THIRD-PARTY-LICENSES.txt",
+        "to": "legal/npm-licenses.txt"
+      },
+      {
+        "from": "THIRD_PARTY_NOTICES.md",
+        "to": "legal/THIRD_PARTY_NOTICES.md"
+      },
+      {
+        "from": "DEPENDENCIES.json",
+        "to": "legal/DEPENDENCIES.json"
+      },
+      {
+        "from": "NATIVE-SPEECH-NOTICES.txt",
+        "to": "legal/NATIVE-SPEECH-NOTICES.txt"
+      },
+      {
+        "from": "public/beauty",
+        "to": "legal/mediapipe",
+        "filter": [
+          "*.txt"
+        ]
+      },
+      {
+        "from": "LICENSE",
+        "to": "legal/LICENSE.client.txt"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "executableName": "小录",
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": true,
+      "signExecutable": false
+    },
+    "nsis": {
+      "include": "build/installer-branding.nsh",
+      "unicode": true,
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    }
+  },
+  "dependencies": {
+    "electron-updater": "6.8.3",
+    "ffmpeg-static": "5.3.0",
+    "lucide-react": "1.41.0",
+    "mediabunny": "1.55.7",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "semver": "7.8.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@mediapipe/tasks-vision": "1.0.1",
+    "@playwright/cli": "0.1.19",
+    "@types/node": "26.4.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "@types/semver": "7.7.1",
+    "@vitejs/plugin-react": "6.1.1",
+    "electron": "44.2.0",
+    "electron-builder": "26.15.3",
+    "esbuild": "0.28.2",
+    "eslint": "10.10.0",
+    "globals": "17.12.0",
+    "playwright-core": "1.63.0",
+    "tsx": "4.23.13",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.69.0",
+    "vite": "8.2.2"
+  },
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haoqiguai-dizao/smorec-client.git"
+  }
+}

@@ -1,0 +1,24 @@
+.camera-settings-panel { position: absolute; display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid var(--border-subtle); border-radius: 11px; background: var(--surface); box-shadow: var(--shadow-panel); color: var(--text-secondary); -webkit-app-region: no-drag; container-type: inline-size; }
+.camera-settings-panel > header { display: flex; flex-shrink: 0; align-items: center; gap: 8px; min-height: 44px; padding: 0 10px 0 14px; border-bottom: 1px solid var(--border-subtle); color: var(--text-primary); }
+.camera-settings-panel > header strong { flex: 1; font-size: 14px; font-weight: 650; }
+.camera-settings-panel > header button { width: 25px; height: 25px; }
+.camera-settings-body { flex: 1; min-height: 0; padding: 12px 14px 15px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--scrollbar) transparent; }
+.camera-settings-body > .camera-effects-controls { margin: 0; padding: 0; border: 0; }
+.camera-settings-layout { margin-top: 15px; padding-top: 11px; border-top: 1px solid var(--border-subtle); }
+.camera-settings-layout-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; font-size: 11px; color: var(--text-primary); }
+.camera-settings-layout-heading > button { gap: 5px; padding: 3px 7px; font-size: 11px; }
+.camera-settings-panel .camera-shape-grid { gap: 4px; }
+.camera-settings-panel .camera-shape-grid > button { height: 46px; gap: 1px; font-size: 10px; }
+.camera-settings-panel .camera-shape-icon { width: 25px; height: 23px; }
+.camera-overlay-content { position: absolute; inset: 0; padding: 6px; }
+.camera-overlay-content.has-layout { inset: auto; }
+.camera-overlay-window .overlay-camera-controls.compact.with-settings { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 116px; }
+.camera-overlay-window .overlay-camera-controls.compact.presenter.with-settings { display: flex; width: 68px; }
+@container (max-width: 235px) {
+  .camera-settings-body { padding: 10px; }
+  .camera-settings-panel .camera-effects-sliders { grid-template-columns: 1fr; gap: 8px; }
+  .camera-settings-panel .camera-effects-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .camera-settings-panel .camera-effects-actions { align-items: flex-start; flex-direction: column; gap: 2px; }
+  .camera-settings-panel .camera-effects-actions > .camera-effects-reset { margin-left: 0; }
+  .camera-settings-panel .camera-shape-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

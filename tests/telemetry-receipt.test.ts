@@ -1,0 +1,40 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { promises as fs } from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { randomUUID } from 'node:crypto';
+import { createTelemetry, type TelemetryOptions } from '../electron/services/telemetry';
+import { TelemetryStore } from '../electron/services/telemetry/store';
+import type { InstallationReceipt, TelemetryBatch } from '../shared/telemetry-types';
+
+test('an installer receipt is not consent and emits a separate installation event only after explicit opt-in', async t => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'smorec-telemetry-receipt-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const batches: TelemetryBatch[] = [], receipt: InstallationReceipt = { schema: 1, version: '0.9.10', event_id: randomUUID() };
+  const options: TelemetryOptions = { directory, endpoint: 'https://telemetry.invalid/api/events/batch', version: '0.9.11',
+    channel: 'stable', platform: 'win32', packaged: true, fetch: async (_url, init) => { batches.push(JSON.parse(String(init.body))); return { status: 200 }; } };
+  const client = createTelemetry(options);
+  assert.equal(client.trackInstallationReceipt(receipt), false);
+  await client.start(); assert.equal(client.trackInstallationReceipt(receipt), false);
+  assert.deepEqual(await fs.readdir(directory), []);
+  await client.setEnabled(true);
+  assert.equal(client.track('install_success'), false);
+  assert.equal(client.trackInstallationReceipt({ ...receipt, private_path: 'C:\\secret' } as InstallationReceipt), false);
+  assert.equal(client.trackInstallationReceipt({ ...receipt, version: 'invalid' }), false);
+  assert.equal(client.trackInstallationReceipt(receipt), true);
+  assert.equal(client.trackInstallationReceipt(receipt), false); await client.stop();
+  const events = batches.flatMap(batch => batch.events), installed = events.filter(event => event.name === 'install_success');
+  assert.equal(installed.length, 1); assert.equal(installed[0].event_id, receipt.event_id); assert.equal(installed[0].app_version, receipt.version);
+  assert.deepEqual(installed[0].properties, {}); assert.equal(events.filter(event => event.name === 'app_first_open').length, 1);
+  const restarted = createTelemetry(options); await restarted.start(); assert.equal(restarted.trackInstallationReceipt(receipt), false);
+  await restarted.setEnabled(false);
+  const second = { ...receipt, event_id: randomUUID(), version: '0.9.11' };
+  assert.equal(restarted.trackInstallationReceipt(second), false);
+  await restarted.setEnabled(true); assert.equal(restarted.trackInstallationReceipt(second), true);
+  for (let index = 0; index < 23; index++) assert.equal(restarted.trackInstallationReceipt({ ...second, event_id: randomUUID() }), true);
+  await restarted.stop();
+  const stored = await new TelemetryStore(directory).read();
+  assert.equal(stored.recorded_installation_receipts?.length, 20);
+  assert.equal(batches.flatMap(batch => batch.events).filter(event => event.name === 'app_first_open').length, 1);
+});

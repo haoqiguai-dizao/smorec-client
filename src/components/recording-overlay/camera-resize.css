@@ -1,0 +1,9 @@
+.camera-resize-handles { position: absolute; inset: 6px; pointer-events: none; }
+.camera-resize-segment { position: absolute; pointer-events: none; -webkit-app-region: no-drag; }
+.camera-resize-segment > svg { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.camera-resize-handle { fill: none; stroke: transparent; stroke-width: 14px; pointer-events: stroke; touch-action: none; -webkit-app-region: no-drag; }
+.camera-resize-handle:hover, .camera-resize-handle:focus-visible, .camera-resize-handles.resizing .camera-resize-handle { stroke: #ffffff24; outline: none; }
+.camera-resize-handle.nw, .camera-resize-handle.se { cursor: nwse-resize; }
+.camera-resize-handle.ne, .camera-resize-handle.sw { cursor: nesw-resize; }
+.camera-resize-handle.n, .camera-resize-handle.s { cursor: ns-resize; }
+.camera-resize-handle.e, .camera-resize-handle.w { cursor: ew-resize; }

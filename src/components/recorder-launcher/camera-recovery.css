@@ -1,0 +1,9 @@
+@import './permission-guide.css';
+.launcher-panel.launcher-panel-notice { flex: 0 1 auto; width: min(100%, 488px); align-self: center; }
+.launcher-panel-notice .launcher-panel-content { padding: 22px 24px; }
+.launcher-camera-recovery h2 { margin: 0 0 12px; font-size: 21px; font-weight: 600; color: var(--text-primary); }
+.launcher-camera-recovery p { margin: 12px 0; color: #b9c3cc; font-size: 14px; line-height: 1.7; }
+.launcher-camera-recovery .permission-guide-actions { display: grid; grid-template-columns: 1fr 1fr; margin-top: 18px; }
+.camera-recovery-change { display: inline-flex; align-items: center; gap: 5px; margin-top: 14px; padding: 3px 0; color: #b9c3cc; background: transparent; font-size: 13px; }
+.launcher-camera-recovery button:focus-visible { outline: 2px solid #a5c3af; outline-offset: 3px; }
+@media (max-width: 350px) { .launcher-camera-recovery .permission-guide-actions { grid-template-columns: 1fr; } }

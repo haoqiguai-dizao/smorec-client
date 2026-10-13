@@ -1,0 +1,12 @@
+.toolbar-label, .toolbar-controls { display: flex; align-items: center; gap: 10px; }
+.toolbar-controls > span { font-size: 11px; color: var(--text-secondary); }
+.preview-loading { position: absolute; display: flex; align-items: center; flex-direction: column; gap: 14px; color: var(--text-secondary); font-size: 12px; max-width: 360px; text-align: center; }
+.browser-notice { position: fixed; bottom: 12px; left: 230px; z-index: 15; display: flex; gap: 7px; align-items: center; color: var(--text-secondary); background: var(--surface-sunken); padding: 8px 12px; border: 1px solid var(--border-subtle); border-radius: 6px; font-size: 11px; }
+.countdown-overlay { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 25px; background: var(--surface-sunken); backdrop-filter: blur(14px); }
+.countdown-overlay > strong { font-size: 130px; font-weight: 300; line-height: 1; color: var(--text-primary); }
+.countdown-overlay > span { font-size: 14px; color: var(--text-secondary); }
+.status-message { font-size: 12px; }
+.status-message > span { overflow-wrap: anywhere; }
+.spin { animation: studio-spin 1s linear infinite; }
+@keyframes studio-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spin, .recording-indicator .record-dot { animation: none; } }

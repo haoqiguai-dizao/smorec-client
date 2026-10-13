@@ -1,0 +1,288 @@
+diff --git a/ScreenRecorderLib/Recorder.cpp b/ScreenRecorderLib/Recorder.cpp
+index 9642a8e..575fa27 100644
+--- a/ScreenRecorderLib/Recorder.cpp
++++ b/ScreenRecorderLib/Recorder.cpp
+@@ -6,6 +6,9 @@
+ using namespace ScreenRecorderLib;
+ using namespace nlohmann;
+ 
++extern bool IsDisplayWindowExclusionSupported() noexcept;
++bool Recorder::IsSessionWindowExclusionSupported() { return IsDisplayWindowExclusionSupported(); }
++
+ Recorder::Recorder(RecorderOptions^ options)
+ {
+ 	m_Rec = new RecordingManager();
+@@ -671,6 +674,13 @@ HRESULT Recorder::CreateOrUpdateNativeRecordingSource(_In_ RecordingSourceBase^
+ 	pNativeSource->Anchor = static_cast<ContentAnchor>(managedSource->AnchorPoint);
+ 	if (isinst<DisplayRecordingSource^>(managedSource)) {
+ 		DisplayRecordingSource^ displaySource = (DisplayRecordingSource^)managedSource;
++		pNativeSource->ExcludedWindowHandles.clear();
++		if (displaySource->ExcludedWindowHandles != nullptr) {
++			for each (IntPtr window in displaySource->ExcludedWindowHandles)
++				pNativeSource->ExcludedWindowHandles.push_back((HWND)window.ToPointer());
++		}
++		if (!pNativeSource->ExcludedWindowHandles.empty() && displaySource->RecorderApi != RecorderApi::WindowsGraphicsCapture)
++			return E_INVALIDARG;
+ 		if (!String::IsNullOrEmpty(displaySource->DeviceName)) {
+ 			std::wstring deviceName = msclr::interop::marshal_as<std::wstring>(displaySource->DeviceName);
+ 			CComPtr<IDXGIOutput> output;
+diff --git a/ScreenRecorderLib/Recorder.h b/ScreenRecorderLib/Recorder.h
+index 627348d..6c4b43c 100644
+--- a/ScreenRecorderLib/Recorder.h
++++ b/ScreenRecorderLib/Recorder.h
+@@ -128,6 +128,7 @@ namespace ScreenRecorderLib {
+ 		DynamicOptionsBuilder^ GetDynamicOptionsBuilder();
+ 
+ 		static bool SetExcludeFromCapture(System::IntPtr hwnd, bool isExcluded);
++		static bool IsSessionWindowExclusionSupported();
+ 		static Recorder^ CreateRecorder();
+ 		static Recorder^ CreateRecorder(RecorderOptions^ options);
+ 		static List<RecordableWindow^>^ GetWindows();
+@@ -286,4 +287,4 @@ namespace ScreenRecorderLib {
+ 		DynamicOptions^ _options;
+ 		Recorder^ _rec;
+ 	};
+-}
+\ No newline at end of file
++}
+diff --git a/ScreenRecorderLib/RecordingSources.h b/ScreenRecorderLib/RecordingSources.h
+index 4af0a11..099b02b 100644
+--- a/ScreenRecorderLib/RecordingSources.h
++++ b/ScreenRecorderLib/RecordingSources.h
+@@ -274,6 +274,7 @@ namespace ScreenRecorderLib {
+ 		bool _isCursorCaptureEnabled = true;
+ 		bool _isBorderRequired = true;
+ 		String^ _deviceName;
++		cli::array<IntPtr>^ _excludedWindowHandles;
+ 	public:
+ 		/// <summary>
+ 		/// Returns a recording source for the main display output. If no display output is available, it returns NULL.
+@@ -321,6 +322,16 @@ namespace ScreenRecorderLib {
+ 			IsCursorCaptureEnabled = source->IsCursorCaptureEnabled;
+ 			IsBorderRequired = source->IsBorderRequired;
+ 			RecorderApi = source->RecorderApi;
++			ExcludedWindowHandles = source->ExcludedWindowHandles;
++		}
++
++		/// <summary>HWNDs excluded only from this WGC display session. Set before recording starts.</summary>
++		property cli::array<IntPtr>^ ExcludedWindowHandles {
++			cli::array<IntPtr>^ get() { return _excludedWindowHandles; }
++			void set(cli::array<IntPtr>^ value) {
++				_excludedWindowHandles = value;
++				OnPropertyChanged("ExcludedWindowHandles");
++			}
+ 		}
+ 
+ 		property RecorderApi RecorderApi {
+@@ -479,4 +490,4 @@ namespace ScreenRecorderLib {
+ 		property String^ FriendlyName;
+ 
+ 	};
+-}
+\ No newline at end of file
++}
+diff --git a/ScreenRecorderLibNative/CaptureExclusion.cpp b/ScreenRecorderLibNative/CaptureExclusion.cpp
+new file mode 100644
+index 0000000..d73d48c
+--- /dev/null
++++ b/ScreenRecorderLibNative/CaptureExclusion.cpp
+@@ -0,0 +1,78 @@
++#include "CaptureExclusion.h"
++#include "Log.h"
++#include <inspectable.h>
++#include <dxgi.h>
++#include <windows.ui.h>
++#include <winrt/Windows.Foundation.Collections.h>
++#include <winrt/Windows.Foundation.Metadata.h>
++#include <winrt/Windows.UI.h>
++
++namespace {
++// ABI from Microsoft Windows SDK metadata, also published by microsoft/windows-rs.
++// Defining only these interfaces keeps the existing SDK 26100 toolchain usable.
++struct __declspec(uuid("bb91f61b-218a-587d-8580-2701a74c0525")) DisplaySessionExclusion : ::IInspectable {
++    virtual HRESULT __stdcall SetWindowExclusionList(void* windows, uint64_t* iteration) = 0;
++    virtual HRESULT __stdcall GetWindowExclusionList(void** windows) = 0;
++};
++struct __declspec(uuid("71616dc8-fea5-5741-a3d8-591acc39a9ee")) CaptureFrameConfiguration : ::IInspectable {
++    virtual HRESULT __stdcall get_ConfigurationIteration(uint64_t* iteration) = 0;
++};
++struct SystemModule {
++    HMODULE value = LoadLibraryExW(L"Windows.UI.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
++    ~SystemModule() { if (value) FreeLibrary(value); }
++};
++struct ApartmentScope {
++    HRESULT status = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
++    ~ApartmentScope() { if (SUCCEEDED(status)) CoUninitialize(); }
++};
++}
++
++bool IsDisplayWindowExclusionSupported() noexcept
++{
++    try {
++        ApartmentScope apartment;
++        return winrt::Windows::Foundation::Metadata::ApiInformation::IsMethodPresent(
++            L"Windows.Graphics.Capture.IDisplayGraphicsCaptureSession", L"SetWindowExclusionList");
++    }
++    catch (...) { return false; }
++}
++
++uint64_t ApplyWindowExclusion(
++    winrt::Windows::Graphics::Capture::GraphicsCaptureSession const& session,
++    std::vector<HWND> const& windows)
++{
++    if (windows.empty()) return 0;
++    auto exclusion = session.try_as<DisplaySessionExclusion>();
++    if (!exclusion) throw winrt::hresult_error(E_NOINTERFACE,
++        L"This Windows version cannot exclude visible floating windows from display recording. Select a window recording source.");
++    SystemModule module;
++    using ConvertWindow = HRESULT(WINAPI*)(HWND, ABI::Windows::UI::WindowId*);
++    auto convert = module.value ? reinterpret_cast<ConvertWindow>(GetProcAddress(module.value, "GetWindowIdFromWindow")) : nullptr;
++    if (!convert) throw winrt::hresult_error(E_NOINTERFACE, L"Windows WindowId conversion is unavailable. Select a window recording source.");
++    auto ids = winrt::single_threaded_vector<winrt::Windows::UI::WindowId>();
++    for (HWND window : windows) {
++        if (!IsWindow(window)) throw winrt::hresult_error(E_INVALIDARG, L"A floating window was closed before capture started.");
++        ABI::Windows::UI::WindowId id{};
++        winrt::check_hresult(convert(window, &id));
++        ids.Append(winrt::Windows::UI::WindowId{ id.Value });
++    }
++    auto iterable = ids.as<winrt::Windows::Foundation::Collections::IIterable<winrt::Windows::UI::WindowId>>();
++    uint64_t iteration = 0;
++    winrt::check_hresult(exclusion->SetWindowExclusionList(winrt::get_abi(iterable), &iteration));
++    LOG_INFO(L"FrameFlow per-session exclusion applied: windows=%zu iteration=%llu", windows.size(), iteration);
++    return iteration;
++}
++
++HRESULT CheckWindowExclusionFrame(
++    winrt::Windows::Graphics::Capture::Direct3D11CaptureFrame const& frame,
++    uint64_t requiredIteration) noexcept
++{
++    if (!requiredIteration) return S_OK;
++    try {
++        auto configuration = frame.as<CaptureFrameConfiguration>();
++        uint64_t iteration = 0;
++        winrt::check_hresult(configuration->get_ConfigurationIteration(&iteration));
++        return iteration >= requiredIteration ? S_OK : DXGI_ERROR_WAIT_TIMEOUT;
++    }
++    catch (...) { return winrt::to_hresult(); }
++}
+diff --git a/ScreenRecorderLibNative/CaptureExclusion.h b/ScreenRecorderLibNative/CaptureExclusion.h
+new file mode 100644
+index 0000000..d3e04ac
+--- /dev/null
++++ b/ScreenRecorderLibNative/CaptureExclusion.h
+@@ -0,0 +1,14 @@
++#pragma once
++#include <Windows.h>
++#include <vector>
++#include <winrt/Windows.Graphics.Capture.h>
++
++bool IsDisplayWindowExclusionSupported() noexcept;
++
++// FrameFlow extension. The configuration is private to this capture session.
++uint64_t ApplyWindowExclusion(
++    winrt::Windows::Graphics::Capture::GraphicsCaptureSession const& session,
++    std::vector<HWND> const& windows);
++HRESULT CheckWindowExclusionFrame(
++    winrt::Windows::Graphics::Capture::Direct3D11CaptureFrame const& frame,
++    uint64_t requiredIteration) noexcept;
+diff --git a/ScreenRecorderLibNative/CommonTypes.h b/ScreenRecorderLibNative/CommonTypes.h
+index 1d61131..20bc9c7 100644
+--- a/ScreenRecorderLibNative/CommonTypes.h
++++ b/ScreenRecorderLibNative/CommonTypes.h
+@@ -279,6 +279,7 @@ public:
+ 	std::wstring SourcePath;
+ 	IStream *SourceStream;
+ 	HWND SourceWindow;
++	std::vector<HWND> ExcludedWindowHandles;
+ 	RecordingSourceType Type;
+ 	std::wstring ID;
+ 	/// <summary>
+@@ -759,4 +760,4 @@ public:
+ 			return L".jpg";
+ 		}
+ 	}
+-};
+\ No newline at end of file
++};
+diff --git a/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj b/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
+index 13e4a0f..d258ab8 100644
+--- a/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
++++ b/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
+@@ -73,6 +73,7 @@
+     <ClCompile Include="AudioDriftCorrector.cpp" />
+     <ClCompile Include="AudioManager.cpp" />
+     <ClCompile Include="CaptureBase.cpp" />
++    <ClCompile Include="CaptureExclusion.cpp" />
+     <ClCompile Include="CoreAudio.util.cpp" />
+     <ClCompile Include="DynamicWait.cpp" />
+     <ClCompile Include="ImageReader.cpp" />
+@@ -414,4 +415,4 @@
+   </ItemDefinitionGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+   <ImportGroup Label="ExtensionTargets" />
+-</Project>
+\ No newline at end of file
++</Project>
+diff --git a/ScreenRecorderLibNative/WindowsGraphicsCapture.cpp b/ScreenRecorderLibNative/WindowsGraphicsCapture.cpp
+index d80deec..6f14452 100644
+--- a/ScreenRecorderLibNative/WindowsGraphicsCapture.cpp
++++ b/ScreenRecorderLibNative/WindowsGraphicsCapture.cpp
+@@ -1,4 +1,5 @@
+ #include "WindowsGraphicsCapture.h"
++#include "CaptureExclusion.h"
+ #include "Util.h"
+ #include <dwmapi.h>
+ #include "Cleanup.h"
+@@ -220,6 +221,7 @@ HRESULT WindowsGraphicsCapture::StartCapture(_In_ RECORDING_SOURCE_BASE &recordi
+ 			m_framePool = winrt::Direct3D11CaptureFramePool::CreateFreeThreaded(direct3DDevice, winrt::DirectXPixelFormat::B8G8R8A8UIntNormalized, 2, m_CaptureItem.Size());
+ 
+ 			m_session = m_framePool.CreateCaptureSession(m_CaptureItem);
++			m_WindowExclusionIteration = ApplyWindowExclusion(m_session, recordingSource.ExcludedWindowHandles);
+ 
+ 			if (IsGraphicsCaptureIsBorderRequiredPropertyAvailable()) {
+ 				m_session.IsBorderRequired(recordingSource.IsBorderRequired.value_or(true));
+@@ -238,6 +240,7 @@ HRESULT WindowsGraphicsCapture::StartCapture(_In_ RECORDING_SOURCE_BASE &recordi
+ 		{
+ 			hr = ex.code();
+ 			LOG_ERROR(L"Failed to create WindowsGraphicsCapture session: error is %ls", ex.message().c_str());
++			try { if (m_session) m_session.Close(); if (m_framePool) m_framePool.Close(); } catch (...) {}
+ 		}
+ 	}
+ 	return hr;
+@@ -509,6 +512,10 @@ HRESULT WindowsGraphicsCapture::GetNextFrame(_In_ DWORD timeoutMillis, _Inout_ G
+ 			return hr;
+ 		}
+ 		if (frame) {
++			if (FAILED(hr = CheckWindowExclusionFrame(frame, m_WindowExclusionIteration))) {
++				frame.Close();
++				return hr;
++			}
+ 			MeasureExecutionTime measureGetFrame(L"WindowsGraphicsManager::GetNextFrame");
+ 			if (frame.ContentSize().Width != pData->ContentSize.cx
+ 					|| frame.ContentSize().Height != pData->ContentSize.cy) {
+@@ -578,4 +585,4 @@ HRESULT WindowsGraphicsCapture::GetNextFrame(_In_ DWORD timeoutMillis, _Inout_ G
+ 		hr = HRESULT_FROM_WIN32(dwErr);
+ 	}
+ 	return hr;
+-}
+\ No newline at end of file
++}
+diff --git a/ScreenRecorderLibNative/WindowsGraphicsCapture.h b/ScreenRecorderLibNative/WindowsGraphicsCapture.h
+index 0a67aaf..8c2e55d 100644
+--- a/ScreenRecorderLibNative/WindowsGraphicsCapture.h
++++ b/ScreenRecorderLibNative/WindowsGraphicsCapture.h
+@@ -29,6 +29,7 @@ private:
+ 	winrt::Windows::Graphics::Capture::GraphicsCaptureItem m_CaptureItem;
+ 	winrt::Windows::Graphics::Capture::Direct3D11CaptureFramePool m_framePool;
+ 	winrt::Windows::Graphics::Capture::GraphicsCaptureSession m_session;
++	uint64_t m_WindowExclusionIteration = 0;
+ 
+ 	std::unique_ptr<MouseManager> m_MouseManager;
+ 	int m_CursorOffsetX;
+@@ -45,4 +46,4 @@ private:
+ 	LARGE_INTEGER m_LastSampleReceivedTimeStamp;
+ 	LARGE_INTEGER m_LastCaptureSessionRestart;
+ 
+-};
+\ No newline at end of file
++};

@@ -1,0 +1,246 @@
+diff --git a/ScreenRecorderLibNative/OutputManager.cpp b/ScreenRecorderLibNative/OutputManager.cpp
+index ccc21ac..5ef972d 100644
+--- a/ScreenRecorderLibNative/OutputManager.cpp
++++ b/ScreenRecorderLibNative/OutputManager.cpp
+@@ -144,6 +144,7 @@ HRESULT OutputManager::FinalizeRecording()
+ 		if (SUCCEEDED(finalizeResult) && m_FinalizeEvent) {
+ 			WaitForSingleObject(m_FinalizeEvent, INFINITE);
+ 		}
++		m_SampleDiagnostics.Report(finalizeResult);
+ 		if (FAILED(finalizeResult)) {
+ 			LOG_ERROR("Failed to finalize sink writer");
+ 		}
+@@ -572,12 +573,16 @@ HRESULT OutputManager::WriteFrameToVideo(_In_ INT64 frameStartPos, _In_ INT64 fr
+ 			}
+ 			if (SUCCEEDED(hr))
+ 			{
++				const auto observed = m_SampleDiagnostics.BeforeWriteSample(transformSample);
+ 				hr = m_SinkWriter->WriteSample(streamIndex, transformSample);
++				m_SampleDiagnostics.AfterWriteSample(observed, hr);
+ 			}
+ 			SafeRelease(&transformSample);
+ 		}
+ 		else {
++			const auto observed = m_SampleDiagnostics.BeforeWriteSample(pSample);
+ 			hr = m_SinkWriter->WriteSample(streamIndex, pSample);
++			m_SampleDiagnostics.AfterWriteSample(observed, hr);
+ 		}
+ 	}
+ 	SafeRelease(&pSample);
+diff --git a/ScreenRecorderLibNative/OutputManager.h b/ScreenRecorderLibNative/OutputManager.h
+index 2198e92..d0160b3 100644
+--- a/ScreenRecorderLibNative/OutputManager.h
++++ b/ScreenRecorderLibNative/OutputManager.h
+@@ -10,6 +10,7 @@
+ #include <atlbase.h>
+ #include "TimelineManager.h"
+ #include "AudioDriftCorrector.h"
++#include "VideoSampleDiagnostics.h"
+ 
+ struct FrameWriteModel
+ {
+@@ -58,6 +59,7 @@ public:
+ 		}
+ 	}
+ private:
++	VideoSampleDiagnostics m_SampleDiagnostics;
+ 	ID3D11DeviceContext *m_DeviceContext = nullptr;
+ 	ID3D11Device *m_Device = nullptr;
+ 
+diff --git a/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj b/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
+index 61c934b..82e58df 100644
+--- a/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
++++ b/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
+@@ -55,6 +55,8 @@
+     <ClInclude Include="CaptureBase.h" />
+     <ClInclude Include="Screengrab.h" />
+     <ClInclude Include="TimelineManager.h" />
++    <ClInclude Include="VideoSampleDiagnostics.h" />
++    <ClInclude Include="VideoSampleMetrics.h" />
+     <ClInclude Include="WASAPINotify.h" />
+     <ClInclude Include="WindowsGraphicsCapture.h" />
+     <ClInclude Include="WindowsGraphicsCapture.util.h" />
+@@ -92,6 +94,7 @@
+     <ClCompile Include="DX.util.cpp" />
+     <ClCompile Include="Screengrab.cpp" />
+     <ClCompile Include="TimelineManager.cpp" />
++    <ClCompile Include="VideoSampleDiagnostics.cpp" />
+     <ClCompile Include="Util.cpp" />
+     <ClCompile Include="WASAPINotify.cpp" />
+     <ClCompile Include="WindowsGraphicsCapture.cpp" />
+diff --git a/ScreenRecorderLibNative/VideoSampleDiagnostics.cpp b/ScreenRecorderLibNative/VideoSampleDiagnostics.cpp
+new file mode 100644
+index 0000000..709de85
+--- /dev/null
++++ b/ScreenRecorderLibNative/VideoSampleDiagnostics.cpp
+@@ -0,0 +1,79 @@
++#include "VideoSampleDiagnostics.h"
++#include "Log.h"
++#include <cstdarg>
++
++namespace {
++void LogSamples(const wchar_t* format, ...) {
++    if (!isLoggingEnabled) return;
++    wchar_t message[1536]{};
++    va_list args;
++    va_start(args, format);
++    _vsnwprintf_s(message, _countof(message), _TRUNCATE, format, args);
++    va_end(args);
++    _log(L"%s [INFO] [VideoSamples] %s\n", GetTimestamp().c_str(), message);
++}
++void LogObservation(const wchar_t* group, std::uint64_t number, const VideoSampleObservation& sample) {
++    LogSamples(L"%s number=%llu pts100ns=%lld duration100ns=%lld beforeQpc=%lld afterQpc=%lld timingValid=%s result=0x%08lx",
++        group, number, sample.Pts, sample.Duration, sample.BeforeQpc, sample.AfterQpc,
++        sample.TimingValid ? L"true" : L"false", static_cast<unsigned long>(sample.Result));
++}
++}
++
++VideoSampleDiagnostics::VideoSampleDiagnostics() noexcept
++{
++    wchar_t value[8]{};
++    const auto length = GetEnvironmentVariableW(L"FRAMEFLOW_CAPTURE_SAMPLE_DIAGNOSTICS", value, _countof(value));
++    m_Enabled = length == 1 && value[0] == L'1';
++    if (m_Enabled) {
++        LARGE_INTEGER frequency{};
++        if (QueryPerformanceFrequency(&frequency) && frequency.QuadPart > 0) m_Frequency = frequency.QuadPart;
++        else m_Enabled = false;
++    }
++}
++
++VideoSampleObservation VideoSampleDiagnostics::BeforeWriteSample(IMFSample* sample) const noexcept
++{
++    VideoSampleObservation observation{};
++    if (!m_Enabled) return observation;
++    observation.Enabled = true;
++    observation.TimingValid = SUCCEEDED(sample->GetSampleTime(&observation.Pts))
++        && SUCCEEDED(sample->GetSampleDuration(&observation.Duration));
++    LARGE_INTEGER now{};
++    QueryPerformanceCounter(&now);
++    observation.BeforeQpc = now.QuadPart;
++    return observation;
++}
++
++void VideoSampleDiagnostics::AfterWriteSample(VideoSampleObservation observed, HRESULT result) noexcept
++{
++    if (!observed.Enabled) return;
++    LARGE_INTEGER now{};
++    QueryPerformanceCounter(&now);
++    observed.AfterQpc = now.QuadPart;
++    observed.Result = static_cast<std::int32_t>(result);
++    const auto waitUs = static_cast<std::uint64_t>((std::max)(0.0,
++        static_cast<double>(observed.AfterQpc - observed.BeforeQpc) * 1000000.0 / m_Frequency));
++    m_Metrics.Observe(observed, waitUs);
++}
++
++void VideoSampleDiagnostics::Report(HRESULT finalized) noexcept
++{
++    if (!m_Enabled || m_Reported) return;
++    m_Reported = true;
++    try {
++        const auto& sample = m_Metrics;
++        LogSamples(L"summary attempted=%llu accepted=%llu failed=%llu invalidTiming=%llu firstPts100ns=%lld lastPts100ns=%lld lastEnd100ns=%lld durationSum100ns=%lld gaps=%llu gap100ns=%lld overlaps=%llu overlap100ns=%lld nonMonotonic=%llu finalize=0x%08lx",
++            sample.Attempts, sample.Accepted, sample.Failures, sample.InvalidTiming, sample.FirstPts, sample.LastPts,
++            sample.LastEnd, sample.DurationSum, sample.Gaps, sample.GapTotal, sample.Overlaps, sample.OverlapTotal,
++            sample.NonMonotonic, finalized);
++        LogSamples(L"writeWait count=%llu meanMs=%.3f p95UpperMs=%.3f maximumMs=%.3f qpcFrequency=%lld",
++            sample.Attempts, sample.Attempts ? sample.WaitTotalUs / (double)sample.Attempts / 1000.0 : 0.0,
++            sample.WaitP95UpperUs() / 1000.0, sample.WaitMaxUs / 1000.0, m_Frequency);
++        for (std::uint64_t index = 0; index < (std::min)(sample.Attempts, (std::uint64_t)VideoSampleMetrics::RetainedCount); ++index)
++            LogObservation(L"first", index + 1, sample.First[index]);
++        const auto begin = sample.Attempts > VideoSampleMetrics::RetainedCount ? sample.Attempts - VideoSampleMetrics::RetainedCount : 0;
++        for (auto index = begin; index < sample.Attempts; ++index)
++            LogObservation(L"last", index + 1, sample.Last[index % VideoSampleMetrics::RetainedCount]);
++    }
++    catch (...) { /* Optional diagnostics must not prevent normal recording cleanup. */ }
++}
+diff --git a/ScreenRecorderLibNative/VideoSampleDiagnostics.h b/ScreenRecorderLibNative/VideoSampleDiagnostics.h
+new file mode 100644
+index 0000000..31d6eab
+--- /dev/null
++++ b/ScreenRecorderLibNative/VideoSampleDiagnostics.h
+@@ -0,0 +1,17 @@
++#pragma once
++#include <Windows.h>
++#include <mfidl.h>
++#include "VideoSampleMetrics.h"
++
++// Optional observation only: never sets sample properties or controls the sink writer.
++class VideoSampleDiagnostics {
++public:
++    VideoSampleDiagnostics() noexcept;
++    VideoSampleObservation BeforeWriteSample(IMFSample* sample) const noexcept;
++    void AfterWriteSample(VideoSampleObservation observed, HRESULT result) noexcept;
++    void Report(HRESULT finalized) noexcept;
++private:
++    bool m_Enabled = false, m_Reported = false;
++    LONGLONG m_Frequency = 1;
++    VideoSampleMetrics m_Metrics;
++};
+diff --git a/ScreenRecorderLibNative/VideoSampleMetrics.h b/ScreenRecorderLibNative/VideoSampleMetrics.h
+new file mode 100644
+index 0000000..ebe66a4
+--- /dev/null
++++ b/ScreenRecorderLibNative/VideoSampleMetrics.h
+@@ -0,0 +1,62 @@
++#pragma once
++#include <algorithm>
++#include <array>
++#include <cstdint>
++#include <limits>
++
++struct VideoSampleObservation {
++    std::int64_t Pts = -1, Duration = 0, BeforeQpc = 0, AfterQpc = 0;
++    std::int32_t Result = 0;
++    bool Enabled = false, TimingValid = false;
++};
++
++struct VideoSampleMetrics {
++    inline static constexpr std::size_t RetainedCount = 8;
++    inline static constexpr std::array<std::uint64_t, 14> WaitUpperUs{
++        250, 500, 1000, 2000, 4000, 8000, 16000, 33000, 66000, 100000, 250000, 500000, 1000000,
++        (std::numeric_limits<std::uint64_t>::max)() };
++    std::array<VideoSampleObservation, RetainedCount> First{}, Last{};
++    std::array<std::uint64_t, WaitUpperUs.size()> WaitBuckets{};
++    std::uint64_t Attempts = 0, Accepted = 0, Failures = 0, InvalidTiming = 0;
++    std::uint64_t Gaps = 0, Overlaps = 0, NonMonotonic = 0, WaitTotalUs = 0, WaitMaxUs = 0;
++    std::int64_t FirstPts = -1, LastPts = -1, LastEnd = -1, DurationSum = 0, GapTotal = 0, OverlapTotal = 0;
++
++    void Observe(const VideoSampleObservation& sample, std::uint64_t waitUs) noexcept
++    {
++        if (Attempts < RetainedCount) First[Attempts] = sample;
++        Last[Attempts % RetainedCount] = sample;
++        ++Attempts;
++        WaitTotalUs += waitUs;
++        WaitMaxUs = (std::max)(WaitMaxUs, waitUs);
++        const auto bucket = std::lower_bound(WaitUpperUs.begin(), WaitUpperUs.end(), waitUs) - WaitUpperUs.begin();
++        ++WaitBuckets[bucket];
++        if (sample.Result < 0) { ++Failures; return; }
++        ++Accepted;
++        if (!sample.TimingValid || sample.Pts < 0 || sample.Duration <= 0
++            || sample.Pts > (std::numeric_limits<std::int64_t>::max)() - sample.Duration) {
++            ++InvalidTiming;
++            return;
++        }
++        if (LastEnd >= 0) {
++            if (sample.Pts <= LastPts) ++NonMonotonic;
++            if (sample.Pts > LastEnd) { ++Gaps; GapTotal += sample.Pts - LastEnd; }
++            if (sample.Pts < LastEnd) { ++Overlaps; OverlapTotal += LastEnd - sample.Pts; }
++        }
++        if (FirstPts < 0) FirstPts = sample.Pts;
++        LastPts = sample.Pts;
++        LastEnd = sample.Pts + sample.Duration;
++        DurationSum += sample.Duration;
++    }
++
++    std::uint64_t WaitP95UpperUs() const noexcept
++    {
++        if (!Attempts) return 0;
++        const auto rank = Attempts - Attempts / 20;
++        std::uint64_t sum = 0;
++        for (std::size_t index = 0; index < WaitBuckets.size(); ++index) {
++            sum += WaitBuckets[index];
++            if (sum >= rank) return (std::min)(WaitUpperUs[index], WaitMaxUs);
++        }
++        return WaitMaxUs;
++    }
++};

@@ -1,0 +1,38 @@
+.toolbar-picture { display: flex; align-items: center; gap: 7px; width: 190px; height: 34px; padding-right: 12px; margin-right: 5px; border-right: 1px solid #ffffff23; }
+.session-toolbar:not(.is-compact) > .toolbar-picture { flex: 1 1 auto; min-width: 140px; max-width: 190px; margin-right: 0; }
+.session-toolbar .launcher-source-trigger, .toolbar-source-readonly { display: inline-flex; align-items: center; justify-content: flex-start; flex: 1; gap: 7px; min-width: 0; min-height: 34px; width: auto; padding: 5px 3px; border: 1px solid transparent; border-radius: 7px; background: transparent; box-shadow: none; color: #e6e9e8; font-size: 13px; line-height: 20px; }
+.launcher-source-trigger span, .toolbar-source-readonly span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.launcher-source-trigger > svg, .toolbar-source-readonly > svg { flex-shrink: 0; }
+.launcher-source-trigger > svg:last-child { margin-left: auto; }
+.session-toolbar .toolbar-exclusions { flex-shrink: 0; min-height: 34px; padding: 5px 7px; gap: 5px; color: #c7cfd2; border-left: 1px solid #ffffff1b; border-radius: 0 7px 7px 0; }
+.toolbar-exclusions svg { width: 17px; height: 17px; }
+.toolbar-exclusions-count { font-size: 12px; font-variant-numeric: tabular-nums; color: #aeb7bc; }
+.session-toolbar .toolbar-exclusions[aria-expanded=true] { color: #eef1ed; border-color: #ffffff20; background: #ffffff0e; }
+.session-toolbar .toolbar-exclusions.has-error { color: #efac9c; }
+.toolbar-exclusions.has-error .toolbar-exclusions-count { color: inherit; }
+.session-toolbar.is-compact .toolbar-picture { width: auto; height: 28px; padding-right: 7px; margin-right: 0; }
+.session-toolbar.is-compact .toolbar-exclusions { padding-inline: 5px; }
+.capture-theme .launcher-panel-applications { width: min(100%, 300px); align-self: flex-start; margin-left: 260px; }
+.launcher-panel-applications .launcher-panel-header { min-height: 42px; padding: 8px 14px; border-bottom: 0; }
+.launcher-panel-applications .launcher-panel-header h1 { font-size: 14px; }
+.launcher-panel-applications .launcher-panel-content { padding: 5px 10px 10px; }
+.launcher-panel-applications .launcher-live-applications > header { padding: 3px 4px 7px; border-bottom: 1px solid #ffffff16; }
+.launcher-panel-applications .launcher-panel-header h1 { display: flex; align-items: center; gap: 8px; }
+.launcher-panel-applications .launcher-panel-header h1 small { display: grid; place-items: center; min-width: 23px; padding: 1px 5px; border: 1px solid #ffffff16; border-radius: 5px; background: #ffffff09; font-size: 12px; font-weight: 400; }
+.launcher-panel-applications .launcher-live-applications > header > button { margin-left: 0; }
+.launcher-panel-applications .launcher-live-application-list { margin-top: 5px; gap: 2px; }
+.launcher-panel-applications .launcher-live-application-list label { min-height: 38px; padding: 7px 6px; gap: 10px; border-radius: 7px; }
+.capture-theme .launcher-panel-applications .launcher-live-application-list input { order: 3; margin: 0 0 0 auto; width: 15px; height: 15px; accent-color: #f0a69a; }
+.launcher-panel-applications .launcher-live-application-list svg { flex-shrink: 0; color: #aebbc0; }
+@media (max-width: 1000px) { .capture-theme .launcher-panel-applications { margin-left: 162px; } }
+@media (max-width: 860px) {
+  .session-toolbar:not(.is-compact) .launcher-source-trigger { height: 30px; min-height: 30px; }
+}
+@media (max-width: 680px) {
+  .toolbar-picture { width: 137px; gap: 3px; padding-right: 5px; margin-right: 0; }
+  .session-toolbar:not(.is-compact) > .toolbar-picture { min-width: 105px; max-width: 137px; }
+  .session-toolbar .toolbar-exclusions-label { display: none; }
+  .session-toolbar .toolbar-exclusions { padding-inline: 4px; }
+  .capture-theme .launcher-panel-applications { margin-left: 60px; }
+}
+@media (max-width: 420px) { .capture-theme .launcher-panel-applications { margin-left: 0; } }

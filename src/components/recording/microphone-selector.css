@@ -1,0 +1,10 @@
+@import '../../styles/tokens.css';
+
+.recorder-microphone { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; padding: 12px; border: 1px solid var(--border-subtle, var(--border-subtle)); border-radius: 9px; background: var(--surface, var(--surface-sunken)); }
+.recorder-microphone .camera-device-heading { display: flex; align-items: center; gap: 7px; color: var(--text-secondary, var(--text-primary)); font-size: 12px; }
+.recorder-microphone .camera-device-heading strong { color: var(--text-primary, var(--text-primary)); font-weight: 500; }
+.recorder-microphone .camera-device-heading button { margin-left: auto; }
+.recorder-microphone select { width: 100%; min-height: 37px; padding: 8px 10px; border: 1px solid var(--border-subtle); border-radius: 7px; background: var(--surface-sunken, var(--surface-sunken)); color: var(--text-primary, var(--text-secondary)); font-size: 12px; }
+.recorder-microphone select:focus-visible, .recorder-microphone button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.microphone-device-error { display: flex; align-items: flex-start; gap: 7px; color: var(--danger); font-size: 12px; line-height: 1.5; }
+.microphone-device-error svg { margin-top: 2px; flex-shrink: 0; }

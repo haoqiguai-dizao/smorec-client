@@ -1,0 +1,24 @@
+.launcher-stream-settings { display: grid; gap: 9px; margin-top: 14px; font-size: 12px; }
+.launcher-stream-settings label { display: grid; gap: 5px; color: var(--text-secondary); min-width: 0; }
+.launcher-stream-settings input, .launcher-stream-settings select, .launcher-live-output select { width: 100%; height: 31px; min-width: 0; border: 1px solid var(--border-strong); border-radius: 5px; padding: 0 8px; background: var(--surface-raised); color: var(--text-primary); font: inherit; -webkit-app-region: no-drag; }
+.launcher-stream-settings input:focus, .launcher-stream-settings select:focus { outline: 1px solid var(--accent); }
+.launcher-stream-settings input:disabled, .launcher-stream-settings select:disabled { opacity: .6; }
+.launcher-stream-profile, .launcher-stream-key { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.launcher-stream-profile select, .launcher-stream-key input { flex: 1; }
+.launcher-stream-profile button, .launcher-stream-key button { flex-shrink: 0; }
+.launcher-stream-encoding { display: grid; grid-template-columns: 1fr 1fr 1.25fr 1fr; gap: 8px; }
+.launcher-stream-save, .launcher-stream-status, .launcher-stream-delete { display: flex; align-items: center; gap: 8px; }
+.launcher-stream-save > span { color: var(--text-secondary); font-size: 11px; }
+.launcher-stream-save > button, .launcher-stream-status > i { margin-left: auto; }
+.launcher-stream-status { color: var(--accent); padding-block: 4px; }
+.launcher-stream-status > span { font-variant-numeric: tabular-nums; color: var(--text-secondary); font-size: 11px; }
+.launcher-stream-delete { color: var(--danger); }
+.launcher-stream-delete button { border: 0; background: transparent; color: inherit; cursor: pointer; text-decoration: underline; }
+.launcher-live-output { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 12px; }
+.launcher-live-output select { flex: 1; width: auto; }
+.launcher-stream-audio { display: grid; gap: 8px; font-size: 12px; }
+.launcher-stream-audio > div { display: flex; align-items: center; gap: 10px; }
+.launcher-stream-audio label { display: flex; align-items: center; gap: 5px; }
+.launcher-stream-audio input { accent-color: var(--accent); }
+.launcher-stream-audio i { display: inline-flex; margin-left: auto; color: var(--text-secondary); }
+.launcher-stream-audio select { flex: 1; min-width: 0; height: 29px; border: 1px solid var(--border-strong); border-radius: 5px; background: var(--surface-raised); color: var(--text-primary); padding-inline: 7px; }

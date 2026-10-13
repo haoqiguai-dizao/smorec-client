@@ -1,0 +1,926 @@
+diff --git a/ScreenRecorderLib/ManagedStreamWrapper.h b/ScreenRecorderLib/ManagedStreamWrapper.h
+index c11315f..2ca5f0c 100644
+--- a/ScreenRecorderLib/ManagedStreamWrapper.h
++++ b/ScreenRecorderLib/ManagedStreamWrapper.h
+@@ -105,7 +105,7 @@ namespace ScreenRecorderLib {
+ 	};
+ 
+ 
+-	ManagedStreamWrapper::ManagedStreamWrapper(System::IO::Stream^ stream)
++	inline ManagedStreamWrapper::ManagedStreamWrapper(System::IO::Stream^ stream)
+ 	{
+ 		m_Stream = stream;
+ 		m_GetLengthDelegate = gcnew LongDelegate(this, &ManagedStreamWrapper::GetLength);
+diff --git a/ScreenRecorderLib/Recorder.Sources.cpp b/ScreenRecorderLib/Recorder.Sources.cpp
+new file mode 100644
+index 0000000..5e8dfdd
+--- /dev/null
++++ b/ScreenRecorderLib/Recorder.Sources.cpp
+@@ -0,0 +1,156 @@
++#include "Recorder.h"
++#include "ManagedIStream.h"
++#include <msclr/marshal_cppstd.h>
++
++using namespace ScreenRecorderLib;
++
++HRESULT Recorder::CreateOrUpdateNativeRecordingSource(_In_ RecordingSourceBase^ managedSource, _Inout_ RECORDING_SOURCE* pNativeSource)
++{
++	HRESULT hr = E_FAIL;
++	pNativeSource->ID = msclr::interop::marshal_as<std::wstring>(managedSource->ID);
++	if (managedSource->OutputSize
++		&& !managedSource->OutputSize->Equals(ScreenSize::Empty)
++		&& (managedSource->OutputSize->Width > 0 || managedSource->OutputSize->Height > 0)) {
++		pNativeSource->OutputSize = managedSource->OutputSize->ToSIZE();
++	}
++
++	if (managedSource->Position && !managedSource->Position->Equals(ScreenPoint::Empty)) {
++		pNativeSource->Position = managedSource->Position->ToPOINT();
++	}
++	if (managedSource->SourceRect
++		&& !managedSource->SourceRect->Equals(ScreenRect::Empty)
++		&& managedSource->SourceRect->Right > managedSource->SourceRect->Left
++		&& managedSource->SourceRect->Bottom > managedSource->SourceRect->Top) {
++		pNativeSource->SourceRect = managedSource->SourceRect->ToRECT();
++	}
++
++	pNativeSource->IsVideoFramePreviewEnabled = managedSource->IsVideoFramePreviewEnabled;
++	auto callback = managedSource->RegisterFrameDataCallback();
++	pNativeSource->UnregisterCallback(callback);
++	pNativeSource->RegisterCallback(callback);
++	if (managedSource->VideoFramePreviewSize
++		&& !managedSource->VideoFramePreviewSize->Equals(ScreenSize::Empty)
++		&& (managedSource->VideoFramePreviewSize->Width > 0 || managedSource->VideoFramePreviewSize->Height > 0)) {
++		pNativeSource->VideoFramePreviewSize = managedSource->VideoFramePreviewSize->ToSIZE();
++	}
++
++	pNativeSource->IsVideoCaptureEnabled = managedSource->IsVideoCaptureEnabled;
++	pNativeSource->Stretch = static_cast<TextureStretchMode>(managedSource->Stretch);
++	pNativeSource->Anchor = static_cast<ContentAnchor>(managedSource->AnchorPoint);
++	if (isinst<DisplayRecordingSource^>(managedSource)) {
++		DisplayRecordingSource^ displaySource = (DisplayRecordingSource^)managedSource;
++		std::vector<HWND> excludedWindows;
++		if (displaySource->ExcludedWindowHandles != nullptr) {
++			for each (IntPtr window in displaySource->ExcludedWindowHandles)
++				excludedWindows.push_back((HWND)window.ToPointer());
++		}
++		if (!excludedWindows.empty() && displaySource->RecorderApi != RecorderApi::WindowsGraphicsCapture)
++			return E_INVALIDARG;
++		pNativeSource->WindowExclusions->Request(std::move(excludedWindows));
++		if (!String::IsNullOrEmpty(displaySource->DeviceName)) {
++			std::wstring deviceName = msclr::interop::marshal_as<std::wstring>(displaySource->DeviceName);
++			CComPtr<IDXGIOutput> output;
++			hr = GetOutputForDeviceName(deviceName, &output);
++			if (SUCCEEDED(hr)) {
++				DXGI_OUTPUT_DESC desc;
++				hr = output->GetDesc(&desc);
++				pNativeSource->Type = RecordingSourceType::Display;
++				pNativeSource->SourcePath = desc.DeviceName;
++				pNativeSource->IsCursorCaptureEnabled = displaySource->IsCursorCaptureEnabled;
++				pNativeSource->IsBorderRequired = displaySource->IsBorderRequired;
++
++				switch (displaySource->RecorderApi)
++				{
++					case RecorderApi::DesktopDuplication: {
++						pNativeSource->SourceApi = RecordingSourceApi::DesktopDuplication;
++						break;
++					}
++					case RecorderApi::WindowsGraphicsCapture: {
++						pNativeSource->SourceApi = RecordingSourceApi::WindowsGraphicsCapture;
++						break;
++					}
++					default:
++						break;
++				}
++				hr = S_OK;
++			}
++		}
++	}
++	else if (isinst<WindowRecordingSource^>(managedSource)) {
++		WindowRecordingSource^ windowSource = (WindowRecordingSource^)managedSource;
++		if (windowSource->Handle != IntPtr::Zero) {
++			HWND windowHandle = (HWND)(windowSource->Handle.ToPointer());
++			if (IsWindow(windowHandle)) {
++				pNativeSource->Type = RecordingSourceType::Window;
++				pNativeSource->SourceWindow = windowHandle;
++				pNativeSource->IsCursorCaptureEnabled = windowSource->IsCursorCaptureEnabled;
++				pNativeSource->IsBorderRequired = windowSource->IsBorderRequired;
++				pNativeSource->SourceApi = RecordingSourceApi::WindowsGraphicsCapture;
++				hr = S_OK;
++			}
++		}
++	}
++	else if (isinst<VideoCaptureRecordingSource^>(managedSource)) {
++		VideoCaptureRecordingSource^ videoCaptureSource = (VideoCaptureRecordingSource^)managedSource;
++		if (!String::IsNullOrEmpty(videoCaptureSource->DeviceName)) {
++			std::wstring deviceName = msclr::interop::marshal_as<std::wstring>(videoCaptureSource->DeviceName);
++			pNativeSource->Type = RecordingSourceType::CameraCapture;
++			pNativeSource->SourcePath = deviceName;
++			if (videoCaptureSource->CaptureFormat) {
++				pNativeSource->CaptureFormatIndex = videoCaptureSource->CaptureFormat->Index;
++			}
++			hr = S_OK;
++		}
++	}
++	else if (isinst<VideoRecordingSource^>(managedSource)) {
++		VideoRecordingSource^ videoSource = (VideoRecordingSource^)managedSource;
++		pNativeSource->Type = RecordingSourceType::Video;
++		if (videoSource->SourceStream) {
++			SafeRelease(&pNativeSource->SourceStream);
++			pNativeSource->SourceStream = new ManagedIStream(videoSource->SourceStream);
++			hr = S_OK;
++		}
++		else if (!String::IsNullOrEmpty(videoSource->SourcePath)) {
++			pNativeSource->SourcePath = msclr::interop::marshal_as<std::wstring>(videoSource->SourcePath);
++			hr = S_OK;
++		}
++	}
++	else if (isinst<ImageRecordingSource^>(managedSource)) {
++		ImageRecordingSource^ imageSource = (ImageRecordingSource^)managedSource;
++		pNativeSource->Type = RecordingSourceType::Picture;
++		if (imageSource->SourceStream) {
++			SafeRelease(&pNativeSource->SourceStream);
++			pNativeSource->SourceStream = new ManagedIStream(imageSource->SourceStream);
++			hr = S_OK;
++		}
++		else if (!String::IsNullOrEmpty(imageSource->SourcePath)) {
++			pNativeSource->SourcePath = msclr::interop::marshal_as<std::wstring>(imageSource->SourcePath);
++			hr = S_OK;
++		}
++	}
++	else {
++		return E_NOTIMPL;
++	}
++	return hr;
++}
++
++bool Recorder::UpdateSessionWindowExclusions(String^ sourceId, cli::array<IntPtr>^ windows)
++{
++    if (Status != RecorderStatus::Recording || windows == nullptr)
++        throw gcnew InvalidOperationException("Recording is not active.");
++    auto id = msclr::interop::marshal_as<std::wstring>(sourceId);
++    for (auto source : m_Rec->GetRecordingSources()) {
++        if (source->ID != id) continue;
++        if (source->Type != RecordingSourceType::Display || source->SourceApi != RecordingSourceApi::WindowsGraphicsCapture)
++            throw gcnew InvalidOperationException("Window exclusion requires a display capture source.");
++        std::vector<HWND> values;
++        for each (IntPtr window in windows) values.push_back((HWND)window.ToPointer());
++        auto generation = source->WindowExclusions->Request(std::move(values));
++        // Return only after a frame from the new WGC configuration has passed its iteration fence.
++        auto result = source->WindowExclusions->Wait(generation);
++        if (FAILED(result)) System::Runtime::InteropServices::Marshal::ThrowExceptionForHR(result);
++        return true;
++    }
++    throw gcnew InvalidOperationException("Recording source has ended.");
++}
++
+diff --git a/ScreenRecorderLib/Recorder.cpp b/ScreenRecorderLib/Recorder.cpp
+index 575fa27..6c1c90d 100644
+--- a/ScreenRecorderLib/Recorder.cpp
++++ b/ScreenRecorderLib/Recorder.cpp
+@@ -639,135 +639,6 @@ HRESULT Recorder::CreateOrUpdateNativeAudioSource(_In_ AudioSourceBase^ managedS
+ 	return hr;
+ }
+ 
+-HRESULT Recorder::CreateOrUpdateNativeRecordingSource(_In_ RecordingSourceBase^ managedSource, _Inout_ RECORDING_SOURCE* pNativeSource)
+-{
+-	HRESULT hr = E_FAIL;
+-	pNativeSource->ID = msclr::interop::marshal_as<std::wstring>(managedSource->ID);
+-	if (managedSource->OutputSize
+-		&& !managedSource->OutputSize->Equals(ScreenSize::Empty)
+-		&& (managedSource->OutputSize->Width > 0 || managedSource->OutputSize->Height > 0)) {
+-		pNativeSource->OutputSize = managedSource->OutputSize->ToSIZE();
+-	}
+-
+-	if (managedSource->Position && !managedSource->Position->Equals(ScreenPoint::Empty)) {
+-		pNativeSource->Position = managedSource->Position->ToPOINT();
+-	}
+-	if (managedSource->SourceRect
+-		&& !managedSource->SourceRect->Equals(ScreenRect::Empty)
+-		&& managedSource->SourceRect->Right > managedSource->SourceRect->Left
+-		&& managedSource->SourceRect->Bottom > managedSource->SourceRect->Top) {
+-		pNativeSource->SourceRect = managedSource->SourceRect->ToRECT();
+-	}
+-
+-	pNativeSource->IsVideoFramePreviewEnabled = managedSource->IsVideoFramePreviewEnabled;
+-	auto callback = managedSource->RegisterFrameDataCallback();
+-	pNativeSource->UnregisterCallback(callback);
+-	pNativeSource->RegisterCallback(callback);
+-	if (managedSource->VideoFramePreviewSize
+-		&& !managedSource->VideoFramePreviewSize->Equals(ScreenSize::Empty)
+-		&& (managedSource->VideoFramePreviewSize->Width > 0 || managedSource->VideoFramePreviewSize->Height > 0)) {
+-		pNativeSource->VideoFramePreviewSize = managedSource->VideoFramePreviewSize->ToSIZE();
+-	}
+-
+-	pNativeSource->IsVideoCaptureEnabled = managedSource->IsVideoCaptureEnabled;
+-	pNativeSource->Stretch = static_cast<TextureStretchMode>(managedSource->Stretch);
+-	pNativeSource->Anchor = static_cast<ContentAnchor>(managedSource->AnchorPoint);
+-	if (isinst<DisplayRecordingSource^>(managedSource)) {
+-		DisplayRecordingSource^ displaySource = (DisplayRecordingSource^)managedSource;
+-		pNativeSource->ExcludedWindowHandles.clear();
+-		if (displaySource->ExcludedWindowHandles != nullptr) {
+-			for each (IntPtr window in displaySource->ExcludedWindowHandles)
+-				pNativeSource->ExcludedWindowHandles.push_back((HWND)window.ToPointer());
+-		}
+-		if (!pNativeSource->ExcludedWindowHandles.empty() && displaySource->RecorderApi != RecorderApi::WindowsGraphicsCapture)
+-			return E_INVALIDARG;
+-		if (!String::IsNullOrEmpty(displaySource->DeviceName)) {
+-			std::wstring deviceName = msclr::interop::marshal_as<std::wstring>(displaySource->DeviceName);
+-			CComPtr<IDXGIOutput> output;
+-			hr = GetOutputForDeviceName(deviceName, &output);
+-			if (SUCCEEDED(hr)) {
+-				DXGI_OUTPUT_DESC desc;
+-				hr = output->GetDesc(&desc);
+-				pNativeSource->Type = RecordingSourceType::Display;
+-				pNativeSource->SourcePath = desc.DeviceName;
+-				pNativeSource->IsCursorCaptureEnabled = displaySource->IsCursorCaptureEnabled;
+-				pNativeSource->IsBorderRequired = displaySource->IsBorderRequired;
+-
+-				switch (displaySource->RecorderApi)
+-				{
+-					case RecorderApi::DesktopDuplication: {
+-						pNativeSource->SourceApi = RecordingSourceApi::DesktopDuplication;
+-						break;
+-					}
+-					case RecorderApi::WindowsGraphicsCapture: {
+-						pNativeSource->SourceApi = RecordingSourceApi::WindowsGraphicsCapture;
+-						break;
+-					}
+-					default:
+-						break;
+-				}
+-				hr = S_OK;
+-			}
+-		}
+-	}
+-	else if (isinst<WindowRecordingSource^>(managedSource)) {
+-		WindowRecordingSource^ windowSource = (WindowRecordingSource^)managedSource;
+-		if (windowSource->Handle != IntPtr::Zero) {
+-			HWND windowHandle = (HWND)(windowSource->Handle.ToPointer());
+-			if (IsWindow(windowHandle)) {
+-				pNativeSource->Type = RecordingSourceType::Window;
+-				pNativeSource->SourceWindow = windowHandle;
+-				pNativeSource->IsCursorCaptureEnabled = windowSource->IsCursorCaptureEnabled;
+-				pNativeSource->IsBorderRequired = windowSource->IsBorderRequired;
+-				pNativeSource->SourceApi = RecordingSourceApi::WindowsGraphicsCapture;
+-				hr = S_OK;
+-			}
+-		}
+-	}
+-	else if (isinst<VideoCaptureRecordingSource^>(managedSource)) {
+-		VideoCaptureRecordingSource^ videoCaptureSource = (VideoCaptureRecordingSource^)managedSource;
+-		if (!String::IsNullOrEmpty(videoCaptureSource->DeviceName)) {
+-			std::wstring deviceName = msclr::interop::marshal_as<std::wstring>(videoCaptureSource->DeviceName);
+-			pNativeSource->Type = RecordingSourceType::CameraCapture;
+-			pNativeSource->SourcePath = deviceName;
+-			if (videoCaptureSource->CaptureFormat) {
+-				pNativeSource->CaptureFormatIndex = videoCaptureSource->CaptureFormat->Index;
+-			}
+-			hr = S_OK;
+-		}
+-	}
+-	else if (isinst<VideoRecordingSource^>(managedSource)) {
+-		VideoRecordingSource^ videoSource = (VideoRecordingSource^)managedSource;
+-		pNativeSource->Type = RecordingSourceType::Video;
+-		if (videoSource->SourceStream) {
+-			SafeRelease(&pNativeSource->SourceStream);
+-			pNativeSource->SourceStream = new ManagedIStream(videoSource->SourceStream);
+-			hr = S_OK;
+-		}
+-		else if (!String::IsNullOrEmpty(videoSource->SourcePath)) {
+-			pNativeSource->SourcePath = msclr::interop::marshal_as<std::wstring>(videoSource->SourcePath);
+-			hr = S_OK;
+-		}
+-	}
+-	else if (isinst<ImageRecordingSource^>(managedSource)) {
+-		ImageRecordingSource^ imageSource = (ImageRecordingSource^)managedSource;
+-		pNativeSource->Type = RecordingSourceType::Picture;
+-		if (imageSource->SourceStream) {
+-			SafeRelease(&pNativeSource->SourceStream);
+-			pNativeSource->SourceStream = new ManagedIStream(imageSource->SourceStream);
+-			hr = S_OK;
+-		}
+-		else if (!String::IsNullOrEmpty(imageSource->SourcePath)) {
+-			pNativeSource->SourcePath = msclr::interop::marshal_as<std::wstring>(imageSource->SourcePath);
+-			hr = S_OK;
+-		}
+-	}
+-	else {
+-		return E_NOTIMPL;
+-	}
+-	return hr;
+-}
+-
+ HRESULT Recorder::CreateOrUpdateNativeRecordingOverlay(_In_ RecordingOverlayBase^ managedOverlay, _Inout_ RECORDING_OVERLAY* pNativeOverlay)
+ {
+ 	HRESULT hr = E_FAIL;
+diff --git a/ScreenRecorderLib/Recorder.h b/ScreenRecorderLib/Recorder.h
+index 6a1482a..c6080b0 100644
+--- a/ScreenRecorderLib/Recorder.h
++++ b/ScreenRecorderLib/Recorder.h
+@@ -126,6 +126,7 @@ namespace ScreenRecorderLib {
+ 		/// </summary>
+ 		/// <returns></returns>
+ 		DynamicOptionsBuilder^ GetDynamicOptionsBuilder();
++		bool UpdateSessionWindowExclusions(String^ sourceId, cli::array<IntPtr>^ windows);
+ 
+ 		static bool SetExcludeFromCapture(System::IntPtr hwnd, bool isExcluded);
+ 		static bool IsSessionWindowExclusionSupported();
+diff --git a/ScreenRecorderLib/ScreenRecorderLib.vcxproj b/ScreenRecorderLib/ScreenRecorderLib.vcxproj
+index 45eb4e9..d550882 100644
+--- a/ScreenRecorderLib/ScreenRecorderLib.vcxproj
++++ b/ScreenRecorderLib/ScreenRecorderLib.vcxproj
+@@ -282,6 +282,9 @@
+       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">NotUsing</PrecompiledHeader>
+     </ClCompile>
++    <ClCompile Include="Recorder.Sources.cpp">
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++    </ClCompile>
+   </ItemGroup>
+   <ItemGroup>
+     <Image Include="app.ico" />
+@@ -296,4 +299,4 @@
+   </ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+   <ImportGroup Label="ExtensionTargets" />
+-</Project>
+\ No newline at end of file
++</Project>
+diff --git a/ScreenRecorderLib/Win32WindowEnumeration.h b/ScreenRecorderLib/Win32WindowEnumeration.h
+index 24f977c..61c7768 100644
+--- a/ScreenRecorderLib/Win32WindowEnumeration.h
++++ b/ScreenRecorderLib/Win32WindowEnumeration.h
+@@ -27,7 +27,7 @@ private:
+ 	DWORD m_Pid;
+ };
+ 
+-std::wstring GetClassName(HWND hwnd)
++inline std::wstring GetClassName(HWND hwnd)
+ {
+ 	std::array<WCHAR, 1024> className;
+ 
+@@ -37,7 +37,7 @@ std::wstring GetClassName(HWND hwnd)
+ 	return title;
+ }
+ 
+-std::wstring GetWindowText(HWND hwnd)
++inline std::wstring GetWindowText(HWND hwnd)
+ {
+ 	std::array<WCHAR, 1024> windowText;
+ 
+@@ -47,7 +47,7 @@ std::wstring GetWindowText(HWND hwnd)
+ 	return title;
+ }
+ 
+-bool IsRecordableWindow(Window const& window)
++inline bool IsRecordableWindow(Window const& window)
+ {
+ 	HWND hwnd = window.Hwnd();
+ 	HWND shellWindow = GetShellWindow();
+@@ -92,7 +92,7 @@ bool IsRecordableWindow(Window const& window)
+ 	return true;
+ }
+ 
+-BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
++inline BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
+ {
+ 	auto class_name = GetClassName(hwnd);
+ 	auto title = GetWindowText(hwnd);
+@@ -110,7 +110,7 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
+ 	return TRUE;
+ }
+ 
+-const std::vector<Window> EnumerateWindows()
++inline const std::vector<Window> EnumerateWindows()
+ {
+ 	std::vector<Window> windows;
+ 	EnumWindows(EnumWindowsProc, reinterpret_cast<LPARAM>(&windows));
+diff --git a/ScreenRecorderLibNative/CaptureExclusion.cpp b/ScreenRecorderLibNative/CaptureExclusion.cpp
+index d73d48c..58822fd 100644
+--- a/ScreenRecorderLibNative/CaptureExclusion.cpp
++++ b/ScreenRecorderLibNative/CaptureExclusion.cpp
+@@ -41,8 +41,8 @@ uint64_t ApplyWindowExclusion(
+     winrt::Windows::Graphics::Capture::GraphicsCaptureSession const& session,
+     std::vector<HWND> const& windows)
+ {
+-    if (windows.empty()) return 0;
+     auto exclusion = session.try_as<DisplaySessionExclusion>();
++    if (!exclusion && windows.empty()) return 0;
+     if (!exclusion) throw winrt::hresult_error(E_NOINTERFACE,
+         L"This Windows version cannot exclude visible floating windows from display recording. Select a window recording source.");
+     SystemModule module;
+diff --git a/ScreenRecorderLibNative/CommonTypes.h b/ScreenRecorderLibNative/CommonTypes.h
+index 7c51229..70ad97c 100644
+--- a/ScreenRecorderLibNative/CommonTypes.h
++++ b/ScreenRecorderLibNative/CommonTypes.h
+@@ -274,94 +274,7 @@ enum class AudioClientKind
+ 	ProcessLoopback
+ };
+ 
+-struct RECORDING_SOURCE_BASE abstract {
+-private:
+-	std::vector<CallbackNewFrameDataFunction> m_NewFrameDataCallbacks;
+-public:
+-	std::wstring SourcePath;
+-	IStream *SourceStream;
+-	HWND SourceWindow;
+-	std::vector<HWND> ExcludedWindowHandles;
+-	RecordingSourceType Type;
+-	std::wstring ID;
+-	/// <summary>
+-	/// Stretch mode for the frame
+-	/// </summary>
+-	TextureStretchMode Stretch;
+-	/// <summary>
+-	/// The index for a MediaType describing a capture format. This is used to select e.g resolution from cameras.
+-	/// </summary>
+-	std::optional<int> CaptureFormatIndex;
+-	/// <summary>
+-	/// Optional custom output size of the source frame. May be both smaller or larger than the source.
+-	/// </summary>
+-	std::optional<SIZE> OutputSize;
+-	/// <summary>
+-	/// The anchor position for the content inside the parent frame.
+-	/// </summary>
+-	ContentAnchor Anchor;
+-	/// <summary>
+-	/// Determines if the source is capturing video. If false, it will be blacked out.
+-	/// </summary>
+-	std::optional<bool> IsVideoCaptureEnabled;
+-	/// <summary>
+-	/// Determines if the source is capturing mouse cursors. If false, it will be hidden.
+-	/// </summary>
+-	std::optional<bool> IsCursorCaptureEnabled;
+-	/// <summary>
+-	/// Toggles the display of a yellow border around recorded displays and windows when using Windows Graphics Capture on Windows 10 2104 or newer. If false, it will be hidden.
+-	/// </summary>
+-	std::optional<bool> IsBorderRequired;
+-	/// <summary>
+-	/// Toggles video frame preview on and off for this source.
+-	/// </summary>
+-	std::optional<bool> IsVideoFramePreviewEnabled;
+-	/// <summary>
+-	/// The requested dimensions of the frame preview bitmap
+-	/// </summary>
+-	std::optional<SIZE> VideoFramePreviewSize;
+-
+-	RECORDING_SOURCE_BASE() :
+-		Type(RecordingSourceType::Display),
+-		SourceWindow(nullptr),
+-		SourcePath(L""),
+-		SourceStream(nullptr),
+-		OutputSize{ std::nullopt },
+-		ID(L""),
+-		Stretch(TextureStretchMode::Uniform),
+-		Anchor(ContentAnchor::TopLeft),
+-		IsVideoCaptureEnabled(std::nullopt),
+-		IsCursorCaptureEnabled(std::nullopt),
+-		IsBorderRequired(std::nullopt),
+-		IsVideoFramePreviewEnabled(std::nullopt),
+-		VideoFramePreviewSize(std::nullopt),
+-		m_NewFrameDataCallbacks{}
+-	{
+-
+-	}
+-	virtual ~RECORDING_SOURCE_BASE() {
+-
+-	}
+-	void RegisterCallback(CallbackNewFrameDataFunction callback)
+-	{
+-		this->m_NewFrameDataCallbacks.push_back(callback);
+-	}
+-
+-	void UnregisterCallback(CallbackNewFrameDataFunction callback)
+-	{
+-		m_NewFrameDataCallbacks.erase(std::remove(m_NewFrameDataCallbacks.begin(), m_NewFrameDataCallbacks.end(), callback), m_NewFrameDataCallbacks.end());
+-	}
+-
+-	void NotifyNewFrameDataCallbacks(int stride, byte *data, int len, int width, int height) {
+-		for each (CallbackNewFrameDataFunction callback in std::vector(m_NewFrameDataCallbacks))
+-		{
+-			callback(stride, data, len, width, height);
+-		}
+-	}
+-	bool HasRegisteredCallbacks() {
+-		return m_NewFrameDataCallbacks.size() > 0;
+-	}
+-};
++#include "RecordingSourceBase.h"
+ 
+ struct RECORDING_OVERLAY :RECORDING_SOURCE_BASE
+ {
+diff --git a/ScreenRecorderLibNative/RecordingSourceBase.h b/ScreenRecorderLibNative/RecordingSourceBase.h
+new file mode 100644
+index 0000000..5bf2e01
+--- /dev/null
++++ b/ScreenRecorderLibNative/RecordingSourceBase.h
+@@ -0,0 +1,92 @@
++#pragma once
++#include "WindowExclusionState.h"
++
++struct RECORDING_SOURCE_BASE abstract {
++private:
++	std::vector<CallbackNewFrameDataFunction> m_NewFrameDataCallbacks;
++public:
++	std::wstring SourcePath;
++	IStream *SourceStream;
++	HWND SourceWindow;
++	std::shared_ptr<WindowExclusionState> WindowExclusions = std::make_shared<WindowExclusionState>();
++	RecordingSourceType Type;
++	std::wstring ID;
++	/// <summary>
++	/// Stretch mode for the frame
++	/// </summary>
++	TextureStretchMode Stretch;
++	/// <summary>
++	/// The index for a MediaType describing a capture format. This is used to select e.g resolution from cameras.
++	/// </summary>
++	std::optional<int> CaptureFormatIndex;
++	/// <summary>
++	/// Optional custom output size of the source frame. May be both smaller or larger than the source.
++	/// </summary>
++	std::optional<SIZE> OutputSize;
++	/// <summary>
++	/// The anchor position for the content inside the parent frame.
++	/// </summary>
++	ContentAnchor Anchor;
++	/// <summary>
++	/// Determines if the source is capturing video. If false, it will be blacked out.
++	/// </summary>
++	std::optional<bool> IsVideoCaptureEnabled;
++	/// <summary>
++	/// Determines if the source is capturing mouse cursors. If false, it will be hidden.
++	/// </summary>
++	std::optional<bool> IsCursorCaptureEnabled;
++	/// <summary>
++	/// Toggles the display of a yellow border around recorded displays and windows when using Windows Graphics Capture on Windows 10 2104 or newer. If false, it will be hidden.
++	/// </summary>
++	std::optional<bool> IsBorderRequired;
++	/// <summary>
++	/// Toggles video frame preview on and off for this source.
++	/// </summary>
++	std::optional<bool> IsVideoFramePreviewEnabled;
++	/// <summary>
++	/// The requested dimensions of the frame preview bitmap
++	/// </summary>
++	std::optional<SIZE> VideoFramePreviewSize;
++
++	RECORDING_SOURCE_BASE() :
++		Type(RecordingSourceType::Display),
++		SourceWindow(nullptr),
++		SourcePath(L""),
++		SourceStream(nullptr),
++		OutputSize{ std::nullopt },
++		ID(L""),
++		Stretch(TextureStretchMode::Uniform),
++		Anchor(ContentAnchor::TopLeft),
++		IsVideoCaptureEnabled(std::nullopt),
++		IsCursorCaptureEnabled(std::nullopt),
++		IsBorderRequired(std::nullopt),
++		IsVideoFramePreviewEnabled(std::nullopt),
++		VideoFramePreviewSize(std::nullopt),
++		m_NewFrameDataCallbacks{}
++	{
++
++	}
++	virtual ~RECORDING_SOURCE_BASE() {
++
++	}
++	void RegisterCallback(CallbackNewFrameDataFunction callback)
++	{
++		this->m_NewFrameDataCallbacks.push_back(callback);
++	}
++
++	void UnregisterCallback(CallbackNewFrameDataFunction callback)
++	{
++		m_NewFrameDataCallbacks.erase(std::remove(m_NewFrameDataCallbacks.begin(), m_NewFrameDataCallbacks.end(), callback), m_NewFrameDataCallbacks.end());
++	}
++
++	void NotifyNewFrameDataCallbacks(int stride, byte *data, int len, int width, int height) {
++		for each (CallbackNewFrameDataFunction callback in std::vector(m_NewFrameDataCallbacks))
++		{
++			callback(stride, data, len, width, height);
++		}
++	}
++	bool HasRegisteredCallbacks() {
++		return m_NewFrameDataCallbacks.size() > 0;
++	}
++};
++
+diff --git a/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj b/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
+index 4b0f2f4..e7e8002 100644
+--- a/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
++++ b/ScreenRecorderLibNative/ScreenRecorderLibNative.vcxproj
+@@ -108,6 +108,7 @@
+     <ClCompile Include="Util.cpp" />
+     <ClCompile Include="WASAPINotify.cpp" />
+     <ClCompile Include="WindowsGraphicsCapture.cpp" />
++    <ClCompile Include="WindowsGraphicsCapture.Frames.cpp" />
+     <ClCompile Include="RecordingManagerPreview.cpp" />
+     <ClCompile Include="RecordingManager.cpp">
+       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+diff --git a/ScreenRecorderLibNative/WindowExclusionState.h b/ScreenRecorderLibNative/WindowExclusionState.h
+new file mode 100644
+index 0000000..3d7dd69
+--- /dev/null
++++ b/ScreenRecorderLibNative/WindowExclusionState.h
+@@ -0,0 +1,43 @@
++#pragma once
++#include <Windows.h>
++#include <vector>
++#include <memory>
++#include <mutex>
++#include <condition_variable>
++#include <chrono>
++
++struct WindowExclusionSnapshot {
++    uint64_t generation;
++    std::vector<HWND> windows;
++};
++
++// The command thread publishes an immutable request. Only the capture thread touches WGC.
++class WindowExclusionState {
++    std::mutex gate;
++    std::condition_variable changed;
++    uint64_t generation = 0, completed = 0;
++    HRESULT outcome = S_OK;
++    std::shared_ptr<const WindowExclusionSnapshot> request =
++        std::make_shared<WindowExclusionSnapshot>(WindowExclusionSnapshot{0, {}});
++public:
++    uint64_t Request(std::vector<HWND> windows) {
++        std::lock_guard<std::mutex> lock(gate);
++        request = std::make_shared<WindowExclusionSnapshot>(WindowExclusionSnapshot{++generation, std::move(windows)});
++        return generation;
++    }
++    std::shared_ptr<const WindowExclusionSnapshot> Read() {
++        std::lock_guard<std::mutex> lock(gate);
++        return request;
++    }
++    void Complete(uint64_t value, HRESULT result) {
++        { std::lock_guard<std::mutex> lock(gate);
++          if (value >= completed) { completed = value; outcome = result; } }
++        changed.notify_all();
++    }
++    HRESULT Wait(uint64_t value) {
++        std::unique_lock<std::mutex> lock(gate);
++        if (!changed.wait_for(lock, std::chrono::seconds(5), [&] { return completed >= value; }))
++            return HRESULT_FROM_WIN32(WAIT_TIMEOUT);
++        return outcome;
++    }
++};
+diff --git a/ScreenRecorderLibNative/WindowsGraphicsCapture.Frames.cpp b/ScreenRecorderLibNative/WindowsGraphicsCapture.Frames.cpp
+new file mode 100644
+index 0000000..f912254
+--- /dev/null
++++ b/ScreenRecorderLibNative/WindowsGraphicsCapture.Frames.cpp
+@@ -0,0 +1,125 @@
++#include "WindowsGraphicsCapture.h"
++#include "CaptureExclusion.h"
++#include "Log.h"
++#include "Util.h"
++#include "Cleanup.h"
++
++using namespace std;
++namespace winrt { using namespace Windows::Graphics; using namespace Windows::Graphics::Capture; }
++
++HRESULT WindowsGraphicsCapture::ApplyPendingWindowExclusions()
++{
++    if (m_RecordingSource->Type != RecordingSourceType::Display) return S_OK;
++    auto pending = m_RecordingSource->WindowExclusions->Read();
++    if (pending->generation == m_ObservedExclusionGeneration) return S_OK;
++    m_ObservedExclusionGeneration = pending->generation;
++    try {
++        auto iteration = ApplyWindowExclusion(m_session, pending->windows);
++        m_WindowExclusionIteration = iteration;
++        m_PendingExclusionGeneration = pending->generation;
++        return S_OK;
++    } catch (...) {
++        auto error = winrt::to_hresult();
++        m_RecordingSource->WindowExclusions->Complete(pending->generation, error);
++        return error;
++    }
++}
++
++HRESULT WindowsGraphicsCapture::GetNextFrame(_In_ DWORD timeoutMillis, _Inout_ GRAPHICS_FRAME_DATA *pData)
++{
++	// Failed dynamic requests keep the last successful filter and are reported to the command thread.
++	ApplyPendingWindowExclusions();
++	HRESULT hr = E_FAIL;
++	DWORD result = WAIT_OBJECT_0;
++	if (pData->Timestamp.QuadPart >= m_LastSampleReceivedTimeStamp.QuadPart) {
++		result = WaitForSingleObject(m_NewFrameEvent, timeoutMillis);
++	}
++	if (result == WAIT_OBJECT_0) {
++		winrt::Direct3D11CaptureFrame frame = nullptr;
++		try
++		{
++			frame = m_framePool.TryGetNextFrame();
++		}
++		catch (winrt::hresult_error const &ex)
++		{
++			hr = ex.code();
++			LOG_ERROR(L"Failed to get Direct3D11CaptureFrame: error is %ls", ex.message().c_str());
++			return hr;
++		}
++		if (frame) {
++			if (FAILED(hr = CheckWindowExclusionFrame(frame, m_WindowExclusionIteration))) {
++				frame.Close();
++				return hr;
++			}
++			if (m_RecordingSource->Type == RecordingSourceType::Display)
++				m_RecordingSource->WindowExclusions->Complete(m_PendingExclusionGeneration, S_OK);
++			MeasureExecutionTime measureGetFrame(L"WindowsGraphicsManager::GetNextFrame");
++			if (frame.ContentSize().Width != pData->ContentSize.cx
++					|| frame.ContentSize().Height != pData->ContentSize.cy) {
++
++				RETURN_ON_BAD_HR(hr = RecreateFramePool(pData, frame.ContentSize()));
++
++				/*
++				* If the recording is started on a minimized window, we will have guesstimated a size for it when starting the recording.
++				* In this instance we continue to use this size instead of the Direct3D11CaptureFrame::ContentSize(), as it may differ by a few pixels
++				* due to windows 10 window borders and trigger a resize, which leads to blurry recordings.
++				*/
++				auto newFrameSize = (!m_HaveDeliveredFirstFrame && pData->ContentSize.cx > 0) ? winrt::SizeInt32{ pData->ContentSize.cx, pData->ContentSize.cy } : frame.ContentSize();
++				auto surfaceTexture = Graphics::Capture::Util::GetDXGIInterfaceFromObject<ID3D11Texture2D>(frame.Surface());
++				D3D11_TEXTURE2D_DESC newFrameDesc;
++				surfaceTexture->GetDesc(&newFrameDesc);
++				newFrameDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
++				newFrameDesc.Width = newFrameSize.Width;
++				newFrameDesc.Height = newFrameSize.Height;
++				SafeRelease(&pData->Frame);
++				hr = m_Device->CreateTexture2D(&newFrameDesc, nullptr, &pData->Frame);
++				if (FAILED(hr))
++				{
++					LOG_ERROR(L"Failed to create texture");
++					return hr;
++				}
++
++				measureGetFrame.SetName(L"WindowsGraphicsManager::GetNextFrame recreated");
++
++				//Some times the size of the first frame is wrong when recording windows, so we just skip it and get a new after resizing the frame pool.
++				if (m_RecordingSource->Type == RecordingSourceType::Window
++					&& !m_HaveDeliveredFirstFrame)
++				{
++					m_HaveDeliveredFirstFrame = true;
++					frame.Close();
++					return GetNextFrame(timeoutMillis, pData);
++				}
++			}
++
++			D3D11_TEXTURE2D_DESC desc;
++			pData->Frame->GetDesc(&desc);
++
++			D3D11_BOX sourceRegion;
++			RtlZeroMemory(&sourceRegion, sizeof(sourceRegion));
++			sourceRegion.left = 0;
++			sourceRegion.right = min(frame.ContentSize().Width, (int)desc.Width);
++			sourceRegion.top = 0;
++			sourceRegion.bottom = min(frame.ContentSize().Height, (int)desc.Height);
++			sourceRegion.front = 0;
++			sourceRegion.back = 1;
++			auto surfaceTexture = Graphics::Capture::Util::GetDXGIInterfaceFromObject<ID3D11Texture2D>(frame.Surface());
++			m_DeviceContext->CopySubresourceRegion(pData->Frame, 0, 0, 0, 0, surfaceTexture.get(), 0, &sourceRegion);
++			m_HaveDeliveredFirstFrame = true;
++			QueryPerformanceCounter(&pData->Timestamp);
++			frame.Close();
++			hr = S_OK;
++		}
++		else {
++			hr = DXGI_ERROR_WAIT_TIMEOUT;
++		}
++	}
++	else if (result == WAIT_TIMEOUT) {
++		hr = ProcessRecordingTimeout(pData);
++	}
++	else {
++		DWORD dwErr = GetLastError();
++		LOG_ERROR(L"WaitForSingleObject failed: last error = %u", dwErr);
++		hr = HRESULT_FROM_WIN32(dwErr);
++	}
++	return hr;
++}
+diff --git a/ScreenRecorderLibNative/WindowsGraphicsCapture.cpp b/ScreenRecorderLibNative/WindowsGraphicsCapture.cpp
+index 6f14452..5829e0e 100644
+--- a/ScreenRecorderLibNative/WindowsGraphicsCapture.cpp
++++ b/ScreenRecorderLibNative/WindowsGraphicsCapture.cpp
+@@ -221,7 +221,8 @@ HRESULT WindowsGraphicsCapture::StartCapture(_In_ RECORDING_SOURCE_BASE &recordi
+ 			m_framePool = winrt::Direct3D11CaptureFramePool::CreateFreeThreaded(direct3DDevice, winrt::DirectXPixelFormat::B8G8R8A8UIntNormalized, 2, m_CaptureItem.Size());
+ 
+ 			m_session = m_framePool.CreateCaptureSession(m_CaptureItem);
+-			m_WindowExclusionIteration = ApplyWindowExclusion(m_session, recordingSource.ExcludedWindowHandles);
++			m_ObservedExclusionGeneration = UINT64_MAX;
++			winrt::check_hresult(ApplyPendingWindowExclusions());
+ 
+ 			if (IsGraphicsCaptureIsBorderRequiredPropertyAvailable()) {
+ 				m_session.IsBorderRequired(recordingSource.IsBorderRequired.value_or(true));
+@@ -492,97 +493,3 @@ void WindowsGraphicsCapture::OnFrameArrived(winrt::Direct3D11CaptureFramePool co
+ 	}
+ }
+ 
+-HRESULT WindowsGraphicsCapture::GetNextFrame(_In_ DWORD timeoutMillis, _Inout_ GRAPHICS_FRAME_DATA *pData)
+-{
+-	HRESULT hr = E_FAIL;
+-	DWORD result = WAIT_OBJECT_0;
+-	if (pData->Timestamp.QuadPart >= m_LastSampleReceivedTimeStamp.QuadPart) {
+-		result = WaitForSingleObject(m_NewFrameEvent, timeoutMillis);
+-	}
+-	if (result == WAIT_OBJECT_0) {
+-		winrt::Direct3D11CaptureFrame frame = nullptr;
+-		try
+-		{
+-			frame = m_framePool.TryGetNextFrame();
+-		}
+-		catch (winrt::hresult_error const &ex)
+-		{
+-			hr = ex.code();
+-			LOG_ERROR(L"Failed to get Direct3D11CaptureFrame: error is %ls", ex.message().c_str());
+-			return hr;
+-		}
+-		if (frame) {
+-			if (FAILED(hr = CheckWindowExclusionFrame(frame, m_WindowExclusionIteration))) {
+-				frame.Close();
+-				return hr;
+-			}
+-			MeasureExecutionTime measureGetFrame(L"WindowsGraphicsManager::GetNextFrame");
+-			if (frame.ContentSize().Width != pData->ContentSize.cx
+-					|| frame.ContentSize().Height != pData->ContentSize.cy) {
+-
+-				RETURN_ON_BAD_HR(hr = RecreateFramePool(pData, frame.ContentSize()));
+-
+-				/*
+-				* If the recording is started on a minimized window, we will have guesstimated a size for it when starting the recording.
+-				* In this instance we continue to use this size instead of the Direct3D11CaptureFrame::ContentSize(), as it may differ by a few pixels
+-				* due to windows 10 window borders and trigger a resize, which leads to blurry recordings.
+-				*/
+-				auto newFrameSize = (!m_HaveDeliveredFirstFrame && pData->ContentSize.cx > 0) ? winrt::SizeInt32{ pData->ContentSize.cx, pData->ContentSize.cy } : frame.ContentSize();
+-				auto surfaceTexture = Graphics::Capture::Util::GetDXGIInterfaceFromObject<ID3D11Texture2D>(frame.Surface());
+-				D3D11_TEXTURE2D_DESC newFrameDesc;
+-				surfaceTexture->GetDesc(&newFrameDesc);
+-				newFrameDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+-				newFrameDesc.Width = newFrameSize.Width;
+-				newFrameDesc.Height = newFrameSize.Height;
+-				SafeRelease(&pData->Frame);
+-				hr = m_Device->CreateTexture2D(&newFrameDesc, nullptr, &pData->Frame);
+-				if (FAILED(hr))
+-				{
+-					LOG_ERROR(L"Failed to create texture");
+-					return hr;
+-				}
+-
+-				measureGetFrame.SetName(L"WindowsGraphicsManager::GetNextFrame recreated");
+-
+-				//Some times the size of the first frame is wrong when recording windows, so we just skip it and get a new after resizing the frame pool.
+-				if (m_RecordingSource->Type == RecordingSourceType::Window
+-					&& !m_HaveDeliveredFirstFrame)
+-				{
+-					m_HaveDeliveredFirstFrame = true;
+-					frame.Close();
+-					return GetNextFrame(timeoutMillis, pData);
+-				}
+-			}
+-
+-			D3D11_TEXTURE2D_DESC desc;
+-			pData->Frame->GetDesc(&desc);
+-
+-			D3D11_BOX sourceRegion;
+-			RtlZeroMemory(&sourceRegion, sizeof(sourceRegion));
+-			sourceRegion.left = 0;
+-			sourceRegion.right = min(frame.ContentSize().Width, (int)desc.Width);
+-			sourceRegion.top = 0;
+-			sourceRegion.bottom = min(frame.ContentSize().Height, (int)desc.Height);
+-			sourceRegion.front = 0;
+-			sourceRegion.back = 1;
+-			auto surfaceTexture = Graphics::Capture::Util::GetDXGIInterfaceFromObject<ID3D11Texture2D>(frame.Surface());
+-			m_DeviceContext->CopySubresourceRegion(pData->Frame, 0, 0, 0, 0, surfaceTexture.get(), 0, &sourceRegion);
+-			m_HaveDeliveredFirstFrame = true;
+-			QueryPerformanceCounter(&pData->Timestamp);
+-			frame.Close();
+-			hr = S_OK;
+-		}
+-		else {
+-			hr = DXGI_ERROR_WAIT_TIMEOUT;
+-		}
+-	}
+-	else if (result == WAIT_TIMEOUT) {
+-		hr = ProcessRecordingTimeout(pData);
+-	}
+-	else {
+-		DWORD dwErr = GetLastError();
+-		LOG_ERROR(L"WaitForSingleObject failed: last error = %u", dwErr);
+-		hr = HRESULT_FROM_WIN32(dwErr);
+-	}
+-	return hr;
+-}
+diff --git a/ScreenRecorderLibNative/WindowsGraphicsCapture.h b/ScreenRecorderLibNative/WindowsGraphicsCapture.h
+index 8c2e55d..fdb967f 100644
+--- a/ScreenRecorderLibNative/WindowsGraphicsCapture.h
++++ b/ScreenRecorderLibNative/WindowsGraphicsCapture.h
+@@ -30,6 +30,8 @@ private:
+ 	winrt::Windows::Graphics::Capture::Direct3D11CaptureFramePool m_framePool;
+ 	winrt::Windows::Graphics::Capture::GraphicsCaptureSession m_session;
+ 	uint64_t m_WindowExclusionIteration = 0;
++	uint64_t m_ObservedExclusionGeneration = 0, m_PendingExclusionGeneration = 0;
++	HRESULT ApplyPendingWindowExclusions();
+ 
+ 	std::unique_ptr<MouseManager> m_MouseManager;
+ 	int m_CursorOffsetX;

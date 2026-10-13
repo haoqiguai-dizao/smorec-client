@@ -1,0 +1,17 @@
+Local face landmark beauty runtime
+
+MediaPipe Tasks Vision 1.0.1 (Google / MediaPipe Authors), Apache License 2.0.
+https://github.com/google-ai-edge/mediapipe
+The accompanying MEDIAPIPE-LICENSE.txt preserves the upstream license notices.
+Runtime JS/WASM files are copied unchanged from the pinned npm package.
+worker.js is an application bundle; upstream legal comments are retained.
+
+Face Landmarker float16 model, revision 1, Google / MediaPipe.
+Source: https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task
+SHA256: 64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff
+Model card (Apache License, Version 2.0):
+https://storage.googleapis.com/mediapipe-assets/Model%20Card%20MediaPipe%20Face%20Mesh%20V2.pdf
+
+The image reshaping and color correction algorithms in this application are
+implemented independently. No GPUPixel or CainCamera source is distributed.
+All inference uses local assets; camera frames are not uploaded by this module.
