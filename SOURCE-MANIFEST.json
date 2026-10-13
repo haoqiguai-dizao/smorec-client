@@ -36,8 +36,8 @@
     },
     {
       "path": "ASSETS.md",
-      "size": 1818,
-      "sha256": "05cb234d072cd7087d878577fc68dd9000bc54c314b3ff326dff740f414c03f0"
+      "size": 1850,
+      "sha256": "badb963fe64e5255615ec77586ec61d2b63d623826f30e30fad070683a26a0cf"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -66,13 +66,13 @@
     },
     {
       "path": "PUBLICATION-PLAN.md",
-      "size": 2159,
-      "sha256": "1bb97b496b9c6415a8e3cf36134bb3b5fcd246f1f5912008df214a7313880b7c"
+      "size": 2498,
+      "sha256": "58da6c4413368b1a34820e5f8798739fe5965b89a97ef88e85bf18608d24a0c1"
     },
     {
       "path": "README.md",
-      "size": 8689,
-      "sha256": "84c7505e4e2d840763dbcea150ab62dfc39b5eb1e77cfefd343096beaae49983"
+      "size": 9436,
+      "sha256": "a3bac9774d52e7c6d0c39118ecb5fb441ad71ef7eee6020358a244b3bd745204"
     },
     {
       "path": "SECURITY.md",
@@ -176,13 +176,23 @@
     },
     {
       "path": "docs/readme/IMAGEGEN-PROMPTS.json",
-      "size": 2665,
-      "sha256": "c517dcf8cbf1692783f8f92af6c19a11b6e48a88a0b8df4871877e7354a3daed"
+      "size": 3700,
+      "sha256": "0e47049fe85947ead36f44aa0dac41e0ec02de8e98c716a793871b0cdd8b7c22"
     },
     {
       "path": "docs/readme/README.md",
-      "size": 2911,
-      "sha256": "7b1259faa5f5dc765d31ce1574bc552ed437dc8373a5d39ab92499e61aff3826"
+      "size": 3965,
+      "sha256": "6cc733abc87bde9bfe1197c1bdb3353acf10574ff8d321de384fe85d9ade3ab6"
+    },
+    {
+      "path": "docs/readme/camera-presenter.png",
+      "size": 1755546,
+      "sha256": "3bf6b7fdc8b54d568514a9e174d4a867641867ec1ae0b0257f89e1394630f2e1"
+    },
+    {
+      "path": "docs/readme/camera-recording.gif",
+      "size": 2853954,
+      "sha256": "24ed0873719a9f5669337245f74f9847ebd12a47f3ab4b7b661d5f90e63a452b"
     },
     {
       "path": "docs/readme/editor.jpg",
