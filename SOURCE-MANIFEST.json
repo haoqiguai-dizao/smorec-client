@@ -36,8 +36,8 @@
     },
     {
       "path": "ASSETS.md",
-      "size": 1513,
-      "sha256": "b6be79b45df1212cfdbf26caaa0fd371bc83c29ca18e6be71bff973609156387"
+      "size": 1787,
+      "sha256": "7553a2e605a2542d354e41e015d94b38f3ad6af5eb8a3373e72fffa3e10c6ad0"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -66,13 +66,13 @@
     },
     {
       "path": "PUBLICATION-PLAN.md",
-      "size": 1666,
-      "sha256": "1f0cf7e4a50bf599158dbb35a5c3f696ca7dd577393965d131e1ee2ef717f0da"
+      "size": 1931,
+      "sha256": "eaa5d6e380d8248e3095759f4f462626c0d48fa7cad32519b1b8abbca05d4403"
     },
     {
       "path": "README.md",
-      "size": 2107,
-      "sha256": "ac1c78fbcd178ef7eb5084ed2df403881026e9be334a882bd2dc189a9418d2a7"
+      "size": 6146,
+      "sha256": "afcc647b86000fc2b14650cc9887213427a39c4e423494961674a058f1a421fa"
     },
     {
       "path": "SECURITY.md",
@@ -173,6 +173,41 @@
       "path": "config/distribution.json",
       "size": 94,
       "sha256": "fc45943ef2c45722ec7a530f7efdf99a794f7f3e84fc87b4c215bd9f262894e0"
+    },
+    {
+      "path": "docs/readme/IMAGEGEN-PROMPTS.json",
+      "size": 2665,
+      "sha256": "c517dcf8cbf1692783f8f92af6c19a11b6e48a88a0b8df4871877e7354a3daed"
+    },
+    {
+      "path": "docs/readme/README.md",
+      "size": 1795,
+      "sha256": "b8153a09e2599f9799efd4f931b3e0100b636802c4505a428d98e2de61d75fc3"
+    },
+    {
+      "path": "docs/readme/editor.jpg",
+      "size": 85843,
+      "sha256": "4c5bb74d7c584ce3a2094fd54361b1743f68817c94efa8d465b190f1299324d0"
+    },
+    {
+      "path": "docs/readme/hero.png",
+      "size": 1216501,
+      "sha256": "dc56e33b3ac349325cfe22bc6c1baad9c6f8b166c1527755fda109e5389d45ac"
+    },
+    {
+      "path": "docs/readme/lesson-example.png",
+      "size": 1374058,
+      "sha256": "4a63744ee128323bd77130add602d07d211d1b8da493b7acee5dd7fa6332c912"
+    },
+    {
+      "path": "docs/readme/recorder.jpg",
+      "size": 25339,
+      "sha256": "def1522ae95daee10bbc60a7ec4854cd15006ade1b662bc2bcf7209c40d4f3a5"
+    },
+    {
+      "path": "docs/readme/whiteboard.jpg",
+      "size": 69245,
+      "sha256": "0aedbc4c198af493d8c55ac814913d967975d6a54aae3145debfe002c29ff5e7"
     },
     {
       "path": "electron/audio-cache-preload.ts",
@@ -430,6 +465,11 @@
       "sha256": "1f8b2afd8bbea5de5587413e46134ff264fb89d153fcd54dec04b572be1f9828"
     },
     {
+      "path": "electron/services/live-recording-controls.ts",
+      "size": 14311,
+      "sha256": "024ba6c89553b3bf503f2684def9cdd2a59be52d1d0d85090ee9003d64b631c7"
+    },
+    {
       "path": "electron/services/live/camera-controls.ts",
       "size": 1733,
       "sha256": "e58e7c7eca41f973a9fbc8a884482ce20e0287626d2c03c3e11f85e80687a616"
@@ -480,14 +520,14 @@
       "sha256": "77297626d70dababf02df43ce075c0cab1959df82fdbeb4265ed9b228235fe35"
     },
     {
-      "path": "electron/services/live-recording-controls.ts",
-      "size": 14311,
-      "sha256": "024ba6c89553b3bf503f2684def9cdd2a59be52d1d0d85090ee9003d64b631c7"
-    },
-    {
       "path": "electron/services/media-permissions.ts",
       "size": 2912,
       "sha256": "a853dab152f25e83c5e65b8ab2eeb508b7050b0c22078e9534ad1a4ab7bf6970"
+    },
+    {
+      "path": "electron/services/microphone-effects.ts",
+      "size": 952,
+      "sha256": "de7e5151fb855e1fdfff0e40ef987f0e950668b819756655548da037feddc5c8"
     },
     {
       "path": "electron/services/microphone-effects/cache.ts",
@@ -508,11 +548,6 @@
       "path": "electron/services/microphone-effects/wave.ts",
       "size": 5637,
       "sha256": "bbf4aa9efc5e3c655500b91321a34d9a5a6c0449e04781757c95df2e124a6ad1"
-    },
-    {
-      "path": "electron/services/microphone-effects.ts",
-      "size": 952,
-      "sha256": "de7e5151fb855e1fdfff0e40ef987f0e950668b819756655548da037feddc5c8"
     },
     {
       "path": "electron/services/microphone-ipc.ts",
@@ -595,6 +630,11 @@
       "sha256": "514959369dab20e10221246f2a47daef1b547408aa061efff675186e29b75e1c"
     },
     {
+      "path": "electron/services/project-audio.ts",
+      "size": 2076,
+      "sha256": "4abab1ce3d8d40c6c32c96d3389878c47435d7c96ceab67d4d1ba15c37f5b486"
+    },
+    {
       "path": "electron/services/project-audio/cache.ts",
       "size": 8822,
       "sha256": "6d941d66efb32dee4547f56ccb217980e0ef9eef9bc1e15297fd55069da90f82"
@@ -608,11 +648,6 @@
       "path": "electron/services/project-audio/source.ts",
       "size": 592,
       "sha256": "b6d2044fb7cdfe3f1cbc0aeb7593eaffc71174b21f58dc6ca4445574b1cb8ebd"
-    },
-    {
-      "path": "electron/services/project-audio.ts",
-      "size": 2076,
-      "sha256": "4abab1ce3d8d40c6c32c96d3389878c47435d7c96ceab67d4d1ba15c37f5b486"
     },
     {
       "path": "electron/services/project-backgrounds.ts",
@@ -650,6 +685,11 @@
       "sha256": "07961e019a67fad0efec1d07484d8becbd30702fb1630798c820b32c2916d0bf"
     },
     {
+      "path": "electron/services/recorder-launcher.ts",
+      "size": 16472,
+      "sha256": "56691c406a5b8c341c0a503acddf17c192dae4db4133c736a3bec4d6806c4fba"
+    },
+    {
       "path": "electron/services/recorder-launcher/geometry.ts",
       "size": 1336,
       "sha256": "4bf27072b2895f2e7ecd655442179c06fcab51bdc101a5d3870607f6a4a4f94d"
@@ -663,16 +703,6 @@
       "path": "electron/services/recorder-launcher/validation.ts",
       "size": 547,
       "sha256": "cf1370ac6ab522857a0827d79d22b53f46d16fd8f811adb4b7cb95b13e67f133"
-    },
-    {
-      "path": "electron/services/recorder-launcher.ts",
-      "size": 16472,
-      "sha256": "56691c406a5b8c341c0a503acddf17c192dae4db4133c736a3bec4d6806c4fba"
-    },
-    {
-      "path": "electron/services/recording/presentation.ts",
-      "size": 2912,
-      "sha256": "fd420f8b4a3ebea375b5bc0a724cd7a0adeb2bba146e47692ef9c6181cdca037"
     },
     {
       "path": "electron/services/recording-camera-callbacks.ts",
@@ -718,6 +748,11 @@
       "path": "electron/services/recording.ts",
       "size": 16765,
       "sha256": "c2b57ffe96a0459e15f2e962bf3bf1b87f20f4820d475321f2e1582b7a0fa97e"
+    },
+    {
+      "path": "electron/services/recording/presentation.ts",
+      "size": 2912,
+      "sha256": "fd420f8b4a3ebea375b5bc0a724cd7a0adeb2bba146e47692ef9c6181cdca037"
     },
     {
       "path": "electron/services/recovery-duration.ts",
@@ -845,6 +880,11 @@
       "sha256": "2007a0cc0db9d9a1d6856153ac4ebc2112718b09d3113e926f9a56565f6908bd"
     },
     {
+      "path": "electron/services/updates/mac-install.ts",
+      "size": 3925,
+      "sha256": "facff313b3609633b68e4c2fa5a8e08cc0eb7c982b3e4f3a03620ae535704d1f"
+    },
+    {
       "path": "electron/services/updates/mac/apply.ts",
       "size": 6399,
       "sha256": "d011c6045fbffbb9ffaf01fa963b3eeb6198c93b4c852911647dba2ebcbe29f2"
@@ -873,11 +913,6 @@
       "path": "electron/services/updates/mac/paths.ts",
       "size": 3911,
       "sha256": "78810ff64cb0675032c9b17df9703d10fe7f28c0c9febf6a94b149427f15f03a"
-    },
-    {
-      "path": "electron/services/updates/mac-install.ts",
-      "size": 3925,
-      "sha256": "facff313b3609633b68e4c2fa5a8e08cc0eb7c982b3e4f3a03620ae535704d1f"
     },
     {
       "path": "electron/services/updates/manager.ts",
@@ -1145,6 +1180,96 @@
       "sha256": "6ade36747cea3e8e40aea8c01a649f87ccdf372d845add3f701667ab9186f7d9"
     },
     {
+      "path": "native/FrameFlow.Capture.Tests/AudioPacketPlannerTests.cs",
+      "size": 16427,
+      "sha256": "853d8af7ac5f9b62803743d1a6701cd808b756e96e62e2756e3f641844d6c11a"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/CaptureSpecificationTests.cs",
+      "size": 3034,
+      "sha256": "4f95aa76ded8957ce4f51b3b01b03647ee7bd32624552c36a4d07fc95823c78a"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/DictationTapTests.cs",
+      "size": 2564,
+      "sha256": "0869ffbc75a2ad4108d991705ea7426d138145b102ac8d08b1cc650184f6dfc3"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/FrameFlow.Capture.Tests.csproj",
+      "size": 3076,
+      "sha256": "f93ad87358f28275cab34f28cf3e1d9dd9d858dde876be721db6468e5afca02a"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/InputLatencyDiagnosticsTests.cs",
+      "size": 2858,
+      "sha256": "099f79a5f84215aace56ce8ead89931417d926d4168e0a985b67b4dddb518ac4"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/LivePcmMixerTests.cs",
+      "size": 4429,
+      "sha256": "860ae6c130a7c1dffd1d146953b56c132f8a7bf285ceacd7092d98de38caf8cf"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/LiveWindowExclusionsTests.cs",
+      "size": 14556,
+      "sha256": "e6e978194bcb368e99115813c7159777c8e11aad5f2bcabfbeb351b3bae68123"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/MouseInputLifecycleTests.cs",
+      "size": 7265,
+      "sha256": "f89d9871bbfbf44dcee8d182710ac9df536aac8afbba60b3111a60d7138053ac"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/Program.cs",
+      "size": 5873,
+      "sha256": "c59920bdce0b4650858814c33d512b14d7a32aa11b4182f9f87417e50069925e"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/RawMousePacketTests.cs",
+      "size": 9725,
+      "sha256": "577e6249d90e8e779f2b20d868f521c5166e522b9881ac30035b165727e87609"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/RecordingExclusionInputTests.cs",
+      "size": 3657,
+      "sha256": "6aa7b2d2bd544e3372ebf98a753a408e5cd4d6e31a01962e229f4ec19dc21900"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/RecordingExclusionTests.cs",
+      "size": 1242,
+      "sha256": "3242a0e16f20112cd0b89d2447e9fa9faea7b36c3f79db323626b6a3d9551953"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/TypingActivityTests.cs",
+      "size": 10734,
+      "sha256": "71f3e61d78d6cabfe6044b6172ce364a19e74a0ab47bc20129ee9e49eea9c274"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/TypingFocusNativeTests.cs",
+      "size": 6494,
+      "sha256": "8b805ab1dd38bccb5c43126646249cf746243553298f339adef68be36a91ee33"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/TypingFocusPositionTests.cs",
+      "size": 6387,
+      "sha256": "93848ef8913f1ebdaae603f9dbb2e45d4fde2319df6699cfab090b4cbb4b7869"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/TypingFocusRaceTests.cs",
+      "size": 4357,
+      "sha256": "83d493d63f2a53c7dd345d852f87c8ecde6ebe3da2d103bdaa1ef5cfe9c56add"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/TypingInputLifecycleTests.cs",
+      "size": 6451,
+      "sha256": "8e8134ab1fe71526605a6b08af24da8bc1fb1e73ea5923219f6d1c370819bf4b"
+    },
+    {
+      "path": "native/FrameFlow.Capture.Tests/VideoClockCorrelationTests.cs",
+      "size": 1536,
+      "sha256": "199e55e5f84ab43d53a5a623ab4cdb64aa480e96d282ca7f55e692329aeb4b9e"
+    },
+    {
       "path": "native/FrameFlow.Capture/AudioCaptureGroup.cs",
       "size": 5462,
       "sha256": "cd81677865a77a2ffb88bc31b0b7b7bdf666b2f0762422b8dc660906f9ee1ced"
@@ -1400,96 +1525,6 @@
       "sha256": "b7a9d51b8ff4cc16582418cb8e953be46d9533878f15a27803bd1d27ef1d5054"
     },
     {
-      "path": "native/FrameFlow.Capture.Tests/AudioPacketPlannerTests.cs",
-      "size": 16427,
-      "sha256": "853d8af7ac5f9b62803743d1a6701cd808b756e96e62e2756e3f641844d6c11a"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/CaptureSpecificationTests.cs",
-      "size": 3034,
-      "sha256": "4f95aa76ded8957ce4f51b3b01b03647ee7bd32624552c36a4d07fc95823c78a"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/DictationTapTests.cs",
-      "size": 2564,
-      "sha256": "0869ffbc75a2ad4108d991705ea7426d138145b102ac8d08b1cc650184f6dfc3"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/FrameFlow.Capture.Tests.csproj",
-      "size": 3076,
-      "sha256": "f93ad87358f28275cab34f28cf3e1d9dd9d858dde876be721db6468e5afca02a"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/InputLatencyDiagnosticsTests.cs",
-      "size": 2858,
-      "sha256": "099f79a5f84215aace56ce8ead89931417d926d4168e0a985b67b4dddb518ac4"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/LivePcmMixerTests.cs",
-      "size": 4429,
-      "sha256": "860ae6c130a7c1dffd1d146953b56c132f8a7bf285ceacd7092d98de38caf8cf"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/LiveWindowExclusionsTests.cs",
-      "size": 14556,
-      "sha256": "e6e978194bcb368e99115813c7159777c8e11aad5f2bcabfbeb351b3bae68123"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/MouseInputLifecycleTests.cs",
-      "size": 7265,
-      "sha256": "f89d9871bbfbf44dcee8d182710ac9df536aac8afbba60b3111a60d7138053ac"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/Program.cs",
-      "size": 5873,
-      "sha256": "c59920bdce0b4650858814c33d512b14d7a32aa11b4182f9f87417e50069925e"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/RawMousePacketTests.cs",
-      "size": 9725,
-      "sha256": "577e6249d90e8e779f2b20d868f521c5166e522b9881ac30035b165727e87609"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/RecordingExclusionInputTests.cs",
-      "size": 3657,
-      "sha256": "6aa7b2d2bd544e3372ebf98a753a408e5cd4d6e31a01962e229f4ec19dc21900"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/RecordingExclusionTests.cs",
-      "size": 1242,
-      "sha256": "3242a0e16f20112cd0b89d2447e9fa9faea7b36c3f79db323626b6a3d9551953"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/TypingActivityTests.cs",
-      "size": 10734,
-      "sha256": "71f3e61d78d6cabfe6044b6172ce364a19e74a0ab47bc20129ee9e49eea9c274"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/TypingFocusNativeTests.cs",
-      "size": 6494,
-      "sha256": "8b805ab1dd38bccb5c43126646249cf746243553298f339adef68be36a91ee33"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/TypingFocusPositionTests.cs",
-      "size": 6387,
-      "sha256": "93848ef8913f1ebdaae603f9dbb2e45d4fde2319df6699cfab090b4cbb4b7869"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/TypingFocusRaceTests.cs",
-      "size": 4357,
-      "sha256": "83d493d63f2a53c7dd345d852f87c8ecde6ebe3da2d103bdaa1ef5cfe9c56add"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/TypingInputLifecycleTests.cs",
-      "size": 6451,
-      "sha256": "8e8134ab1fe71526605a6b08af24da8bc1fb1e73ea5923219f6d1c370819bf4b"
-    },
-    {
-      "path": "native/FrameFlow.Capture.Tests/VideoClockCorrelationTests.cs",
-      "size": 1536,
-      "sha256": "199e55e5f84ab43d53a5a623ab4cdb64aa480e96d282ca7f55e692329aeb4b9e"
-    },
-    {
       "path": "native/INPUT-LATENCY-DIAGNOSTICS.md",
       "size": 7034,
       "sha256": "134d1961919c229a1c6e8e82b2a2e5fa64f532922a9fed09dbb9e75387c8ea49"
@@ -1530,6 +1565,16 @@
       "sha256": "ea88aa134a21adfe39525a999a42b32377e630a46ecb5f5841702ca40e436664"
     },
     {
+      "path": "native/XiaoLu.Updater.TestTarget/Program.cs",
+      "size": 525,
+      "sha256": "7369d11a8f05b88d645fc0d304abb1b982c69e2e526e33e79e41f4ab5ca32be7"
+    },
+    {
+      "path": "native/XiaoLu.Updater.TestTarget/XiaoLu.Updater.TestTarget.csproj",
+      "size": 238,
+      "sha256": "3da66f2555e614283d07f8cb1ccd7972834781b9fa0aed00e61156b1ef9c35e6"
+    },
+    {
       "path": "native/XiaoLu.Updater/Contracts.cs",
       "size": 1513,
       "sha256": "07e24d95f4ce081d68ce23cf686676e2a1eee56ed5c5fa3da3eb8969e413b3e3"
@@ -1563,16 +1608,6 @@
       "path": "native/XiaoLu.Updater/app.manifest",
       "size": 600,
       "sha256": "c66d72f26ae9aa00ad943f525a39b763d8e13a27c2785b414f66dcc81dd68152"
-    },
-    {
-      "path": "native/XiaoLu.Updater.TestTarget/Program.cs",
-      "size": 525,
-      "sha256": "7369d11a8f05b88d645fc0d304abb1b982c69e2e526e33e79e41f4ab5ca32be7"
-    },
-    {
-      "path": "native/XiaoLu.Updater.TestTarget/XiaoLu.Updater.TestTarget.csproj",
-      "size": 238,
-      "sha256": "3da66f2555e614283d07f8cb1ccd7972834781b9fa0aed00e61156b1ef9c35e6"
     },
     {
       "path": "native/macos/Package.swift",
@@ -3050,41 +3085,6 @@
       "sha256": "49e8c4eeee6334d31b1a3f8ad49573c48cdc4e708c7cd64c4e5216b6dcf1f616"
     },
     {
-      "path": "src/components/recording/CameraPreview.tsx",
-      "size": 2715,
-      "sha256": "2bd5969e6fa1870c113a99b3424c7eb5ed030dce67be11c394b7cc367280caac"
-    },
-    {
-      "path": "src/components/recording/MicrophoneSelector.tsx",
-      "size": 1456,
-      "sha256": "8cff4b820e36f5b654002e9cdccdafdbd8050756048b87988a1aa52ee6d0b3ec"
-    },
-    {
-      "path": "src/components/recording/RecordingSetup.tsx",
-      "size": 9173,
-      "sha256": "917d23832ee186124506a32237eb41ff310d22f35c13ae3071da0085cf264317"
-    },
-    {
-      "path": "src/components/recording/RegionEditor.tsx",
-      "size": 1384,
-      "sha256": "5b6c2b2ca169d3b501f8acf731512914aea23f9bfb442440ad1a5d3816c7b0b9"
-    },
-    {
-      "path": "src/components/recording/RegionPicker.tsx",
-      "size": 3073,
-      "sha256": "be8101f1cff195aeb3073cd19cbf77e005ca1665b7db6e0d5c5310f70246f016"
-    },
-    {
-      "path": "src/components/recording/SourcePicker.tsx",
-      "size": 1105,
-      "sha256": "89f5baae888ed06db0e29b4a7c7abc4256a461e6240c74a9928f769aa5df205f"
-    },
-    {
-      "path": "src/components/recording/microphone-selector.css",
-      "size": 1249,
-      "sha256": "919539646075631276e5f8c73d4dfab95d56f85a86eec5112d83bf5c5c77550f"
-    },
-    {
       "path": "src/components/recording-overlay/CameraControls.tsx",
       "size": 3806,
       "sha256": "c90bf1ee1b0a7299ba3693566e2afde6ea24b3ecd12dbbe943764b721e580fb5"
@@ -3163,6 +3163,41 @@
       "path": "src/components/recording-overlay/teleprompter.css",
       "size": 3525,
       "sha256": "1d8e04f44648ae2bafbd434f2dc410c2c6575176e6580d31392f472c253ba77e"
+    },
+    {
+      "path": "src/components/recording/CameraPreview.tsx",
+      "size": 2715,
+      "sha256": "2bd5969e6fa1870c113a99b3424c7eb5ed030dce67be11c394b7cc367280caac"
+    },
+    {
+      "path": "src/components/recording/MicrophoneSelector.tsx",
+      "size": 1456,
+      "sha256": "8cff4b820e36f5b654002e9cdccdafdbd8050756048b87988a1aa52ee6d0b3ec"
+    },
+    {
+      "path": "src/components/recording/RecordingSetup.tsx",
+      "size": 9173,
+      "sha256": "917d23832ee186124506a32237eb41ff310d22f35c13ae3071da0085cf264317"
+    },
+    {
+      "path": "src/components/recording/RegionEditor.tsx",
+      "size": 1384,
+      "sha256": "5b6c2b2ca169d3b501f8acf731512914aea23f9bfb442440ad1a5d3816c7b0b9"
+    },
+    {
+      "path": "src/components/recording/RegionPicker.tsx",
+      "size": 3073,
+      "sha256": "be8101f1cff195aeb3073cd19cbf77e005ca1665b7db6e0d5c5310f70246f016"
+    },
+    {
+      "path": "src/components/recording/SourcePicker.tsx",
+      "size": 1105,
+      "sha256": "89f5baae888ed06db0e29b4a7c7abc4256a461e6240c74a9928f769aa5df205f"
+    },
+    {
+      "path": "src/components/recording/microphone-selector.css",
+      "size": 1249,
+      "sha256": "919539646075631276e5f8c73d4dfab95d56f85a86eec5112d83bf5c5c77550f"
     },
     {
       "path": "src/components/session-controls/SessionDevices.tsx",
@@ -3885,6 +3920,11 @@
       "sha256": "f7d019f4589fa5500d083e6c18780d001517ad42bbd13990ef423fb22732afcd"
     },
     {
+      "path": "src/services/live-application-preferences.ts",
+      "size": 3905,
+      "sha256": "6a5d9efe65141de978fa952c27020e7cb2e0cacdb072541b32c6be6dfbf22aec"
+    },
+    {
       "path": "src/services/live/camera.ts",
       "size": 3364,
       "sha256": "5d7b803bfcf4829b74e42671bacec74e8a04da252daac980115e58e158d09679"
@@ -3908,11 +3948,6 @@
       "path": "src/services/live/whiteboard.ts",
       "size": 868,
       "sha256": "cadae65ebc9f437bb2dbe7ebddb08197306309049af591917e409dbeee840a98"
-    },
-    {
-      "path": "src/services/live-application-preferences.ts",
-      "size": 3905,
-      "sha256": "6a5d9efe65141de978fa952c27020e7cb2e0cacdb072541b32c6be6dfbf22aec"
     },
     {
       "path": "src/services/media-frame-identity.ts",
