@@ -10,6 +10,6 @@
 
 ## 已知依赖范围（2026-10-13）
 
-锁定依赖的`npm audit`报告涉及14个包（9中、5高）；`--omit=dev`涉及2个高风险包：electron-updater与其builder-util-runtime，关联同一[上游跨域重定向凭据报告](https://github.com/advisories/GHSA-p2f4-r6v6-j797)。报告描述带认证头的更新下载跨域跳转可能泄露凭据；本快照的默认更新域名无效、信任公钥为空，没有配置该认证下载路径。Mac包排除这两项Windows更新链路依赖；Windows更新源码仍引用electron-updater，衍生发行应先升级修复并验证更新链路，不将默认配置隔离当作依赖已修复的证明。
+锁定依赖的`npm audit`报告涉及14个包（9中、5高）；`--omit=dev`涉及2个高风险包：electron-updater与其builder-util-runtime，关联同一[上游跨域重定向凭据报告](https://github.com/advisories/GHSA-p2f4-r6v6-j797)。报告描述带认证头的更新下载跨域跳转可能泄露凭据；本快照的默认更新域名无效、信任公钥为空，没有配置该认证下载路径。Mac包排除electron-updater及lazy-val，且不使用该Windows更新链路；Windows更新源码仍引用electron-updater，衍生发行应先升级修复并验证更新链路，不将默认配置隔离当作依赖已修复的证明。
 
 其余报告涉及构建/下载/样式工具的传递依赖。初始118快照保留经过验证的锁文件，本轮没有使用`npm audit fix --force`改写版本或发布新二进制；后续依赖升级需完成受影响的构建、更新和平台回归。Windows另有lazy-val许可全文及新机原生/安装器验证门槛，见 [第三方声明](THIRD_PARTY_NOTICES.md) 与 [构建说明](DEVELOPMENT.md)。
